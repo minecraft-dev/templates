@@ -104,6 +104,11 @@
   ],
   "files": [
     {
+      "template": "../gradle.gitignore.ft",
+      "destination": ".gitignore",
+      "condition": "$USE_GIT"
+    },
+    {
       "template": "build.gradle.ft",
       "destination": "build.gradle"
     },
@@ -177,6 +182,10 @@
     {
       "type": "run_gradle_tasks",
       "tasks": ["wrapper", "genIntellijRuns"]
+    },
+    {
+      "type": "git_add_all",
+      "condition": "$USE_GIT"
     }
   ]
 }

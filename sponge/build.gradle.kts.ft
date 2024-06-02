@@ -11,9 +11,8 @@ version = "${BUILD_COORDS.version}"
 
 repositories {
     mavenCentral()
-    maven {
+    maven("https://repo.spongepowered.org/maven/") {
         name = "spongepowered-repo"
-        url = "https://repo.spongepowered.org/maven/"
     }
 }
 

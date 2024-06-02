@@ -98,6 +98,11 @@
   ],
   "files": [
     {
+      "template": "../${BUILD_SYSTEM}.gitignore.ft",
+      "destination": ".gitignore",
+      "condition": "$USE_GIT"
+    },
+    {
       "template": "build.gradle.ft",
       "destination": "build.gradle",
       "condition": "$BUILD_SYSTEM=='Gradle'"
@@ -136,6 +141,10 @@
       "type": "run_gradle_tasks",
       "tasks": ["wrapper"],
       "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
+      "type": "git_add_all",
+      "condition": "$USE_GIT"
     }
   ]
 }
