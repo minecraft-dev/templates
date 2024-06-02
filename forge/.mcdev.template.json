@@ -172,5 +172,11 @@
       "destination": "src/main/java/${MAIN_CLASS.packagePath}/Config.java",
       "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_20_2) >= 0"
     }
+  ],
+  "finalizers": [
+    {
+      "type": "run_gradle_tasks",
+      "tasks": ["wrapper", "genIntellijRuns"]
+    }
   ]
 }

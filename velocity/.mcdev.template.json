@@ -146,5 +146,12 @@
       "destination": "src/main/templates/${MAIN_CLASS.packagePath}/BuildConstants.java",
       "condition": "$BUILD_SYSTEM=='Gradle'"
     }
+  ],
+  "finalizers": [
+    {
+      "type": "run_gradle_tasks",
+      "tasks": ["wrapper"],
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    }
   ]
 }

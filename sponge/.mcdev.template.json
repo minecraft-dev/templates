@@ -144,5 +144,12 @@
       "template": "MainClass.java.ft",
       "destination": "src/main/java/${MAIN_CLASS.path}.java"
     }
+  ],
+  "finalizers": [
+    {
+      "type": "run_gradle_tasks",
+      "tasks": ["wrapper"],
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    }
   ]
 }

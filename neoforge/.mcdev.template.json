@@ -144,5 +144,12 @@
       "template": "Config.java.ft",
       "destination": "src/main/java/${MAIN_CLASS.packagePath}/Config.java"
     }
+  ],
+  "finalizers": [
+    {
+      "type": "run_gradle_tasks",
+      "tasks": ["wrapper"],
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    }
   ]
 }

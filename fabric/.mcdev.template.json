@@ -140,5 +140,12 @@
       "template": "../licenses/${LICENSE.id}.txt.ft",
       "destination": "LICENSE.txt"
     }
+  ],
+  "finalizers": [
+    {
+      "type": "run_gradle_tasks",
+      "tasks": ["wrapper"],
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    }
   ]
 }
