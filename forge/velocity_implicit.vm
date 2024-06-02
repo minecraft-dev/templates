@@ -1,0 +1,18 @@
+#* @implicitly included *#
+
+#* @vtlvariable name="semver" type="com.demonwav.mcdev.util.SemanticVersion.Companion" *#
+#* @vtlvariable name="mcver" type="com.demonwav.mcdev.util.MinecraftVersions" *#
+
+#* @vtlvariable name="BUILD_COORDS" type="com.demonwav.mcdev.creator.custom.model.BuildSystemCoordinates" *#
+#* @vtlvariable name="VERSIONS" type="com.demonwav.mcdev.creator.custom.model.ForgeVersions" *#
+#* @vtlvariable name="USE_MIXINS" type="boolean" *#
+#* @vtlvariable name="MOD_ID" type="java.lang.String" *#
+#* @vtlvariable name="MOD_NAME" type="java.lang.String" *#
+#* @vtlvariable name="MAIN_CLASS" type="com.demonwav.mcdev.creator.custom.model.ClassFqn" *#
+#* @vtlvariable name="LICENSE" type="com.demonwav.mcdev.creator.custom.model.LicenseData" *#
+#* @vtlvariable name="DESCRIPTION" type="java.lang.String" *#
+#* @vtlvariable name="AUTHORS" type="com.demonwav.mcdev.creator.custom.model.StringList" *#
+#* @vtlvariable name="WEBSITE" type="java.lang.String" *#
+#* @vtlvariable name="UPDATE_URL" type="java.lang.String" *#
+#* @vtlvariable name="JAVA_VERSION" type="int" *#
+#* @vtlvariable name="JDK" type="com.demonwav.mcdev.creator.custom.model.CreatorJdk" *#

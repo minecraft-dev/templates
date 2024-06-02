@@ -1,0 +1,134 @@
+{
+  "version": 1,
+  "label": "Bungeecord",
+  "properties": [
+    {
+      "name": "BUILD_COORDS",
+      "type": "build_system_coordinates",
+      "order": 10
+    },
+    {
+      "name": "BUILD_SYSTEM",
+      "type": "string",
+      "label": "Build System:",
+      "options": [
+        "Gradle",
+        "Maven"
+      ]
+    },
+    {
+      "name": "BUNGEE_VERSION",
+      "type": "semantic_version",
+      "label": "Version:",
+      "forceDropdown": true,
+      "options": [
+        "1.20-R0.1-SNAPSHOT",
+        "1.19-R0.1-SNAPSHOT",
+        "1.18-R0.1-SNAPSHOT",
+        "1.17-R0.1-SNAPSHOT",
+        "1.16-R0.5-SNAPSHOT",
+        "1.16-R0.4",
+        "1.16-R0.3",
+        "1.16-R0.2",
+        "1.16-R0.1",
+        "1.15-SNAPSHOT",
+        "1.14-SNAPSHOT",
+        "1.13-SNAPSHOT",
+        "1.12-SNAPSHOT"
+      ],
+      "default": 0
+    },
+    {
+      "name": "NAME",
+      "type": "string",
+      "label": "Plugin Name:",
+      "inheritFrom": "PROJECT_NAME"
+    },
+    {
+      "name": "MAIN_CLASS",
+      "type": "class_fqn",
+      "label": "Main Class:",
+      "derives": {
+        "parents": ["BUILD_COORDS", "NAME"],
+        "method": "suggestClassName"
+      }
+    },
+    {
+      "label": "Optional Settings",
+      "collapsible": true,
+      "groupProperties": [
+        {
+          "name": "DESCRIPTION",
+          "type": "string",
+          "label": "Description:",
+          "default": "",
+          "nullIfDefault": true
+        },
+        {
+          "name": "AUTHORS",
+          "type": "inline_string_list",
+          "label": "Authors:",
+          "default": "",
+          "nullIfDefault": true
+        },
+        {
+          "name": "WEBSITE",
+          "type": "string",
+          "label": "Website:",
+          "default": "",
+          "nullIfDefault": true
+        }
+      ]
+    },
+    {
+      "name": "JAVA_VERSION",
+      "type": "integer",
+      "label": "Java Version:",
+      "order": 20,
+      "default": 8,
+      "hidden": true
+    },
+    {
+      "name": "JDK",
+      "type": "jdk",
+      "label": "JDK:",
+      "order": 20,
+      "default": "JAVA_VERSION"
+    }
+  ],
+  "files": [
+    {
+      "template": "build.gradle.ft",
+      "destination": "build.gradle",
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
+      "template": "settings.gradle.ft",
+      "destination": "settings.gradle",
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
+      "template": "gradle.properties.ft",
+      "destination": "gradle.properties",
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
+      "template": "../gradle-wrapper.properties.ft",
+      "destination": "gradle/wrapper/gradle-wrapper.properties",
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
+      "template": "pom.xml.ft",
+      "destination": "pom.xml",
+      "condition": "$BUILD_SYSTEM=='Maven'"
+    },
+    {
+      "template": "bungee.yml.ft",
+      "destination": "src/main/resources/bungee.yml"
+    },
+    {
+      "template": "MainClass.java.ft",
+      "destination": "src/main/java/${MAIN_CLASS.path}.java"
+    }
+  ]
+}

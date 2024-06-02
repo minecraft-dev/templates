@@ -1,0 +1,148 @@
+{
+  "version": 1,
+  "label": "Sponge",
+  "properties": [
+    {
+      "name": "BUILD_COORDS",
+      "type": "build_system_coordinates",
+      "order": 10
+    },
+    {
+      "name": "BUILD_SYSTEM",
+      "type": "string",
+      "label": "Build System:",
+      "options": [
+        "Gradle",
+        "Maven"
+      ]
+    },
+    {
+      "name": "SPONGEAPI_VERSION",
+      "type": "semantic_version",
+      "label": "SpongeAPI Version:",
+      "forceDropdown": true,
+      "options": [
+        "11.0.0-SNAPSHOT",
+        "10.1.0-SNAPSHOT",
+        "10.0.0",
+        "9.1.0-SNAPSHOT",
+        "9.0.0",
+        "8.3.0-SNAPSHOT",
+        "8.2.0"
+      ],
+      "default": 0
+    },
+    {
+      "name": "PLUGIN_ID",
+      "type": "string",
+      "label": "Plugin ID:",
+      "validator": "[a-z][a-z0-9-_]{1,63}",
+      "derives": {
+        "parents": ["PROJECT_NAME"],
+        "method": "suggestSpongePluginId"
+      }
+    },
+    {
+      "name": "PLUGIN_NAME",
+      "type": "string",
+      "label": "Plugin Name:",
+      "inheritFrom": "PROJECT_NAME"
+    },
+    {
+      "name": "MAIN_CLASS",
+      "type": "class_fqn",
+      "label": "Main Class:",
+      "derives": {
+        "parents": ["BUILD_COORDS", "PLUGIN_ID"],
+        "method": "suggestClassName"
+      }
+    },
+    {
+      "name": "LICENSE",
+      "type": "license",
+      "label": "License:"
+    },
+    {
+      "label": "Optional Settings",
+      "collapsible": true,
+      "groupProperties": [
+        {
+          "name": "DESCRIPTION",
+          "type": "string",
+          "label": "Description:",
+          "default": "",
+          "nullIfDefault": true
+        },
+        {
+          "name": "AUTHORS",
+          "type": "inline_string_list",
+          "label": "Authors:",
+          "default": "",
+          "nullIfDefault": true
+        },
+        {
+          "name": "WEBSITE",
+          "type": "string",
+          "label": "Website:",
+          "default": "",
+          "nullIfDefault": true
+        }
+      ]
+    },
+    {
+      "name": "JAVA_VERSION",
+      "type": "integer",
+      "label": "Java Version:",
+      "order": 20,
+      "default": 17,
+      "hidden": true,
+      "derives": {
+        "parents": ["SPONGEAPI_VERSION"],
+        "method": "recommendJavaVersionForSpongeApiVersion"
+      }
+    },
+    {
+      "name": "JDK",
+      "type": "jdk",
+      "label": "JDK:",
+      "order": 20,
+      "default": "JAVA_VERSION"
+    }
+  ],
+  "files": [
+    {
+      "template": "build.gradle.kts.ft",
+      "destination": "build.gradle.kts",
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
+      "template": "settings.gradle.kts.ft",
+      "destination": "settings.gradle.kts",
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
+      "template": "gradle.properties.ft",
+      "destination": "gradle.properties",
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
+      "template": "../gradle-wrapper.properties.ft",
+      "destination": "gradle/wrapper/gradle-wrapper.properties",
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
+      "template": "pom.xml.ft",
+      "destination": "pom.xml",
+      "condition": "$BUILD_SYSTEM=='Maven'"
+    },
+    {
+      "template": "sponge_plugins.json.ft",
+      "destination": "src/main/resources/sponge_plugin.json",
+      "condition": "!$USE_PAPER_MANIFEST"
+    },
+    {
+      "template": "MainClass.java.ft",
+      "destination": "src/main/java/${MAIN_CLASS.path}.java"
+    }
+  ]
+}

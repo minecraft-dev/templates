@@ -1,0 +1,47 @@
+#if ($VERSIONS.minecraft.compareTo($mcver.MC1_20_5) >= 0)
+#set ($PACK_FORMAT = 32)
+#elseif ($VERSIONS.minecraft.compareTo($mcver.MC1_20_3) >= 0)
+#set ($PACK_FORMAT = 22)
+#elseif ($VERSIONS.minecraft.compareTo($mcver.MC1_20_2) >= 0)
+#set ($PACK_FORMAT = 18)
+#elseif ($VERSIONS.minecraft.compareTo($mcver.MC1_20) >= 0)
+#set ($PACK_FORMAT = 15)
+#elseif ($VERSIONS.minecraft.compareTo($mcver.MC1_19_4) >= 0)
+#set ($PACK_FORMAT = 12)
+#elseif ($VERSIONS.minecraft.compareTo($mcver.MC1_19) >= 0)
+#set ($PACK_FORMAT = 10)
+#elseif ($VERSIONS.minecraft.compareTo($mcver.MC1_18_2) >= 0)
+#set ($PACK_FORMAT = 9)
+#elseif ($VERSIONS.minecraft.compareTo($mcver.MC1_18) >= 0)
+#set ($PACK_FORMAT = 8)
+#elseif ($VERSIONS.minecraft.compareTo($mcver.MC1_17) >= 0)
+#set ($PACK_FORMAT = 7)
+#elseif ($VERSIONS.minecraft.compareTo($mcver.MC1_16_5) >= 0)
+#set ($PACK_FORMAT = 6)
+#end
+#if ($VERSIONS.minecraft.compareTo($mcver.MC1_20) < 0)
+#if ($VERSIONS.minecraft.compareTo($mcver.MC1_19_4) >= 0)
+#set ($FORGE_SERVER_PACK_FORMAT = 12)
+#elseif ($VERSIONS.minecraft.compareTo($mcver.MC1_19_3) >= 0)
+#set ($RESOURCE_PACK_FORMAT = 12)
+#set ($DATA_PACK_FORMAT = 10)
+#elseif ($VERSIONS.minecraft.compareTo($mcver.MC1_19) >= 0)
+#set ($RESOURCE_PACK_FORMAT = 8)
+#set ($DATA_PACK_FORMAT = 9)
+#end
+#end
+{
+    "pack": {
+        "description": "${MOD_ID} resources",
+        "pack_format": ${PACK_FORMAT}
+        #if (${RESOURCE_PACK_FORMAT})
+        ,"forge:resource_pack_format": ${RESOURCE_PACK_FORMAT}
+        #end
+        #if (${DATA_PACK_FORMAT})
+        ,"forge:data_pack_format": ${DATA_PACK_FORMAT}
+        #end
+        #if (${FORGE_SERVER_PACK_FORMAT})
+        ,"forge:server_data_pack_format": ${FORGE_SERVER_PACK_FORMAT}
+        #end
+    }
+}

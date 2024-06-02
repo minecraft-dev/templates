@@ -1,0 +1,185 @@
+{
+  "version": 1,
+  "label": "Paper",
+  "properties": [
+    {
+      "name": "BUILD_COORDS",
+      "type": "build_system_coordinates",
+      "order": 10
+    },
+    {
+      "name": "BUILD_SYSTEM",
+      "type": "string",
+      "label": "Build System:",
+      "options": [
+        "Gradle",
+        "Maven"
+      ]
+    },
+    {
+      "name": "MC_VERSION",
+      "type": "semantic_version",
+      "label": "Minecraft Version:",
+      "forceDropdown": true,
+      "options": [
+        "1.20.6",
+        "1.20.4",
+        "1.20.3",
+        "1.20.2",
+        "1.20.1",
+        "1.19.4",
+        "1.18.2"
+      ],
+      "default": 0
+    },
+    {
+      "name": "API_VERSION",
+      "type": "semantic_version",
+      "label": "API Version:",
+      "options": [
+        "1.20",
+        "1.19",
+        "1.18",
+        "1.17"
+      ],
+      "hidden": true,
+      "derives": {
+        "parents": ["MC_VERSION"],
+        "method": "extractVersionMajorMinor"
+      }
+    },
+    {
+      "name": "NAME",
+      "type": "string",
+      "label": "Plugin Name:",
+      "inheritFrom": "PROJECT_NAME"
+    },
+    {
+      "name": "MAIN_CLASS",
+      "type": "class_fqn",
+      "label": "Main Class:",
+      "derives": {
+        "parents": ["BUILD_COORDS", "NAME"],
+        "method": "suggestClassName"
+      }
+    },
+    {
+      "name": "USE_PAPER_MANIFEST",
+      "type": "boolean",
+      "label": "Use Paper manifest:",
+      "default": true,
+      "placeAfter": "MAIN_CLASS"
+    },
+    {
+      "label": "Optional Settings",
+      "collapsible": true,
+      "groupProperties": [
+        {
+          "name": "DESCRIPTION",
+          "type": "string",
+          "label": "Description:",
+          "default": "",
+          "nullIfDefault": true
+        },
+        {
+          "name": "AUTHORS",
+          "type": "inline_string_list",
+          "label": "Authors:",
+          "default": "",
+          "nullIfDefault": true
+        },
+        {
+          "name": "WEBSITE",
+          "type": "string",
+          "label": "Website:",
+          "default": "",
+          "nullIfDefault": true
+        },
+        {
+          "name": "PREFIX",
+          "type": "string",
+          "label": "Prefix:",
+          "default": "",
+          "nullIfDefault": true
+        },
+        {
+          "name": "LOAD",
+          "type": "string",
+          "label": "Load At:",
+          "options": {
+            "STARTUP": "Startup",
+            "POSTWORLD": "Post World"
+          },
+          "default": "POSTWORLD",
+          "nullIfDefault": true
+        }
+      ]
+    },
+    {
+      "name": "JAVA_VERSION",
+      "type": "integer",
+      "label": "Java Version:",
+      "order": 20,
+      "default": 17,
+      "hidden": true,
+      "derives": {
+        "parents": ["MC_VERSION"],
+        "method": "recommendJavaVersionForMcVersion"
+      }
+    },
+    {
+      "name": "JDK",
+      "type": "jdk",
+      "label": "JDK:",
+      "order": 20,
+      "default": "JAVA_VERSION"
+    },
+    {
+      "name": "IS_PAPER",
+      "type": "boolean",
+      "hidden": true,
+      "default": true
+    }
+  ],
+  "files": [
+    {
+      "template": "build.gradle.ft",
+      "destination": "build.gradle",
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
+      "template": "settings.gradle.ft",
+      "destination": "settings.gradle",
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
+      "template": "gradle.properties.ft",
+      "destination": "gradle.properties",
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
+      "template": "../gradle-wrapper.properties.ft",
+      "destination": "gradle/wrapper/gradle-wrapper.properties",
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
+      "template": "pom.xml.ft",
+      "destination": "pom.xml",
+      "condition": "$BUILD_SYSTEM=='Maven'"
+    },
+    {
+      "template": "plugin.yml.ft",
+      "destination": "src/main/resources/plugin.yml",
+      "condition": "!$USE_PAPER_MANIFEST"
+    },
+    {
+      "template": "paper-plugin.yml.ft",
+      "destination": "src/main/resources/paper-plugin.yml",
+      "condition": "$USE_PAPER_MANIFEST"
+    },
+    {
+      "template": "MainClass.java.ft",
+      "destination": "src/main/java/${MAIN_CLASS.path}.java"
+    }
+  ]
+}

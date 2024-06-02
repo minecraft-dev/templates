@@ -1,0 +1,176 @@
+{
+  "version": 1,
+  "label": "Forge",
+  "properties": [
+    {
+      "name": "BUILD_COORDS",
+      "type": "build_system_coordinates",
+      "order": 10
+    },
+    {
+      "name": "VERSIONS",
+      "type": "forge_versions",
+      "label": "Versions:",
+      "parameters": {
+        "mcVersionFilter": "$MC_VERSION.compareTo($mcver.MC1_16) >= 0"
+      }
+    },
+    {
+      "name": "USE_MIXINS",
+      "type": "boolean",
+      "label": "Use Mixins:",
+      "default": false
+    },
+    {
+      "name": "MOD_ID",
+      "type": "string",
+      "label": "Mod ID:",
+      "validator": "[a-z][a-z0-9_]{1,63}",
+      "derives": {
+        "parents": ["PROJECT_NAME"],
+        "method": "suggestSpongePluginId"
+      }
+    },
+    {
+      "name": "MOD_NAME",
+      "type": "string",
+      "label": "Mod Name:",
+      "inheritFrom": "PROJECT_NAME"
+    },
+    {
+      "name": "MAIN_CLASS",
+      "type": "class_fqn",
+      "label": "Main Class:",
+      "derives": {
+        "parents": ["BUILD_COORDS", "MOD_ID"],
+        "method": "suggestClassName"
+      }
+    },
+    {
+      "name": "LICENSE",
+      "type": "license",
+      "label": "License:"
+    },
+    {
+      "label": "Optional Settings",
+      "collapsible": true,
+      "groupProperties": [
+        {
+          "name": "DESCRIPTION",
+          "type": "string",
+          "label": "Description:",
+          "default": ""
+        },
+        {
+          "name": "AUTHORS",
+          "type": "inline_string_list",
+          "label": "Authors:",
+          "default": ""
+        },
+        {
+          "name": "WEBSITE",
+          "type": "string",
+          "label": "Website:",
+          "default": ""
+        },
+        {
+          "name": "UPDATE_URL",
+          "type": "string",
+          "label": "Update URL:",
+          "default": "",
+          "nullIfDefault": true
+        }
+      ]
+    },
+    {
+      "name": "JAVA_VERSION",
+      "type": "integer",
+      "label": "Java Version:",
+      "order": 20,
+      "default": 17,
+      "hidden": true,
+      "derives": {
+        "parents": ["VERSIONS"],
+        "method": "recommendJavaVersionForMcVersion"
+      }
+    },
+    {
+      "name": "JDK",
+      "type": "jdk",
+      "label": "JDK:",
+      "order": 20,
+      "default": "JAVA_VERSION"
+    }
+  ],
+  "files": [
+    {
+      "template": "build.gradle.ft",
+      "destination": "build.gradle"
+    },
+    {
+      "template": "settings.gradle.ft",
+      "destination": "settings.gradle"
+    },
+    {
+      "template": "gradle.properties.ft",
+      "destination": "gradle.properties"
+    },
+    {
+      "template": "../gradle-wrapper.properties.ft",
+      "destination": "gradle/wrapper/gradle-wrapper.properties"
+    },
+    {
+      "template": "mods.toml.ft",
+      "destination": "src/main/resources/META-INF/mods.toml"
+    },
+    {
+      "template": "pack.mcmeta.ft",
+      "destination": "src/main/resources/pack.mcmeta"
+    },
+    {
+      "template": "MixinsConfig.json.ft",
+      "destination": "src/main/resources/${MOD_ID}.mixins.json",
+      "condition": "$USE_MIXINS"
+    },
+    {
+      "template": "MainClass (1.16+).java.ft",
+      "destination": "src/main/java/${MAIN_CLASS.path}.java",
+      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_16) >= 0 && $VERSIONS.minecraft.compareTo($mcver.MC1_17) < 0"
+    },
+    {
+      "template": "MainClass (1.17+).java.ft",
+      "destination": "src/main/java/${MAIN_CLASS.path}.java",
+      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_17) >= 0 && $VERSIONS.minecraft.compareTo($mcver.MC1_18) < 0"
+    },
+    {
+      "template": "MainClass (1.18+).java.ft",
+      "destination": "src/main/java/${MAIN_CLASS.path}.java",
+      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_18) >= 0 && $VERSIONS.minecraft.compareTo($mcver.MC1_19) < 0"
+    },
+    {
+      "template": "MainClass (1.19+).java.ft",
+      "destination": "src/main/java/${MAIN_CLASS.path}.java",
+      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_19) >= 0 && $VERSIONS.minecraft.compareTo($mcver.MC1_19_3) < 0"
+    },
+    {
+      "template": "MainClass (1.19.3+).java.ft",
+      "destination": "src/main/java/${MAIN_CLASS.path}.java",
+      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_19_3) >= 0 && $VERSIONS.minecraft.compareTo($mcver.MC1_20) < 0"
+    },
+    {
+      "template": "MainClass (1.20+).java.ft",
+      "destination": "src/main/java/${MAIN_CLASS.path}.java",
+      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_20) >= 0 && $VERSIONS.minecraft.compareTo($mcver.MC1_20_6) < 0"
+    },
+    {
+      "template": "MainClass (1.20.6+).java.ft",
+      "destination": "src/main/java/${MAIN_CLASS.path}.java",
+      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_20_6) >= 0"
+    },
+    {
+      "template": "Config (1.20.2+).java.ft",
+      "destination": "src/main/java/${MAIN_CLASS.packagePath}/Config.java",
+      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_20_2) >= 0"
+    }
+  ]
+}

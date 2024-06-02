@@ -1,0 +1,144 @@
+{
+  "version": 1,
+  "label": "Fabric",
+  "properties": [
+    {
+      "name": "BUILD_COORDS",
+      "type": "build_system_coordinates",
+      "order": 10
+    },
+    {
+      "name": "VERSIONS",
+      "type": "fabric_versions"
+    },
+    {
+      "name": "MOD_ENVIRONMENT",
+      "type": "string",
+      "label": "Environment:",
+      "options": {
+        "*": "Both",
+        "client": "Client",
+        "server": "Server"
+      },
+      "default": "*"
+    },
+    {
+      "name": "USE_MIXINS",
+      "type": "boolean",
+      "label": "Use Mixins:"
+    },
+    {
+      "name": "MOD_ID",
+      "type": "string",
+      "label": "Mod ID:",
+      "validator": "[a-z][a-z0-9-_]{1,63}",
+      "derives": {
+        "parents": ["PROJECT_NAME"],
+        "method": "suggestSpongePluginId"
+      }
+    },
+    {
+      "name": "MOD_NAME",
+      "type": "string",
+      "label": "Mod Name:",
+      "inheritFrom": "PROJECT_NAME"
+    },
+    {
+      "name": "MAIN_CLASS",
+      "type": "class_fqn",
+      "label": "Main Class:",
+      "derives": {
+        "parents": ["BUILD_COORDS", "MOD_ID"],
+        "method": "suggestClassName"
+      }
+    },
+    {
+      "name": "LICENSE",
+      "type": "license",
+      "label": "License:"
+    },
+    {
+      "label": "Optional Settings",
+      "collapsible": true,
+      "groupProperties": [
+        {
+          "name": "DESCRIPTION",
+          "type": "string",
+          "label": "Description:",
+          "default": ""
+        },
+        {
+          "name": "AUTHORS",
+          "type": "inline_string_list",
+          "label": "Authors:",
+          "default": ""
+        },
+        {
+          "name": "WEBSITE",
+          "type": "string",
+          "label": "Website:",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "name": "JAVA_VERSION",
+      "type": "integer",
+      "label": "Java Version:",
+      "order": 20,
+      "default": 17,
+      "hidden": true,
+      "derives": {
+        "parents": ["VERSIONS"],
+        "method": "recommendJavaVersionForMcVersion"
+      }
+    },
+    {
+      "name": "JDK",
+      "type": "jdk",
+      "label": "JDK:",
+      "order": 20,
+      "default": "JAVA_VERSION"
+    }
+  ],
+  "files": [
+    {
+      "template": "build.gradle.ft",
+      "destination": "build.gradle"
+    },
+    {
+      "template": "settings.gradle.ft",
+      "destination": "settings.gradle"
+    },
+    {
+      "template": "gradle.properties.ft",
+      "destination": "gradle.properties"
+    },
+    {
+      "template": "../gradle-wrapper.properties.ft",
+      "destination": "gradle/wrapper/gradle-wrapper.properties"
+    },
+    {
+      "template": "fabric.mod.json.ft",
+      "destination": "src/main/resources/fabric.mod.json"
+    },
+    {
+      "template": "mixins.json.ft",
+      "destination": "src/main/resources/${MOD_ID}.mixins.json",
+      "condition": "$USE_MIXINS"
+    },
+    {
+      "template": "Initializer.java.ft",
+      "destination": "src/main/java/${MAIN_CLASS.path}.java"
+    },
+    {
+      "template": "ClientInitializer.java.ft",
+      "destination": "src/main/java/${MAIN_CLASS.packagePath}/client/${MAIN_CLASS.className}Client.java",
+      "condition": "$MOD_ENVIRONMENT != 'server'"
+    },
+    {
+      "template": "../licenses/${LICENSE.id}.txt.ft",
+      "destination": "LICENSE.txt"
+    }
+  ]
+}

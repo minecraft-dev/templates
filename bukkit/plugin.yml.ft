@@ -1,0 +1,21 @@
+name: ${NAME}
+version: '${BUILD_COORDS.version}'
+main: ${MAIN_CLASS}
+#if (${API_VERSION})
+api-version: '${API_VERSION}'
+#end
+#if (${PREFIX})
+prefix: ${PREFIX}
+#end
+#if (${LOAD})
+load: ${LOAD}
+#end
+#if (${AUTHORS})
+authors: ${AUTHORS.toString(", ", "[", "]")}
+#end
+#if (${DESCRIPTION})
+description: ${DESCRIPTION}
+#end
+#if (${WEBSITE})
+website: ${WEBSITE}
+#end
