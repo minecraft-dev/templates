@@ -68,7 +68,7 @@
       "type": "boolean",
       "label": "Use Paper manifest:",
       "default": true,
-      "placeAfter": "MAIN_CLASS"
+      "warning": "Paper plugins are <a href='https://docs.papermc.io/paper/dev/getting-started/paper-plugins'>still experimental</a>, their usage is discouraged for general purpose development."
     },
     {
       "label": "Optional Settings",
