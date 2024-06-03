@@ -1,0 +1,42 @@
+modLoader = "javafml"
+loaderVersion = "[2,)"
+#issueTrackerURL = ""
+license = "${LICENSE.name}"
+
+[[mods]]
+modId = "${MOD_ID}"
+version = "${version}"
+displayName = "${MOD_NAME}"
+authors = "${AUTHORS}"
+description = '''
+${DESCRIPTION}
+'''
+#logoFile = ""
+
+[[dependencies.${MOD_ID}]]
+modId = "neoforge"
+type = "required"
+versionRange = "[${VERSIONS.neoforgeSpec},)"
+ordering = "NONE"
+side = "BOTH"
+
+[[dependencies.${MOD_ID}]]
+modId = "minecraft"
+type = "required"
+versionRange = "[${VERSIONS.minecraftVersion},)"
+ordering = "NONE"
+side = "BOTH"
+
+#if ($VERSIONS.useArchitecturyApi)
+[[dependencies.${MOD_ID}]]
+modId = "architectury"
+type = "required"
+versionRange = "[${VERSIONS.architecturyApi},)"
+ordering = "AFTER"
+side = "BOTH"
+#end
+
+#if ($USE_MIXINS)
+[[mixins]]
+config = "${MOD_ID}.mixins.json"
+#end

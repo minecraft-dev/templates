@@ -1,0 +1,23 @@
+package ${MAIN_CLASS.packageName}.forge;
+
+import ${MAIN_CLASS};
+#if ($VERSIONS.useArchitecturyApi)
+import dev.architectury.platform.forge.EventBuses;
+#end
+import net.minecraftforge.fml.common.Mod;
+#if ($VERSIONS.useArchitecturyApi)
+import net.minecraftforge.fml.javafmlmod.FMLJavaModLoadingContext;
+#end
+
+@Mod(${MAIN_CLASS.className}.MOD_ID)
+public final class ${MAIN_CLASS.className}Forge {
+    public ${MAIN_CLASS.className}Forge() {
+#if ($VERSIONS.useArchitecturyApi)
+        // Submit our event bus to let Architectury API register our content on the right time.
+        EventBuses.registerModEventBus(${MAIN_CLASS.className}.MOD_ID, FMLJavaModLoadingContext.get().getModEventBus());
+
+#end
+        // Run our common setup.
+        ${MAIN_CLASS.className}.init();
+    }
+}

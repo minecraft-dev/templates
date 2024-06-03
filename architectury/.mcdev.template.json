@@ -1,0 +1,218 @@
+{
+  "version": 1,
+  "label": "Architectury",
+  "properties": [
+    {
+      "name": "BUILD_COORDS",
+      "type": "build_system_coordinates",
+      "order": 10
+    },
+    {
+      "name": "VERSIONS",
+      "type": "architectury_versions",
+      "parameters": {
+        "forgeMcVersionFilter": "$MC_VERSION.compareTo($mcver.MC1_20_4) <= 0",
+        "neoForgeMcVersionFilter": "$MC_VERSION.compareTo($mcver.MC1_20_5) >= 0"
+      }
+    },
+    {
+      "name": "USE_MIXINS",
+      "type": "boolean",
+      "label": "Use Mixins:"
+    },
+    {
+      "name": "MOD_ID",
+      "type": "string",
+      "label": "Mod ID:",
+      "validator": "[a-z][a-z0-9-_]{1,63}",
+      "derives": {
+        "parents": ["PROJECT_NAME"],
+        "method": "suggestSpongePluginId"
+      }
+    },
+    {
+      "name": "MOD_NAME",
+      "type": "string",
+      "label": "Mod Name:",
+      "inheritFrom": "PROJECT_NAME"
+    },
+    {
+      "name": "MAIN_CLASS",
+      "type": "class_fqn",
+      "label": "Main Class:",
+      "derives": {
+        "parents": ["BUILD_COORDS", "MOD_ID"],
+        "method": "suggestClassName"
+      }
+    },
+    {
+      "name": "LICENSE",
+      "type": "license",
+      "label": "License:"
+    },
+    {
+      "label": "Optional Settings",
+      "collapsible": true,
+      "groupProperties": [
+        {
+          "name": "DESCRIPTION",
+          "type": "string",
+          "label": "Description:",
+          "default": ""
+        },
+        {
+          "name": "AUTHORS",
+          "type": "inline_string_list",
+          "label": "Authors:",
+          "default": ""
+        },
+        {
+          "name": "WEBSITE",
+          "type": "string",
+          "label": "Website:",
+          "default": ""
+        }
+      ]
+    },
+    {
+      "name": "JAVA_VERSION",
+      "type": "integer",
+      "label": "Java Version:",
+      "order": 20,
+      "default": 17,
+      "hidden": true,
+      "derives": {
+        "parents": ["VERSIONS"],
+        "method": "recommendJavaVersionForMcVersion"
+      }
+    },
+    {
+      "name": "JDK",
+      "type": "jdk",
+      "label": "JDK:",
+      "order": 20,
+      "default": "JAVA_VERSION"
+    }
+  ],
+  "files": [
+    {
+      "template": "../gradle.gitignore.ft",
+      "destination": ".gitignore",
+      "condition": "$USE_GIT"
+    },
+    {
+      "template": "../gradle.gitignore.ft",
+      "destination": "fabric/.gitignore",
+      "condition": "$USE_GIT"
+    },
+    {
+      "template": "../gradle.gitignore.ft",
+      "destination": "neoforge/.gitignore",
+      "condition": "$USE_GIT"
+    },
+    {
+      "template": "build.gradle.ft",
+      "destination": "build.gradle"
+    },
+    {
+      "template": "settings.gradle.ft",
+      "destination": "settings.gradle"
+    },
+    {
+      "template": "gradle.properties.ft",
+      "destination": "gradle.properties"
+    },
+    {
+      "template": "../gradle-wrapper.properties.ft",
+      "destination": "gradle/wrapper/gradle-wrapper.properties"
+    },
+    {
+      "template": "common/build.gradle.ft",
+      "destination": "common/build.gradle"
+    },
+    {
+      "template": "common/mixins.json.ft",
+      "destination": "common/src/main/resources/${MOD_ID}.mixins.json",
+      "condition": "$USE_MIXINS"
+    },
+    {
+      "template": "common/MainClass.java.ft",
+      "destination": "common/src/main/java/${MAIN_CLASS.path}.java"
+    },
+    {
+      "template": "fabric/build.gradle.ft",
+      "destination": "fabric/build.gradle"
+    },
+    {
+      "template": "fabric/Initializer.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.withSubPackage('fabric').path}Fabric.java"
+    },
+    {
+      "template": "fabric/InitializerClient.java.ft",
+      "destination": "fabric/src/main/java/${MAIN_CLASS.withSubPackage('fabric.client').path}FabricClient.java"
+    },
+    {
+      "template": "fabric/fabric.mod.json.ft",
+      "destination": "fabric/src/main/resources/fabric.mod.json"
+    },
+    {
+      "template": "forge/build.gradle.ft",
+      "destination": "forge/build.gradle",
+      "condition": "$VERSIONS.hasForge"
+    },
+    {
+      "template": "forge/gradle.properties.ft",
+      "destination": "forge/gradle.properties",
+      "condition": "$VERSIONS.hasForge"
+    },
+    {
+      "template": "forge/MainClass.java.ft",
+      "destination":"forge/src/main/java/${MAIN_CLASS.withSubPackage('forge').path}Forge.java",
+      "condition": "$VERSIONS.hasForge"
+    },
+    {
+      "template": "forge/mods.toml.ft",
+      "destination": "forge/src/main/resources/META-INF/mods.toml",
+      "condition": "$VERSIONS.hasForge"
+    },
+    {
+      "template": "../forge/pack.mcmeta.ft",
+      "destination": "forge/src/main/resources/pack.mcmeta",
+      "condition": "$VERSIONS.hasForge"
+    },
+    {
+      "template": "neoforge/build.gradle.ft",
+      "destination": "neoforge/build.gradle",
+      "condition": "$VERSIONS.hasNeoforge"
+    },
+    {
+      "template": "neoforge/gradle.properties.ft",
+      "destination": "neoforge/gradle.properties",
+      "condition": "$VERSIONS.hasNeoforge"
+    },
+    {
+      "template": "neoforge/MainClass.java.ft",
+      "destination":"neoforge/src/main/java/${MAIN_CLASS.withSubPackage('neoforge').path}NeoForge.java",
+      "condition": "$VERSIONS.hasNeoforge"
+    },
+    {
+      "template": "neoforge/neoforge.mods.toml.ft",
+      "destination": "neoforge/src/main/resources/META-INF/neoforge.mods.toml",
+      "condition": "$VERSIONS.hasNeoforge"
+    },
+    {
+      "template": "../licenses/${LICENSE.id}.txt.ft",
+      "destination": "LICENSE.txt"
+    }
+  ],
+  "finalizers": [
+    {
+      "type": "run_gradle_tasks",
+      "tasks": ["wrapper"]
+    },
+    {
+      "type": "git_add_all",
+      "condition": "$USE_GIT"
+    }
+  ]
+}

@@ -1,0 +1,19 @@
+pluginManagement {
+    repositories {
+        maven { url "https://maven.fabricmc.net/" }
+        maven { url "https://maven.architectury.dev/" }
+        maven { url "https://files.minecraftforge.net/maven/" }
+        gradlePluginPortal()
+    }
+}
+
+rootProject.name = '${MOD_ID}'
+
+include 'common'
+include 'fabric'
+#if ($VERSIONS.hasForge)
+include 'forge'
+#end
+#if ($VERSIONS.hasNeoforge)
+include 'neoforge'
+#end

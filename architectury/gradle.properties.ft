@@ -1,0 +1,27 @@
+# Done to increase the memory available to Gradle.
+org.gradle.jvmargs=-Xmx2G
+org.gradle.parallel=true
+
+# Mod properties
+mod_version = ${BUILD_COORDS.version}
+maven_group = ${BUILD_COORDS.groupId}
+archives_name = ${BUILD_COORDS.artifactId}
+enabled_platforms = fabric,neoforge
+
+# Minecraft properties
+minecraft_version = ${VERSIONS.minecraftVersion}
+
+# Dependencies
+#if ($VERSIONS.useArchitecturyApi)
+architectury_api_version = ${VERSIONS.architecturyApi}
+#end
+fabric_loader_version = ${VERSIONS.loader}
+#if ($VERSIONS.useFabricApi)
+fabric_api_version = ${VERSIONS.fabricApi}
+#end
+#if ($VERSIONS.hasForge)
+forge_version = ${VERSIONS.minecraftVersion}-${VERSIONS.forge}
+#end
+#if ($VERSIONS.hasNeoforge)
+neoforge_version = ${VERSIONS.neoforge}
+#end

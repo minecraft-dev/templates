@@ -1,0 +1,12 @@
+package ${MAIN_CLASS.packageName}.neoforge;
+
+import ${MAIN_CLASS};
+import net.neoforged.fml.common.Mod;
+
+@Mod(${MAIN_CLASS.className}.MOD_ID)
+public final class ${MAIN_CLASS.className}NeoForge {
+    public ${MAIN_CLASS.className}NeoForge() {
+        // Run our common setup.
+        ${MAIN_CLASS.className}.init();
+    }
+}
