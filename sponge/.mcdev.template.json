@@ -152,6 +152,14 @@
   ],
   "finalizers": [
     {
+      "type": "import_maven_project",
+      "condition": "$BUILD_SYSTEM=='Maven'"
+    },
+    {
+      "type": "import_gradle_project",
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
       "type": "run_gradle_tasks",
       "tasks": ["wrapper"],
       "condition": "$BUILD_SYSTEM=='Gradle'"

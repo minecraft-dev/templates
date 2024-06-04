@@ -148,9 +148,11 @@
   ],
   "finalizers": [
     {
+      "type": "import_gradle_project"
+    },
+    {
       "type": "run_gradle_tasks",
-      "tasks": ["wrapper"],
-      "condition": "$BUILD_SYSTEM=='Gradle'"
+      "tasks": ["wrapper"]
     },
     {
       "type": "git_add_all",
