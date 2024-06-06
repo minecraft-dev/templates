@@ -96,18 +96,8 @@
   ],
   "files": [
     {
-      "template": "../gradle.gitignore.ft",
+      "template": "../Gradle.gitignore.ft",
       "destination": ".gitignore",
-      "condition": "$USE_GIT"
-    },
-    {
-      "template": "../gradle.gitignore.ft",
-      "destination": "fabric/.gitignore",
-      "condition": "$USE_GIT"
-    },
-    {
-      "template": "../gradle.gitignore.ft",
-      "destination": "neoforge/.gitignore",
       "condition": "$USE_GIT"
     },
     {

@@ -103,7 +103,7 @@
   ],
   "files": [
     {
-      "template": "../gradle.gitignore.ft",
+      "template": "../Gradle.gitignore.ft",
       "destination": ".gitignore",
       "condition": "$USE_GIT"
     },
