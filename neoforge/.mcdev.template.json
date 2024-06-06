@@ -143,7 +143,8 @@
     },
     {
       "template": "MainClass.java.ft",
-      "destination": "src/main/java/${MAIN_CLASS.path}.java"
+      "destination": "src/main/java/${MAIN_CLASS.path}.java",
+      "openInEditor": true
     },
     {
       "template": "Config.java.ft",

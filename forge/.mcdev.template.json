@@ -140,42 +140,50 @@
     {
       "template": "MainClass (1.16+).java.ft",
       "destination": "src/main/java/${MAIN_CLASS.path}.java",
-      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_16) >= 0 && $VERSIONS.minecraft.compareTo($mcver.MC1_17) < 0"
+      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_16) >= 0 && $VERSIONS.minecraft.compareTo($mcver.MC1_17) < 0",
+      "openInEditor": true
     },
     {
       "template": "MainClass (1.17+).java.ft",
       "destination": "src/main/java/${MAIN_CLASS.path}.java",
-      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_17) >= 0 && $VERSIONS.minecraft.compareTo($mcver.MC1_18) < 0"
+      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_17) >= 0 && $VERSIONS.minecraft.compareTo($mcver.MC1_18) < 0",
+      "openInEditor": true
     },
     {
       "template": "MainClass (1.18+).java.ft",
       "destination": "src/main/java/${MAIN_CLASS.path}.java",
-      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_18) >= 0 && $VERSIONS.minecraft.compareTo($mcver.MC1_19) < 0"
+      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_18) >= 0 && $VERSIONS.minecraft.compareTo($mcver.MC1_19) < 0",
+      "openInEditor": true
     },
     {
       "template": "MainClass (1.19+).java.ft",
       "destination": "src/main/java/${MAIN_CLASS.path}.java",
-      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_19) >= 0 && $VERSIONS.minecraft.compareTo($mcver.MC1_19_3) < 0"
+      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_19) >= 0 && $VERSIONS.minecraft.compareTo($mcver.MC1_19_3) < 0",
+      "openInEditor": true
     },
     {
       "template": "MainClass (1.19.3+).java.ft",
       "destination": "src/main/java/${MAIN_CLASS.path}.java",
-      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_19_3) >= 0 && $VERSIONS.minecraft.compareTo($mcver.MC1_20) < 0"
+      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_19_3) >= 0 && $VERSIONS.minecraft.compareTo($mcver.MC1_20) < 0",
+      "openInEditor": true
     },
     {
       "template": "MainClass (1.20+).java.ft",
       "destination": "src/main/java/${MAIN_CLASS.path}.java",
-      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_20) >= 0 && $VERSIONS.minecraft.compareTo($mcver.MC1_20_6) < 0"
+      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_20) >= 0 && $VERSIONS.minecraft.compareTo($mcver.MC1_20_6) < 0",
+      "openInEditor": true
     },
     {
       "template": "MainClass (1.20.6+).java.ft",
       "destination": "src/main/java/${MAIN_CLASS.path}.java",
-      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_20_6) >= 0"
+      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_20_6) >= 0",
+      "openInEditor": true
     },
     {
       "template": "Config (1.20.2+).java.ft",
       "destination": "src/main/java/${MAIN_CLASS.packagePath}/Config.java",
-      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_20_2) >= 0"
+      "condition": "$VERSIONS.minecraft.compareTo($mcver.MC1_20_2) >= 0",
+      "openInEditor": true
     }
   ],
   "finalizers": [

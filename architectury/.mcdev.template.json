@@ -137,7 +137,8 @@
     },
     {
       "template": "common/MainClass.java.ft",
-      "destination": "common/src/main/java/${MAIN_CLASS.path}.java"
+      "destination": "common/src/main/java/${MAIN_CLASS.path}.java",
+      "openInEditor": true
     },
     {
       "template": "fabric/build.gradle.ft",
@@ -145,11 +146,13 @@
     },
     {
       "template": "fabric/Initializer.java.ft",
-      "destination": "fabric/src/main/java/${MAIN_CLASS.withSubPackage('fabric').path}Fabric.java"
+      "destination": "fabric/src/main/java/${MAIN_CLASS.withSubPackage('fabric').path}Fabric.java",
+      "openInEditor": true
     },
     {
       "template": "fabric/InitializerClient.java.ft",
-      "destination": "fabric/src/main/java/${MAIN_CLASS.withSubPackage('fabric.client').path}FabricClient.java"
+      "destination": "fabric/src/main/java/${MAIN_CLASS.withSubPackage('fabric.client').path}FabricClient.java",
+      "openInEditor": true
     },
     {
       "template": "fabric/fabric.mod.json.ft",
@@ -168,7 +171,8 @@
     {
       "template": "forge/MainClass.java.ft",
       "destination":"forge/src/main/java/${MAIN_CLASS.withSubPackage('forge').path}Forge.java",
-      "condition": "$VERSIONS.hasForge"
+      "condition": "$VERSIONS.hasForge",
+      "openInEditor": true
     },
     {
       "template": "forge/mods.toml.ft",
@@ -193,7 +197,8 @@
     {
       "template": "neoforge/MainClass.java.ft",
       "destination":"neoforge/src/main/java/${MAIN_CLASS.withSubPackage('neoforge').path}NeoForge.java",
-      "condition": "$VERSIONS.hasNeoforge"
+      "condition": "$VERSIONS.hasNeoforge",
+      "openInEditor": true
     },
     {
       "template": "neoforge/neoforge.mods.toml.ft",

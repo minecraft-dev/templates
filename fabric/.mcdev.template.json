@@ -134,12 +134,14 @@
     },
     {
       "template": "Initializer.java.ft",
-      "destination": "src/main/java/${MAIN_CLASS.path}.java"
+      "destination": "src/main/java/${MAIN_CLASS.path}.java",
+      "openInEditor": true
     },
     {
       "template": "ClientInitializer.java.ft",
       "destination": "src/main/java/${MAIN_CLASS.packagePath}/client/${MAIN_CLASS.className}Client.java",
-      "condition": "$MOD_ENVIRONMENT != 'server'"
+      "condition": "$MOD_ENVIRONMENT != 'server'",
+      "openInEditor": true
     },
     {
       "template": "../licenses/${LICENSE.id}.txt.ft",
