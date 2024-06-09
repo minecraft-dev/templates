@@ -1,6 +1,5 @@
 {
   "version": 1,
-  "label": "Bungeecord",
   "properties": [
     {
       "name": "BUILD_COORDS",
@@ -10,7 +9,6 @@
     {
       "name": "BUILD_SYSTEM",
       "type": "string",
-      "label": "Build System:",
       "options": [
         "Gradle",
         "Maven"
@@ -19,7 +17,6 @@
     {
       "name": "BUNGEE_VERSION",
       "type": "semantic_version",
-      "label": "Version:",
       "forceDropdown": true,
       "options": [
         "1.20-R0.1-SNAPSHOT",
@@ -39,42 +36,37 @@
       "default": 0
     },
     {
-      "name": "NAME",
+      "name": "PLUGIN_NAME",
       "type": "string",
-      "label": "Plugin Name:",
       "inheritFrom": "PROJECT_NAME"
     },
     {
       "name": "MAIN_CLASS",
       "type": "class_fqn",
-      "label": "Main Class:",
       "derives": {
-        "parents": ["BUILD_COORDS", "NAME"],
+        "parents": ["BUILD_COORDS", "PLUGIN_NAME"],
         "method": "suggestClassName"
       }
     },
     {
-      "label": "Optional Settings",
+      "label": "creator.ui.optional_settings.label",
       "collapsible": true,
       "groupProperties": [
         {
           "name": "DESCRIPTION",
           "type": "string",
-          "label": "Description:",
           "default": "",
           "nullIfDefault": true
         },
         {
           "name": "AUTHORS",
           "type": "inline_string_list",
-          "label": "Authors:",
           "default": "",
           "nullIfDefault": true
         },
         {
           "name": "WEBSITE",
           "type": "string",
-          "label": "Website:",
           "default": "",
           "nullIfDefault": true
         }
@@ -83,7 +75,6 @@
     {
       "name": "JAVA_VERSION",
       "type": "integer",
-      "label": "Java Version:",
       "order": 20,
       "default": 8,
       "hidden": true
@@ -91,7 +82,6 @@
     {
       "name": "JDK",
       "type": "jdk",
-      "label": "JDK:",
       "order": 20,
       "default": "JAVA_VERSION"
     }

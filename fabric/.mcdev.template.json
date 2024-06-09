@@ -1,6 +1,5 @@
 {
   "version": 1,
-  "label": "Fabric",
   "properties": [
     {
       "name": "BUILD_COORDS",
@@ -14,23 +13,20 @@
     {
       "name": "MOD_ENVIRONMENT",
       "type": "string",
-      "label": "Environment:",
-      "options": {
-        "*": "Both",
-        "client": "Client",
-        "server": "Server"
-      },
+      "options": [
+        "*",
+        "client",
+        "server"
+      ],
       "default": "*"
     },
     {
       "name": "USE_MIXINS",
-      "type": "boolean",
-      "label": "Use Mixins:"
+      "type": "boolean"
     },
     {
       "name": "MOD_ID",
       "type": "string",
-      "label": "Mod ID:",
       "validator": "[a-z][a-z0-9-_]{1,63}",
       "derives": {
         "parents": ["PROJECT_NAME"],
@@ -40,13 +36,11 @@
     {
       "name": "MOD_NAME",
       "type": "string",
-      "label": "Mod Name:",
       "inheritFrom": "PROJECT_NAME"
     },
     {
       "name": "MAIN_CLASS",
       "type": "class_fqn",
-      "label": "Main Class:",
       "derives": {
         "parents": ["BUILD_COORDS", "MOD_ID"],
         "method": "suggestClassName"
@@ -54,29 +48,25 @@
     },
     {
       "name": "LICENSE",
-      "type": "license",
-      "label": "License:"
+      "type": "license"
     },
     {
-      "label": "Optional Settings",
+      "label": "creator.ui.optional_settings.label",
       "collapsible": true,
       "groupProperties": [
         {
           "name": "DESCRIPTION",
           "type": "string",
-          "label": "Description:",
           "default": ""
         },
         {
           "name": "AUTHORS",
           "type": "inline_string_list",
-          "label": "Authors:",
           "default": ""
         },
         {
           "name": "WEBSITE",
           "type": "string",
-          "label": "Website:",
           "default": ""
         }
       ]
@@ -84,7 +74,6 @@
     {
       "name": "JAVA_VERSION",
       "type": "integer",
-      "label": "Java Version:",
       "order": 20,
       "default": 17,
       "hidden": true,
@@ -96,7 +85,6 @@
     {
       "name": "JDK",
       "type": "jdk",
-      "label": "JDK:",
       "order": 20,
       "default": "JAVA_VERSION"
     }

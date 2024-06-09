@@ -1,6 +1,5 @@
 {
   "version": 1,
-  "label": "Spigot",
   "properties": [
     {
       "name": "BUILD_COORDS",
@@ -10,7 +9,6 @@
     {
       "name": "BUILD_SYSTEM",
       "type": "string",
-      "label": "Build System:",
       "options": [
         "Gradle",
         "Maven"
@@ -19,7 +17,6 @@
     {
       "name": "MC_VERSION",
       "type": "semantic_version",
-      "label": "Minecraft Version:",
       "forceDropdown": true,
       "options": [
         "1.20.6",
@@ -35,7 +32,6 @@
     {
       "name": "API_VERSION",
       "type": "semantic_version",
-      "label": "API Version:",
       "options": [
         "1.20",
         "1.19",
@@ -49,60 +45,53 @@
       }
     },
     {
-      "name": "NAME",
+      "name": "PLUGIN_NAME",
       "type": "string",
-      "label": "Plugin Name:",
       "inheritFrom": "PROJECT_NAME"
     },
     {
       "name": "MAIN_CLASS",
       "type": "class_fqn",
-      "label": "Main Class:",
       "derives": {
-        "parents": ["BUILD_COORDS", "NAME"],
+        "parents": ["BUILD_COORDS", "PLUGIN_NAME"],
         "method": "suggestClassName"
       }
     },
     {
-      "label": "Optional Settings",
+      "label": "creator.ui.optional_settings.label",
       "collapsible": true,
       "groupProperties": [
         {
           "name": "DESCRIPTION",
           "type": "string",
-          "label": "Description:",
           "default": "",
           "nullIfDefault": true
         },
         {
           "name": "AUTHORS",
           "type": "inline_string_list",
-          "label": "Authors:",
           "default": "",
           "nullIfDefault": true
         },
         {
           "name": "WEBSITE",
           "type": "string",
-          "label": "Website:",
           "default": "",
           "nullIfDefault": true
         },
         {
-          "name": "PREFIX",
+          "name": "LOG_PREFIX",
           "type": "string",
-          "label": "Prefix:",
           "default": "",
           "nullIfDefault": true
         },
         {
-          "name": "LOAD",
+          "name": "LOAD_AT",
           "type": "string",
-          "label": "Load At:",
-          "options": {
-            "STARTUP": "Startup",
-            "POSTWORLD": "Post World"
-          },
+          "options": [
+            "STARTUP",
+            "POSTWORLD"
+          ],
           "default": "POSTWORLD",
           "nullIfDefault": true
         }
@@ -111,7 +100,6 @@
     {
       "name": "JAVA_VERSION",
       "type": "integer",
-      "label": "Java Version:",
       "order": 20,
       "default": 17,
       "hidden": true,
@@ -123,7 +111,6 @@
     {
       "name": "JDK",
       "type": "jdk",
-      "label": "JDK:",
       "order": 20,
       "default": "JAVA_VERSION"
     },

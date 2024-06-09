@@ -1,14 +1,14 @@
-name: ${NAME}
+name: ${PLUGIN_NAME}
 version: '${BUILD_COORDS.version}'
 main: ${MAIN_CLASS}
 #if (${API_VERSION})
 api-version: '${API_VERSION}'
 #end
-#if (${PREFIX})
-prefix: ${PREFIX}
+#if (${LOG_PREFIX})
+prefix: ${LOG_PREFIX}
 #end
-#if (${LOAD})
-load: ${LOAD}
+#if (${LOAD_AT})
+load: ${LOAD_AT}
 #end
 #if (${AUTHORS})
 authors: ${AUTHORS.toString(", ", "[", "]")}

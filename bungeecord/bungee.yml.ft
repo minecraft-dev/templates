@@ -1,4 +1,4 @@
-name: ${NAME}
+name: ${PLUGIN_NAME}
 version: '${BUILD_COORDS.version}'
 main: ${MAIN_CLASS}
 #if (${AUTHORS})

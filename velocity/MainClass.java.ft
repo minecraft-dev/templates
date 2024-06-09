@@ -8,7 +8,7 @@ import org.slf4j.Logger;
 
 @Plugin(
     id = "${PLUGIN_ID}",
-    name = "${NAME}",
+    name = "${PLUGIN_NAME}",
 #if ($BUILD_SYSTEM == 'Gradle')
     version = BuildConstants.VERSION
 #elseif ($BUILD_SYSTEM == 'Maven')

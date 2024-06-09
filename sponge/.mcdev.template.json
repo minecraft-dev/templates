@@ -1,6 +1,5 @@
 {
   "version": 1,
-  "label": "Sponge",
   "properties": [
     {
       "name": "BUILD_COORDS",
@@ -10,7 +9,6 @@
     {
       "name": "BUILD_SYSTEM",
       "type": "string",
-      "label": "Build System:",
       "options": [
         "Gradle",
         "Maven"
@@ -19,7 +17,6 @@
     {
       "name": "SPONGEAPI_VERSION",
       "type": "semantic_version",
-      "label": "SpongeAPI Version:",
       "forceDropdown": true,
       "options": [
         "11.0.0-SNAPSHOT",
@@ -35,7 +32,6 @@
     {
       "name": "PLUGIN_ID",
       "type": "string",
-      "label": "Plugin ID:",
       "validator": "[a-z][a-z0-9-_]{1,63}",
       "derives": {
         "parents": ["PROJECT_NAME"],
@@ -45,13 +41,11 @@
     {
       "name": "PLUGIN_NAME",
       "type": "string",
-      "label": "Plugin Name:",
       "inheritFrom": "PROJECT_NAME"
     },
     {
       "name": "MAIN_CLASS",
       "type": "class_fqn",
-      "label": "Main Class:",
       "derives": {
         "parents": ["BUILD_COORDS", "PLUGIN_ID"],
         "method": "suggestClassName"
@@ -59,31 +53,27 @@
     },
     {
       "name": "LICENSE",
-      "type": "license",
-      "label": "License:"
+      "type": "license"
     },
     {
-      "label": "Optional Settings",
+      "label": "creator.ui.optional_settings.label",
       "collapsible": true,
       "groupProperties": [
         {
           "name": "DESCRIPTION",
           "type": "string",
-          "label": "Description:",
           "default": "",
           "nullIfDefault": true
         },
         {
           "name": "AUTHORS",
           "type": "inline_string_list",
-          "label": "Authors:",
           "default": "",
           "nullIfDefault": true
         },
         {
           "name": "WEBSITE",
           "type": "string",
-          "label": "Website:",
           "default": "",
           "nullIfDefault": true
         }
@@ -92,7 +82,6 @@
     {
       "name": "JAVA_VERSION",
       "type": "integer",
-      "label": "Java Version:",
       "order": 20,
       "default": 17,
       "hidden": true,
@@ -104,7 +93,6 @@
     {
       "name": "JDK",
       "type": "jdk",
-      "label": "JDK:",
       "order": 20,
       "default": "JAVA_VERSION"
     }
