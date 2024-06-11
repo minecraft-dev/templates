@@ -1,5 +1,6 @@
 {
   "version": 1,
+  "group": "plugin",
   "properties": [
     {
       "name": "BUILD_COORDS",
