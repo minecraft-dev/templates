@@ -20,6 +20,7 @@
       "type": "semantic_version",
       "forceDropdown": true,
       "options": [
+        "12.0.0-SNAPSHOT",
         "11.0.0-SNAPSHOT",
         "10.1.0-SNAPSHOT",
         "10.0.0",
@@ -28,7 +29,7 @@
         "8.3.0-SNAPSHOT",
         "8.2.0"
       ],
-      "default": 0
+      "default": 1
     },
     {
       "name": "PLUGIN_ID",
@@ -93,7 +94,21 @@
       "hidden": true,
       "derives": {
         "parents": ["SPONGEAPI_VERSION"],
-        "method": "recommendJavaVersionForSpongeApiVersion"
+        "select": [
+          {
+            "condition": "$SPONGEAPI_VERSION.compareTo($semver.release(11)) >= 0",
+            "value": 21
+          },
+          {
+            "condition": "$SPONGEAPI_VERSION.compareTo($semver.release(9)) >= 0",
+            "value": 17
+          },
+          {
+            "condition": "$SPONGEAPI_VERSION.compareTo($semver.release(8)) >= 0",
+            "value": 16
+          }
+        ],
+        "default": 17
       }
     },
     {
