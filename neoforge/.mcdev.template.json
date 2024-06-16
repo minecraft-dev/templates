@@ -92,7 +92,8 @@
       "hidden": true,
       "derives": {
         "parents": ["VERSIONS"],
-        "method": "recommendJavaVersionForMcVersion"
+        "method": "recommendJavaVersionForMcVersion",
+        "default": 17
       }
     },
     {

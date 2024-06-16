@@ -106,7 +106,8 @@
       "hidden": true,
       "derives": {
         "parents": ["MC_VERSION"],
-        "method": "recommendJavaVersionForMcVersion"
+        "method": "recommendJavaVersionForMcVersion",
+        "default": 17
       }
     },
     {
