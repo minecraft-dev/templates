@@ -36,7 +36,12 @@
       "validator": "[a-z][a-z0-9-_]{1,63}",
       "derives": {
         "parents": ["PROJECT_NAME"],
-        "method": "suggestSpongePluginId"
+        "method": "replace",
+        "parameters": {
+          "regex": "[^a-z0-9-_]+",
+          "replacement": "_",
+          "maxLength": 64
+        }
       }
     },
     {
