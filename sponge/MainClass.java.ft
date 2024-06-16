@@ -1,4 +1,4 @@
-package ${PACKAGE};
+package ${MAIN_CLASS.packageName};
 
 import com.google.inject.Inject;
 import net.kyori.adventure.identity.Identity;
@@ -26,13 +26,13 @@ import org.spongepowered.plugin.builtin.jvm.Plugin;
  * <p>All methods are optional -- some common event registrations are included as a jumping-off point.</p>
  */
 @Plugin("${PLUGIN_ID}")
-public class ${CLASS_NAME} {
+public class ${MAIN_CLASS.className} {
 
     private final PluginContainer container;
     private final Logger logger;
 
     @Inject
-    ${CLASS_NAME}(final PluginContainer container, final Logger logger) {
+    ${MAIN_CLASS.className}(final PluginContainer container, final Logger logger) {
         this.container = container;
         this.logger = logger;
     }
