@@ -39,7 +39,7 @@
         "1.18",
         "1.17"
       ],
-      "hidden": true,
+      "visible": false,
       "derives": {
         "parents": ["MC_VERSION"],
         "method": "extractVersionMajorMinor"
@@ -108,7 +108,7 @@
       "type": "integer",
       "order": 20,
       "default": 17,
-      "hidden": true,
+      "visible": false,
       "derives": {
         "parents": ["MC_VERSION"],
         "method": "recommendJavaVersionForMcVersion",
@@ -124,7 +124,7 @@
     {
       "name": "IS_PAPER",
       "type": "boolean",
-      "hidden": true,
+      "visible": false,
       "default": true
     }
   ],

@@ -83,7 +83,7 @@
       "type": "integer",
       "order": 20,
       "default": 17,
-      "hidden": true,
+      "visible": false,
       "derives": {
         "parents": ["VELOCITY_VERSION"],
         "default": 8,
