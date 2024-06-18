@@ -28,6 +28,9 @@
 
   "depends": {
     "fabricloader": ">=${d}{loader_version}",
+#if (${LANGUAGE} == 'Kotlin')
+    "fabric-language-kotlin": ">=${d}{kotlin_loader_version}",
+#end
 #if (${VERSIONS.useFabricApi})
     "fabric": "*",
 #end

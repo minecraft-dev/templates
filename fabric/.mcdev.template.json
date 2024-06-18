@@ -8,8 +8,29 @@
       "order": 10
     },
     {
+      "name": "LANGUAGE",
+      "type": "string",
+      "options": [
+        "Java",
+        "Kotlin"
+      ],
+      "default": 0
+    },
+    {
       "name": "VERSIONS",
       "type": "fabric_versions"
+    },
+    {
+      "name": "KOTLIN_LOADER_VERSION",
+      "type": "maven_artifact_version",
+      "parameters": {
+        "sourceUrl": "https://maven.fabricmc.net/net/fabricmc/fabric-language-kotlin/maven-metadata.xml",
+        "rawVersionFilter": "$version.contains('+kotlin.')"
+      },
+      "visible": {
+        "dependsOn": "LANGUAGE",
+        "condition": "$LANGUAGE == 'Kotlin'"
+      }
     },
     {
       "name": "MOD_ENVIRONMENT",
@@ -104,11 +125,23 @@
     },
     {
       "template": "build.gradle.ft",
-      "destination": "build.gradle"
+      "destination": "build.gradle",
+      "condition": "$LANGUAGE == 'Java'"
     },
     {
       "template": "settings.gradle.ft",
-      "destination": "settings.gradle"
+      "destination": "settings.gradle",
+      "condition": "$LANGUAGE == 'Java'"
+    },
+    {
+      "template": "build.gradle.kts.ft",
+      "destination": "build.gradle.kts",
+      "condition": "$LANGUAGE == 'Kotlin'"
+    },
+    {
+      "template": "settings.gradle.kts.ft",
+      "destination": "settings.gradle.kts",
+      "condition": "$LANGUAGE == 'Kotlin'"
     },
     {
       "template": "gradle.properties.ft",
@@ -130,12 +163,25 @@
     {
       "template": "Initializer.java.ft",
       "destination": "src/main/java/${MAIN_CLASS.path}.java",
+      "condition": "$LANGUAGE == 'Java'",
       "openInEditor": true
     },
     {
       "template": "ClientInitializer.java.ft",
       "destination": "src/main/java/${MAIN_CLASS.packagePath}/client/${MAIN_CLASS.className}Client.java",
-      "condition": "$MOD_ENVIRONMENT != 'server'",
+      "condition": "$LANGUAGE == 'Java' && $MOD_ENVIRONMENT != 'server'",
+      "openInEditor": true
+    },
+    {
+      "template": "Initializer.kt.ft",
+      "destination": "src/main/kotlin/${MAIN_CLASS.path}.kt",
+      "condition": "$LANGUAGE == 'Kotlin'",
+      "openInEditor": true
+    },
+    {
+      "template": "ClientInitializer.kt.ft",
+      "destination": "src/main/kotlin/${MAIN_CLASS.packagePath}/client/${MAIN_CLASS.className}Client.kt",
+      "condition": "$LANGUAGE == 'Kotlin' && $MOD_ENVIRONMENT != 'server'",
       "openInEditor": true
     },
     {

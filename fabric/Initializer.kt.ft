@@ -1,0 +1,9 @@
+package ${MAIN_CLASS.packageName}
+
+import net.fabricmc.api.ModInitializer
+
+class ${MAIN_CLASS.className} : ModInitializer {
+
+    override fun onInitialize() {
+    }
+}
