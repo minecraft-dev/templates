@@ -1,0 +1,57 @@
+plugins {
+    kotlin("jvm") version "${KOTLIN_VERSION}"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+}
+
+group = "${BUILD_COORDS.groupId}"
+version = "${BUILD_COORDS.version}"
+
+repositories {
+    mavenCentral()
+#if ($IS_SPIGOT)
+    maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") {
+        name = "spigotmc-repo"
+    }
+#elseif ($IS_PAPER)
+    maven("https://repo.papermc.io/repository/maven-public/") {
+        name = "papermc-repo"
+    }
+#end
+    maven("https://oss.sonatype.org/content/groups/public/") {
+        name = "sonatype"
+    }
+}
+
+dependencies {
+#if ($IS_SPIGOT)
+    compileOnly("org.spigotmc:spigot-api:${MC_VERSION}-R0.1-SNAPSHOT")
+#elseif ($IS_PAPER)
+    compileOnly("io.papermc.paper:paper-api:${MC_VERSION}-R0.1-SNAPSHOT")
+#end
+#if ($LANGUAGE == "Kotlin")
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+#end
+}
+
+val targetJavaVersion = ${JAVA_VERSION}
+kotlin {
+    jvmToolchain(targetJavaVersion)
+}
+
+tasks.build {
+    dependsOn("shadowJar")
+}
+
+#if ($USE_PAPER_MANIFEST)
+    #set($MANIFEST_NAME = "paper-plugin.yml")
+#else
+    #set($MANIFEST_NAME = "plugin.yml")
+#end
+tasks.processResources {
+    val props = mapOf("version" to version)
+    inputs.properties(props)
+    filteringCharset = "UTF-8"
+    filesMatching("${MANIFEST_NAME}") {
+        expand(props)
+    }
+}
