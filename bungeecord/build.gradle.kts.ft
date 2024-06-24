@@ -1,0 +1,36 @@
+plugins {
+    kotlin("jvm") version "${KOTLIN_VERSION}"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+}
+
+group = "${BUILD_COORDS.groupId}"
+version = "${BUILD_COORDS.version}"
+
+repositories {
+    mavenCentral()
+    maven("https://oss.sonatype.org/content/groups/public/") {
+        name = "sonatype"
+    }
+}
+
+dependencies {
+    compileOnly("net.md-5:bungeecord-api:${BUNGEE_VERSION}")
+}
+
+val targetJavaVersion = ${JAVA_VERSION}
+    kotlin {
+        jvmToolchain(targetJavaVersion)
+    }
+
+tasks.build {
+    dependsOn("shadowJar")
+}
+
+tasks.processResources {
+    val props = mapOf("version" to version)
+    inputs.properties(props)
+    filteringCharset = "UTF-8"
+    filesMatching("bungee.yml") {
+        expand(props)
+    }
+}

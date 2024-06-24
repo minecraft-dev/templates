@@ -1,0 +1,14 @@
+package ${MAIN_CLASS.packageName}
+
+import net.md_5.bungee.api.plugin.Plugin
+
+class ${MAIN_CLASS.className} : Plugin() {
+
+    override fun onEnable() {
+        // Plugin startup logic
+    }
+
+    override fun onDisable() {
+        // Plugin shutdown logic
+    }
+}
