@@ -32,7 +32,7 @@
       "dependencies": [
         {
           "id": "spongeapi",
-          "version": "${SPONGEAPI_VERSION}",
+          "version": "${spongeapi.version}",
           "load-order": "after",
           "optional": false
         #foreach (${DEPENDENCY} in ${DEPENDENCIES})

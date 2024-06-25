@@ -2,7 +2,12 @@ import org.spongepowered.gradle.plugin.config.PluginLoaders
 import org.spongepowered.plugin.metadata.model.PluginDependency
 
 plugins {
+#if ($LANGUAGE == 'Kotlin')
+    kotlin("jvm") version "${KOTLIN_VERSION}"
+    id("com.github.johnrengelman.shadow") version "8.1.1"
+#else
     `java-library`
+#end
     id("org.spongepowered.gradle.plugin") version "2.2.0"
 }
 
@@ -16,6 +21,12 @@ repositories {
     }
 }
 
+#if ($LANGUAGE == "Kotlin")
+dependencies {
+    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+}
+
+#end
 sponge {
     apiVersion("${SPONGEAPI_VERSION}")
     license("${LICENSE.id}")
@@ -59,15 +70,20 @@ sponge {
 }
 
 val javaTarget = ${JAVA_VERSION} // Sponge targets a minimum of Java ${JAVA_VERSION}
-java {
-    sourceCompatibility = JavaVersion.toVersion(javaTarget)
-    targetCompatibility = JavaVersion.toVersion(javaTarget)
-    if (JavaVersion.current() < JavaVersion.toVersion(javaTarget)) {
-        toolchain.languageVersion.set(JavaLanguageVersion.of(javaTarget))
-    }
+#if ($LANGUAGE == 'Kotlin')
+kotlin {
+    jvmToolchain(javaTarget)
 }
 
-tasks.withType(JavaCompile::class).configureEach {
+tasks.build {
+    dependsOn("shadowJar")
+}
+#else
+java {
+    toolchain.languageVersion.set(JavaLanguageVersion.of(javaTarget))
+}
+
+tasks.withType<JavaCompile>().configureEach {
     options.apply {
         encoding = "utf-8" // Consistent source file encoding
         if (JavaVersion.current().isJava10Compatible) {
@@ -75,9 +91,10 @@ tasks.withType(JavaCompile::class).configureEach {
         }
     }
 }
+#end
 
 // Make sure all tasks which produce archives (jar, sources jar, javadoc jar, etc) produce more consistent output
-tasks.withType(AbstractArchiveTask::class).configureEach {
+tasks.withType<AbstractArchiveTask>().configureEach {
     isReproducibleFileOrder = true
     isPreserveFileTimestamps = false
 }
