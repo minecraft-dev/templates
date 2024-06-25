@@ -28,9 +28,7 @@ dependencies {
 #elseif ($IS_PAPER)
     compileOnly("io.papermc.paper:paper-api:${MC_VERSION}-R0.1-SNAPSHOT")
 #end
-#if ($LANGUAGE == "Kotlin")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-#end
 }
 
 val targetJavaVersion = ${JAVA_VERSION}

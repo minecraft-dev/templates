@@ -16,6 +16,14 @@
       ]
     },
     {
+      "name": "LANGUAGE",
+      "type": "string",
+      "options": [
+        "Java",
+        "Kotlin"
+      ]
+    },
+    {
       "name": "VELOCITY_VERSION",
       "type": "semantic_version",
       "forceDropdown": true,
@@ -26,6 +34,17 @@
         "3.1.1"
       ],
       "default": 0
+    },
+    {
+      "name": "KOTLIN_VERSION",
+      "type": "maven_artifact_version",
+      "parameters": {
+        "sourceUrl": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/maven-metadata.xml"
+      },
+      "visible": {
+        "dependsOn": ["LANGUAGE"],
+        "condition": "$LANGUAGE == 'Kotlin'"
+      }
     },
     {
       "name": "PLUGIN_NAME",
@@ -115,12 +134,22 @@
     {
       "template": "build.gradle.ft",
       "destination": "build.gradle",
-      "condition": "$BUILD_SYSTEM=='Gradle'"
+      "condition": "$BUILD_SYSTEM=='Gradle' && $LANGUAGE=='Java'"
     },
     {
       "template": "settings.gradle.ft",
       "destination": "settings.gradle",
-      "condition": "$BUILD_SYSTEM=='Gradle'"
+      "condition": "$BUILD_SYSTEM=='Gradle' && $LANGUAGE=='Java'"
+    },
+    {
+      "template": "build.gradle.kts.ft",
+      "destination": "build.gradle.kts",
+      "condition": "$BUILD_SYSTEM=='Gradle' && $LANGUAGE=='Kotlin'"
+    },
+    {
+      "template": "settings.gradle.kts.ft",
+      "destination": "settings.gradle.kts",
+      "condition": "$BUILD_SYSTEM=='Gradle' && $LANGUAGE=='Kotlin'"
     },
     {
       "template": "gradle.properties.ft",
@@ -140,6 +169,13 @@
     {
       "template": "MainClass.java.ft",
       "destination": "src/main/java/${MAIN_CLASS.path}.java",
+      "condition": "$LANGUAGE=='Java'",
+      "openInEditor": true
+    },
+    {
+      "template": "MainClass.kt.ft",
+      "destination": "src/main/kotlin/${MAIN_CLASS.path}.kt",
+      "condition": "$LANGUAGE=='Kotlin'",
       "openInEditor": true
     },
     {
