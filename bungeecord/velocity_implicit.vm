@@ -1,0 +1,20 @@
+#* @implicitly included *#
+
+#* @vtlvariable name="semver" type="com.demonwav.mcdev.util.SemanticVersion.Companion" *#
+#* @vtlvariable name="mcver" type="com.demonwav.mcdev.util.MinecraftVersions" *#
+
+#* @vtlvariable name="PROJECT_NAME" type="java.lang.String" *#
+#* @vtlvariable name="USE_GIT" type="boolean" *#
+
+#* @vtlvariable name="BUILD_COORDS" type="com.demonwav.mcdev.creator.custom.model.BuildSystemCoordinates" *#
+#* @vtlvariable name="BUILD_SYSTEM" type="java.lang.String" *#
+#* @vtlvariable name="LANGUAGE" type="java.lang.String" *#
+#* @vtlvariable name="BUNGEE_VERSION" type="com.demonwav.mcdev.util.SemanticVersion" *#
+#* @vtlvariable name="KOTLIN_VERSION" type="com.demonwav.mcdev.util.SemanticVersion" *#
+#* @vtlvariable name="PLUGIN_NAME" type="java.lang.String" *#
+#* @vtlvariable name="MAIN_CLASS" type="com.demonwav.mcdev.creator.custom.model.ClassFqn" *#
+#* @vtlvariable name="DESCRIPTION" type="java.lang.String" *#
+#* @vtlvariable name="AUTHORS" type="com.demonwav.mcdev.creator.custom.model.StringList" *#
+#* @vtlvariable name="WEBSITE" type="java.lang.String" *#
+#* @vtlvariable name="JAVA_VERSION" type="int" *#
+#* @vtlvariable name="JDK" type="com.demonwav.mcdev.creator.custom.model.CreatorJdk" *#

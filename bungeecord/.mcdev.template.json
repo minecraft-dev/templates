@@ -28,6 +28,7 @@
       "type": "semantic_version",
       "forceDropdown": true,
       "options": [
+        "1.21-R0.1-SNAPSHOT",
         "1.20-R0.1-SNAPSHOT",
         "1.19-R0.1-SNAPSHOT",
         "1.18-R0.1-SNAPSHOT",

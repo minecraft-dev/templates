@@ -17,7 +17,11 @@ neo_version=${VERSIONS.neoforge}
 neo_version_range=[${VERSIONS.neoforgeSpec},)
 # The loader version range can only use the major version of FML as bounds
 #if (${LANGUAGE} == 'Java')
+#if (${VERSIONS.minecraft.compareTo($mcver.MC1_21) >= 0)})
+loader_version_range=[4,)
+#else
 loader_version_range=[2,)
+#end
 #else
 loader_version_range=[${KFF_VERSION.take(2)},)
 #end

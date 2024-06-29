@@ -28,6 +28,7 @@
       "type": "semantic_version",
       "forceDropdown": true,
       "options": [
+        "1.21",
         "1.20.6",
         "1.20.4",
         "1.20.3",
@@ -53,6 +54,7 @@
       "name": "API_VERSION",
       "type": "semantic_version",
       "options": [
+        "1.21",
         "1.20",
         "1.19",
         "1.18",
