@@ -4,6 +4,9 @@ plugins {
     id 'idea'
     id 'maven-publish'
     id 'net.neoforged.gradle.userdev' version '${VERSIONS.neogradle}'
+#if (${LANGUAGE} == 'Kotlin')
+    id 'org.jetbrains.kotlin.jvm' version '${KOTLIN_VERSION}'
+#end
 }
 
 version = mod_version
@@ -11,6 +14,13 @@ group = mod_group_id
 
 repositories {
     mavenLocal()
+#if (${LANGUAGE} == 'Kotlin')
+    maven {
+        name = 'Kotlin for Forge'
+        url = 'https://thedarkcolour.github.io/KotlinForForge/'
+        content { includeGroup "thedarkcolour" }
+    }
+#end
 }
 
 base {
@@ -18,6 +28,9 @@ base {
 }
 
 java.toolchain.languageVersion = JavaLanguageVersion.of(${JAVA_VERSION})
+#if (${LANGUAGE} == 'Kotlin')
+kotlin.jvmToolchain(${JAVA_VERSION})
+#end
 
 //minecraft.accessTransformers.file rootProject.file('src/main/resources/META-INF/accesstransformer.cfg')
 //minecraft.accessTransformers.entry public net.minecraft.client.Minecraft textureManager # textureManager
@@ -81,6 +94,10 @@ dependencies {
     // For all intends and purposes: You can treat this dependency as if it is a normal library you would use.
     implementation "net.neoforged:neoforge:${neo_version}"
 
+#if (${LANGUAGE} == 'Kotlin')
+    implementation 'thedarkcolour:kotlinforforge-neoforge:${KFF_VERSION}'
+
+#end
     // Example mod dependency with JEI
     // The JEI API is declared for compile time use, while the full JEI artifact is used at runtime
     // compileOnly "mezz.jei:jei-${mc_version}-common-api:${jei_version}"

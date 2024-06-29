@@ -16,7 +16,11 @@ neo_version=${VERSIONS.neoforge}
 # The Neo version range can use any version of Neo as bounds
 neo_version_range=[${VERSIONS.neoforgeSpec},)
 # The loader version range can only use the major version of FML as bounds
+#if (${LANGUAGE} == 'Java')
 loader_version_range=[2,)
+#else
+loader_version_range=[${KFF_VERSION.take(2)},)
+#end
 
 #if (${PARCHMENT.use})
 neogradle.subsystems.parchment.minecraftVersion=${PARCHMENT.minecraftVersion}

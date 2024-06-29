@@ -8,10 +8,62 @@
       "order": 10
     },
     {
+      "name": "LANGUAGE",
+      "type": "string",
+      "options": [
+        "Java",
+        "Kotlin"
+      ]
+    },
+    {
       "name": "VERSIONS",
       "type": "neoforge_versions",
       "parameters": {
         "mcVersionFilter": "$MC_VERSION.compareTo($mcver.MC1_20_5) >= 0"
+      }
+    },
+    {
+      "name": "KFF_VERSION",
+      "type": "semantic_version",
+      "default": "",
+      "visible": false,
+      "derives": {
+        "parents": ["VERSIONS"],
+        "select": [
+          {
+            "condition": "$VERSIONS.minecraft != $null && $VERSIONS.minecraft.compareTo($mcver.MC1_21) >= 0",
+            "value": "5.3.0"
+          },
+          {
+            "condition": "$VERSIONS.minecraft != $null && $VERSIONS.minecraft.compareTo($mcver.MC1_20_6) >= 0",
+            "value": "5.2.0"
+          },
+          {
+            "condition": "$VERSIONS.minecraft != $null && $VERSIONS.minecraft.compareTo($mcver.MC1_20_5) >= 0",
+            "value": "5.0.0"
+          }
+        ],
+        "default": ""
+      }
+    },
+    {
+      "name": "KOTLIN_VERSION",
+      "type": "semantic_version",
+      "default": "",
+      "visible": false,
+      "derives": {
+        "parents": ["VERSIONS"],
+        "select": [
+          {
+            "condition": "$VERSIONS.minecraft != $null && $VERSIONS.minecraft.compareTo($mcver.MC1_20_6) >= 0",
+            "value": "2.0.0"
+          },
+          {
+            "condition": "$VERSIONS.minecraft != $null && $VERSIONS.minecraft.compareTo($mcver.MC1_20_5) >= 0",
+            "value": "1.9.23"
+          }
+        ],
+        "default": ""
       }
     },
     {
@@ -137,11 +189,25 @@
     {
       "template": "MainClass.java.ft",
       "destination": "src/main/java/${MAIN_CLASS.path}.java",
+      "condition": "$LANGUAGE=='Java'",
       "openInEditor": true
     },
     {
       "template": "Config.java.ft",
-      "destination": "src/main/java/${MAIN_CLASS.packagePath}/Config.java"
+      "destination": "src/main/java/${MAIN_CLASS.packagePath}/Config.java",
+      "condition": "$LANGUAGE=='Java'"
+    },
+    {
+      "template": "MainClass.kt.ft",
+      "destination": "src/main/kotlin/${MAIN_CLASS.path}.kt",
+      "condition": "$LANGUAGE=='Kotlin'",
+      "openInEditor": true
+    },
+    {
+      "template": "ModBlocks.kt.ft",
+      "destination": "src/main/kotlin/${MAIN_CLASS.packagePath}/block/ModBlocks.kt",
+      "condition": "$LANGUAGE=='Kotlin'",
+      "openInEditor": true
     }
   ],
   "finalizers": [
