@@ -47,6 +47,29 @@
       "type": "boolean"
     },
     {
+      "name": "SPLIT_SOURCES",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "name": "CLIENT_SOURCE_SET",
+      "type": "string",
+      "visible": false,
+      "derives": {
+        "parents": ["SPLIT_SOURCES"],
+        "select": [
+          {
+            "condition": "$SPLIT_SOURCES",
+            "value": "client"
+          },
+          {
+            "condition": "!$SPLIT_SOURCES",
+            "value": "main"
+          }
+        ]
+      }
+    },
+    {
       "name": "MOD_ID",
       "type": "string",
       "validator": "[a-z][a-z0-9-_]{1,63}",
@@ -161,6 +184,14 @@
       "condition": "$USE_MIXINS"
     },
     {
+      "template": "mixins.json.ft",
+      "destination": "src/client/resources/${MOD_ID}.client.mixins.json",
+      "condition": "$USE_MIXINS && $SPLIT_SOURCES",
+      "properties": {
+        "CLIENT": true
+      }
+    },
+    {
       "template": "Initializer.java.ft",
       "destination": "src/main/java/${MAIN_CLASS.path}.java",
       "condition": "$LANGUAGE == 'Java'",
@@ -168,7 +199,7 @@
     },
     {
       "template": "ClientInitializer.java.ft",
-      "destination": "src/main/java/${MAIN_CLASS.packagePath}/client/${MAIN_CLASS.className}Client.java",
+      "destination": "src/${CLIENT_SOURCE_SET}/java/${MAIN_CLASS.packagePath}/client/${MAIN_CLASS.className}Client.java",
       "condition": "$LANGUAGE == 'Java' && $MOD_ENVIRONMENT != 'server'",
       "openInEditor": true
     },
@@ -180,7 +211,7 @@
     },
     {
       "template": "ClientInitializer.kt.ft",
-      "destination": "src/main/kotlin/${MAIN_CLASS.packagePath}/client/${MAIN_CLASS.className}Client.kt",
+      "destination": "src/${CLIENT_SOURCE_SET}/kotlin/${MAIN_CLASS.packagePath}/client/${MAIN_CLASS.className}Client.kt",
       "condition": "$LANGUAGE == 'Kotlin' && $MOD_ENVIRONMENT != 'server'",
       "openInEditor": true
     },

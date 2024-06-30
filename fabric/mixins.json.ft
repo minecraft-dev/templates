@@ -1,12 +1,20 @@
 {
   "required": true,
   "minVersion": "0.8",
+#if (!$CLIENT)
   "package": "${MAIN_CLASS.packageName}.mixin",
+#else
+  "package": "${MAIN_CLASS.packageName}.mixin.client",
+#end
   "compatibilityLevel": "JAVA_${JAVA_VERSION}",
+#if (!$SPLIT_SOURCES || !$CLIENT)
   "mixins": [
   ],
+#end
+#if (!$SPLIT_SOURCES || $CLIENT)
   "client": [
   ],
+#end
   "injectors": {
     "defaultRequire": 1
   }

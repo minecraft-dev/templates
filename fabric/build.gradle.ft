@@ -1,7 +1,4 @@
 plugins {
-#if (${LANGUAGE})
-    id 'org.jetbrains.kotlin.jvm' version '${KOTLIN_LOADER_VERSION.toString().split("kotlin.")[1]}'
-#end
     id 'fabric-loom' version '${VERSIONS.loom}'
     id 'maven-publish'
 }
@@ -12,6 +9,19 @@ group = project.maven_group
 base {
     archivesName = project.archives_base_name
 }
+
+#if ($SPLIT_SOURCES)
+loom {
+    splitEnvironmentSourceSets()
+
+    mods {
+        "${MOD_ID}" {
+            sourceSet sourceSets.main
+            sourceSet sourceSets.client
+        }
+    }
+}
+#end
 
 repositories {
     // Add repositories to retrieve artifacts from in here.
@@ -30,9 +40,6 @@ dependencies {
     mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
 #end
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
-#if (${LANGUAGE} == 'Kotlin')
-    modImplementation "net.fabricmc:fabric-language-kotlin:${project.kotlin_loader_version}"
-#end
 
 #if (${VERSIONS.useFabricApi})
     // Fabric API. This is technically optional, but you probably want it anyway.
