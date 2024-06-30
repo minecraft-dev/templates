@@ -20,5 +20,6 @@
 #* @vtlvariable name="AUTHORS" type="com.demonwav.mcdev.creator.custom.model.StringList" *#
 #* @vtlvariable name="WEBSITE" type="java.lang.String" *#
 #* @vtlvariable name="UPDATE_URL" type="java.lang.String" *#
+#* @vtlvariable name="PARCHMENT" type="com.demonwav.mcdev.creator.custom.model.ParchmentVersions" *#
 #* @vtlvariable name="JAVA_VERSION" type="int" *#
 #* @vtlvariable name="JDK" type="com.demonwav.mcdev.creator.custom.model.CreatorJdk" *#

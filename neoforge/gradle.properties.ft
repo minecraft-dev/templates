@@ -1,7 +1,11 @@
 # Sets default memory used for gradle commands. Can be overridden by user or command line properties.
 org.gradle.jvmargs=-Xmx2G
-org.gradle.daemon=false
-org.gradle.debug=false
+org.gradle.daemon=true
+#if (${VERSIONS.minecraft.compareTo($mcver.MC1_21)} >= 0)
+org.gradle.parallel=true
+org.gradle.caching=true
+org.gradle.configuration-cache=true
+#end
 
 #[[##]]# Environment Properties
 # You can find the latest versions here: https://projects.neoforged.net/neoforged/neoforge
@@ -17,7 +21,7 @@ neo_version=${VERSIONS.neoforge}
 neo_version_range=[${VERSIONS.neoforgeSpec},)
 # The loader version range can only use the major version of FML as bounds
 #if (${LANGUAGE} == 'Java')
-#if (${VERSIONS.minecraft.compareTo($mcver.MC1_21) >= 0)})
+#if (${VERSIONS.minecraft.compareTo($mcver.MC1_21)} >= 0)
 loader_version_range=[4,)
 #else
 loader_version_range=[2,)
@@ -26,6 +30,12 @@ loader_version_range=[2,)
 loader_version_range=[${KFF_VERSION.take(2)},)
 #end
 
+#if (${VERSIONS.minecraft.compareTo($mcver.MC1_21)} >= 0)
+#if (${PARCHMENT.use})
+parchment_minecraft_version=${PARCHMENT.minecraftVersion}
+parchment_mappings_version=${PARCHMENT.version}
+#end
+#else
 #if (${PARCHMENT.use})
 neogradle.subsystems.parchment.minecraftVersion=${PARCHMENT.minecraftVersion}
 neogradle.subsystems.parchment.mappingsVersion=${PARCHMENT.version}
@@ -33,6 +43,7 @@ neogradle.subsystems.parchment.mappingsVersion=${PARCHMENT.version}
 # Uncomment this to activate parchment
 #neogradle.subsystems.parchment.minecraftVersion=${VERSIONS.minecraft}
 #neogradle.subsystems.parchment.mappingsVersion=SET_ME
+#end
 #end
 
 #[[##]]# Mod Properties
