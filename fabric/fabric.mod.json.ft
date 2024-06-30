@@ -23,6 +23,12 @@
 #if (${USE_MIXINS})
   "mixins": [
     "${MOD_ID}.mixins.json"
+#if (${SPLIT_SOURCES})
+    ,{
+      "config": "${MOD_ID}.client.mixins.json",
+      "environment": "client"
+    }
+#end
   ],
 #end
 
