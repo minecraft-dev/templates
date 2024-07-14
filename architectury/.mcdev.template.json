@@ -17,7 +17,9 @@
     },
     {
       "name": "USE_MIXINS",
-      "type": "boolean"
+      "type": "boolean",
+      "remember": "architectury.USE_MIXINS",
+      "default": true
     },
     {
       "name": "MOD_ID",

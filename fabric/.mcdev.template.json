@@ -44,7 +44,9 @@
     },
     {
       "name": "USE_MIXINS",
-      "type": "boolean"
+      "type": "boolean",
+      "remember": "fabric.USE_MIXINS",
+      "default": true
     },
     {
       "name": "SPLIT_SOURCES",

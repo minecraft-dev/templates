@@ -69,6 +69,7 @@
     {
       "name": "USE_MIXINS",
       "type": "boolean",
+      "remember": "neoforge.USE_MIXINS",
       "default": false
     },
     {
