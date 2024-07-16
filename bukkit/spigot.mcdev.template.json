@@ -192,6 +192,7 @@
     {
       "template": "MainClass.java.ft",
       "destination": "src/main/java/${MAIN_CLASS.path}.java",
+      "condition": "$LANGUAGE=='Java'",
       "openInEditor": true
     },
     {
