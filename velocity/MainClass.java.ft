@@ -12,7 +12,7 @@ import org.slf4j.Logger;
 #if ($BUILD_SYSTEM == 'Gradle')
     version = BuildConstants.VERSION
 #elseif ($BUILD_SYSTEM == 'Maven')
-    version = "${BUILD_COORDS.version}")
+    version = "${BUILD_COORDS.version}"
 #end
 #if ($DESCRIPTION)
     ,description = "${DESCRIPTION}"
