@@ -2,6 +2,7 @@ plugins {
     id 'java'
     id 'eclipse'
     id 'org.jetbrains.gradle.plugin.idea-ext' version '1.1.8'
+    id("xyz.jpenilla.run-velocity") version "2.3.1"
 }
 
 group = '${BUILD_COORDS.groupId}'
@@ -22,6 +23,15 @@ repositories {
 dependencies {
     compileOnly("com.velocitypowered:velocity-api:${VELOCITY_VERSION}")
     annotationProcessor("com.velocitypowered:velocity-api:${VELOCITY_VERSION}")
+}
+
+tasks {
+  runVelocity {
+    // Configure the Velocity version for our task.
+    // This is the only required configuration besides applying the plugin.
+    // Your plugin's jar (or shadowJar if present) will be used automatically.
+    velocityVersion(${VELOCITY_VERSION})
+  }
 }
 
 def targetJavaVersion = ${JAVA_VERSION}

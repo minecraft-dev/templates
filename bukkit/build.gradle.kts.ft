@@ -1,6 +1,7 @@
 plugins {
     kotlin("jvm") version "${KOTLIN_VERSION}"
     id("com.github.johnrengelman.shadow") version "8.1.1"
+    id("xyz.jpenilla.run-paper") version "2.3.0"
 }
 
 group = "${BUILD_COORDS.groupId}"
@@ -29,6 +30,15 @@ dependencies {
     compileOnly("io.papermc.paper:paper-api:${MC_VERSION}-R0.1-SNAPSHOT")
 #end
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+}
+
+tasks {
+  runServer {
+    // Configure the Minecraft version for our task.
+    // This is the only required configuration besides applying the plugin.
+    // Your plugin's jar (or shadowJar if present) will be used automatically.
+    minecraftVersion(${API_VERSION})
+  }
 }
 
 val targetJavaVersion = ${JAVA_VERSION}
