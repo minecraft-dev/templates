@@ -1,4 +1,4 @@
 #if (!$GRADLE_VERSION)
-#set ($GRADLE_VERSION = "8.8")
+#set ($GRADLE_VERSION = "8.12.1")
 #end
 distributionUrl=https\://services.gradle.org/distributions/gradle-${GRADLE_VERSION}-bin.zip
