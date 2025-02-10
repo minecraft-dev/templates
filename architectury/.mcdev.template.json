@@ -113,7 +113,10 @@
     },
     {
       "template": "../gradle-wrapper.properties.ft",
-      "destination": "gradle/wrapper/gradle-wrapper.properties"
+      "destination": "gradle/wrapper/gradle-wrapper.properties",
+      "properties": {
+        "GRADLE_VERSION": "8.12.1"
+      }
     },
     {
       "template": "common/build.gradle.ft",
