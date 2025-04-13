@@ -14,6 +14,9 @@
 
   "environment": "${MOD_ENVIRONMENT}",
   "entrypoints": {
+#if ($USE_DATAGEN)
+    "fabric-datagen": ["${MAIN_CLASS.packageName}.client.${MAIN_CLASS.className}DataGenerator"],
+#end
 #if (${MOD_ENVIRONMENT} != 'server')
     "client": ["${MAIN_CLASS.packageName}.client.${MAIN_CLASS.className}Client"],
 #end

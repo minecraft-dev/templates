@@ -9,6 +9,7 @@
 #* @vtlvariable name="KOTLIN_LOADER_VERSION" type="com.demonwav.mcdev.util.SemanticVersion" *#
 #* @vtlvariable name="MOD_ENVIRONMENT" type="java.lang.String" *#
 #* @vtlvariable name="USE_MIXINS" type="boolean" *#
+#* @vtlvariable name="USE_DATAGEN" type="boolean" *#
 #* @vtlvariable name="SPLIT_SOURCES" type="boolean" *#
 #* @vtlvariable name="CLIENT_SOURCE_SET" type="java.lang.String" *#
 #* @vtlvariable name="MOD_ID" type="java.lang.String" *#
