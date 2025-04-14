@@ -234,13 +234,13 @@
     {
       "template": "DataGenerator.java.ft",
       "destination": "src/${CLIENT_SOURCE_SET}/java/${MAIN_CLASS.packagePath}/client/${MAIN_CLASS.className}DataGenerator.java",
-      "condition": "$USE_DATAGEN",
+      "condition": "$LANGUAGE == 'Java' && $USE_DATAGEN",
       "openInEditor": true
     },
     {
       "template": "DataGenerator.kt.ft",
       "destination": "src/${CLIENT_SOURCE_SET}/kotlin/${MAIN_CLASS.packagePath}/client/${MAIN_CLASS.className}DataGenerator.kt",
-      "condition": "$USE_DATAGEN",
+      "condition": "$LANGUAGE == 'Kotlin' && $USE_DATAGEN",
       "openInEditor": true
     },
     {
