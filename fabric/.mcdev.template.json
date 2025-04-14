@@ -49,6 +49,15 @@
       "default": true
     },
     {
+      "name": "USE_DATAGEN",
+      "type": "boolean",
+      "default": true,
+      "visible": {
+        "dependsOn": ["VERSIONS"],
+        "condition": "$VERSIONS.useFabricApi"
+      }
+    },
+    {
       "name": "SPLIT_SOURCES",
       "type": "boolean",
       "default": true,
@@ -220,6 +229,18 @@
       "template": "ClientInitializer.kt.ft",
       "destination": "src/${CLIENT_SOURCE_SET}/kotlin/${MAIN_CLASS.packagePath}/client/${MAIN_CLASS.className}Client.kt",
       "condition": "$LANGUAGE == 'Kotlin' && $MOD_ENVIRONMENT != 'server'",
+      "openInEditor": true
+    },
+    {
+      "template": "DataGenerator.java.ft",
+      "destination": "src/${CLIENT_SOURCE_SET}/java/${MAIN_CLASS.packagePath}/client/${MAIN_CLASS.className}DataGenerator.java",
+      "condition": "$LANGUAGE == 'Java' && $USE_DATAGEN",
+      "openInEditor": true
+    },
+    {
+      "template": "DataGenerator.kt.ft",
+      "destination": "src/${CLIENT_SOURCE_SET}/kotlin/${MAIN_CLASS.packagePath}/client/${MAIN_CLASS.className}DataGenerator.kt",
+      "condition": "$LANGUAGE == 'Kotlin' && $USE_DATAGEN",
       "openInEditor": true
     },
     {

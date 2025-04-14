@@ -1,0 +1,11 @@
+package ${MAIN_CLASS.packageName}.client
+
+import net.fabricmc.fabric.api.datagen.v1.DataGeneratorEntrypoint
+import net.fabricmc.fabric.api.datagen.v1.FabricDataGenerator
+
+class ${MAIN_CLASS.className}DataGenerator : DataGeneratorEntrypoint {
+
+    override fun onInitializeDataGenerator(FabricDataGenerator fabricDataGenerator) {
+        val pack = fabricDataGenerator.createPack();
+    }
+}

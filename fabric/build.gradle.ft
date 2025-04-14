@@ -23,6 +23,14 @@ loom {
 }
 #end
 
+#if ($USE_DATAGEN)
+fabricApi {
+    configureDataGeneration {
+        client = true
+    }
+}
+#end
+
 repositories {
     // Add repositories to retrieve artifacts from in here.
     // You should only use this when depending on other mods because
