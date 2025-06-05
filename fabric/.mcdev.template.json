@@ -187,7 +187,7 @@
       "template": "../gradle-wrapper.properties.ft",
       "destination": "gradle/wrapper/gradle-wrapper.properties",
       "properties": {
-        "GRADLE_VERSION": "8.11.1"
+        "GRADLE_VERSION": "8.14.1"
       }
     },
     {
