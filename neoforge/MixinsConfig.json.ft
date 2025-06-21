@@ -2,8 +2,10 @@
   "required": true,
   "minVersion": "0.8",
   "package": "${MAIN_CLASS.packageName}.mixin",
-  "compatibilityLevel": "JAVA_8",
+  "compatibilityLevel": "JAVA_${JAVA_VERSION}",
+#if ($VERSIONS.minecraftVersion.compareTo($mcver.MC1_20_2) < 0)
   "refmap": "${MOD_ID}.refmap.json",
+#end
   "mixins": [
   ],
   "client": [
