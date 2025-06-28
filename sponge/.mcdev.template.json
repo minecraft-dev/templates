@@ -28,6 +28,12 @@
       "type": "semantic_version",
       "forceDropdown": true,
       "options": [
+        "16.0.0-SNAPSHOT",
+        "15.0.0-SNAPSHOT",
+        "14.0.0-SNAPSHOT",
+        "13.1.0-SNAPSHOT",
+        "13.0.0",
+        "13.0.0-SNAPSHOT",
         "12.1.0-SNAPSHOT",
         "12.0.0",
         "11.0.0-SNAPSHOT",
