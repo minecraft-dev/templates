@@ -8,9 +8,6 @@ version = "${BUILD_COORDS.version}"
 
 repositories {
     mavenCentral()
-    maven("https://oss.sonatype.org/content/groups/public/") {
-        name = "sonatype"
-    }
 }
 
 dependencies {

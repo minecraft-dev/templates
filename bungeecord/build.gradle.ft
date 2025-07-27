@@ -5,10 +5,6 @@ version = '${BUILD_COORDS.version}'
 
 repositories {
     mavenCentral()
-    maven {
-        name = "sonatype"
-        url = "https://oss.sonatype.org/content/groups/public/"
-    }
 }
 
 dependencies {
