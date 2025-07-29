@@ -28,11 +28,15 @@
       "type": "semantic_version",
       "forceDropdown": true,
       "options": [
+        "4.0.0-SNAPSHOT",
         "3.4.0-SNAPSHOT",
         "3.3.0-SNAPSHOT",
         "3.2.0-SNAPSHOT",
         "3.1.2-SNAPSHOT",
-        "3.1.1"
+        "3.1.1",
+        "3.1.0",
+        "3.0.1",
+        "3.0.0"
       ],
       "default": 0
     },
