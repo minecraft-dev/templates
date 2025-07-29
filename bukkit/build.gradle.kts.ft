@@ -18,9 +18,6 @@ repositories {
         name = "papermc-repo"
     }
 #end
-    maven("https://oss.sonatype.org/content/groups/public/") {
-        name = "sonatype"
-    }
 }
 
 dependencies {
