@@ -19,10 +19,6 @@ repositories {
         url = "https://repo.papermc.io/repository/maven-public/"
     }
 #end
-    maven {
-        name = "sonatype"
-        url = "https://oss.sonatype.org/content/groups/public/"
-    }
 }
 
 dependencies {
