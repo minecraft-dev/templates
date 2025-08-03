@@ -6,7 +6,11 @@ org.gradle.parallel=true
 mod_version = ${BUILD_COORDS.version}
 maven_group = ${BUILD_COORDS.groupId}
 archives_name = ${BUILD_COORDS.artifactId}
+#if ($VERSIONS.hasNeoforge)
 enabled_platforms = fabric,neoforge
+#else
+enabled_platforms = fabric,forge
+#end
 
 # Minecraft properties
 minecraft_version = ${VERSIONS.minecraftVersion}
