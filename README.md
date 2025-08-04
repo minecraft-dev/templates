@@ -22,20 +22,6 @@ If you want to modify these templates or create your own, please see [https://mc
 
 You can either choose to host your modifications on a GitHub repository or on your local machine. If you choose to host it on your own machine, please select "local" instead of "remote" (as explained in the documentation).
 
-Developers
-----------
-
-- Project Owner - [**@DenWav** - Kyle Wood](https://github.com/DenWav)
-- [**@Minecrell**](https://github.com/Minecrell)
-- [**@PaleoCrafter** - Marvin Rösch](https://github.com/PaleoCrafter)
-- [**@RedNesto**](https://github.com/RedNesto)
-- [**@Earthcomputer** - Joseph Burton](https://github.com/Earthcomputer)
-
-<!-- #### **Significant Contributors**
-
-You can either add main project contributors here or place contributors of minecraft-dev/templates here.
-
--->
 License
 -------
 
