@@ -10,17 +10,17 @@ This repository is part of the Minecraft Development for IntelliJ project.
 
 This contains the default templates for this plugin.
 
-For more informations, please visit [https://mcdev.io](https://mcdev.io) for more informations about it.
+For more information, please visit [https://mcdev.io](https://mcdev.io).
 
 ## Usage
 You simply need to install the plugin Minecraft Development for IntelliJ on your instance of Jetbrains IntelliJ Idea.
 
-For more informations about this plugin's installation, please see [this explanation](https://github.com/minecraft-dev/MinecraftDev?tab=readme-ov-file#installation).
+For more information about this plugin's installation, please see [this explanation](https://github.com/minecraft-dev/MinecraftDev?tab=readme-ov-file#installation).
 
 ## Testing
-If you're in the will of modifying this templates or create your owns, please see [https://mcdev.io/docs/creating-creator-templates/](https://mcdev.io/docs/creating-creator-templates/) for more help about this.
+If you're in the will of modifying this templates or create your own, please see [https://mcdev.io/docs/creating-creator-templates/](https://mcdev.io/docs/creating-creator-templates/) for information about this.
 
-You can either choose to host your modifications on a GitHub repository or on your local machine. If you choose to host it on your own machine, please select "local" instead of "remote" (as explained in the Documentation).
+You can either choose to host your modifications on a GitHub repository or on your local machine. If you choose to host it on your own machine, please select "local" instead of "remote" (as explained in the documentation).
 
 Developers
 ----------
