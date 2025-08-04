@@ -18,7 +18,7 @@ You simply need to install the plugin Minecraft Development for IntelliJ on your
 For more information about this plugin's installation, please see [this explanation](https://github.com/minecraft-dev/MinecraftDev?tab=readme-ov-file#installation).
 
 ## Testing
-If you're in the will of modifying this templates or create your own, please see [https://mcdev.io/docs/creating-creator-templates/](https://mcdev.io/docs/creating-creator-templates/) for information about this.
+If you want to modify these templates or create your own, please see [https://mcdev.io/docs/creating-creator-templates/](https://mcdev.io/docs/creating-creator-templates/) for information about this.
 
 You can either choose to host your modifications on a GitHub repository or on your local machine. If you choose to host it on your own machine, please select "local" instead of "remote" (as explained in the documentation).
 
