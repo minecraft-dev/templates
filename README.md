@@ -33,7 +33,7 @@ Supported Platforms
 - [![Sponge Icon](https://github.com/minecraft-dev/MinecraftDev/blob/dev/src/main/resources/assets/icons/platform/Sponge_dark.png?raw=true) **Sponge**](https://www.spongepowered.org/)
 - [![Architectury Icon](https://github.com/minecraft-dev/MinecraftDev/blob/dev/src/main/resources/assets/icons/platform/Architectury.png?raw=true) **Architectury**](https://github.com/architectury/architectury-api)
 - [![Forge Icon](https://github.com/minecraft-dev/MinecraftDev/blob/dev/src/main/resources/assets/icons/platform/Forge.png?raw=true) **Minecraft Forge**](https://forums.minecraftforge.net/)
-- <a href="https://neoforged.net/"><img src="src/main/resources/assets/icons/platform/NeoForge.png?raw=true" width="16" height="16"/> <b>Neoforge</b><a/>
+- <a href="https://neoforged.net/"><img src="https://github.com/minecraft-dev/MinecraftDev/blob/dev/src/main/resources/assets/icons/platform/NeoForge.png?raw=true" width="16" height="16"/> <b>Neoforge</b><a/>
 - [![Fabric Icon](https://github.com/minecraft-dev/MinecraftDev/blob/dev/src/main/resources/assets/icons/platform/Fabric.png?raw=true) **Fabric**](https://fabricmc.net)
 - [![Mixins Icon](https://github.com/minecraft-dev/MinecraftDev/blob/dev/src/main/resources/assets/icons/platform/Mixins_dark.png?raw=true) **Mixins**](https://github.com/SpongePowered/Mixin)
 - [![BungeeCord Icon](https://github.com/minecraft-dev/MinecraftDev/blob/dev/src/main/resources/assets/icons/platform/BungeeCord.png?raw=true) **BungeeCord**](https://www.spigotmc.org/wiki/bungeecord/) ([![Waterfall Icon](https://github.com/minecraft-dev/MinecraftDev/blob/dev/src/main/resources/assets/icons/platform/Waterfall.png?raw=true) Waterfall](https://github.com/PaperMC/Waterfall))
