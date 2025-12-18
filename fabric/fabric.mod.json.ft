@@ -41,7 +41,7 @@
     "fabric-language-kotlin": ">=${d}{kotlin_loader_version}",
 #end
 #if (${VERSIONS.useFabricApi})
-    "fabric": "*",
+    "fabric-api": "*",
 #end
     "minecraft": "${d}{minecraft_version}"
   }
