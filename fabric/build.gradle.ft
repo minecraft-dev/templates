@@ -63,14 +63,15 @@ dependencies {
 }
 
 processResources {
+    def mcVer = project.property("minecraft_version").toString().replace("-snapshot-", "-alpha.")
     inputs.property "version", project.version
-    inputs.property "minecraft_version", project.minecraft_version
+    inputs.property "minecraft_version", mcVer
     inputs.property "loader_version", project.loader_version
     filteringCharset "UTF-8"
 
     filesMatching("fabric.mod.json") {
         expand "version": project.version,
-                "minecraft_version": project.minecraft_version,
+                "minecraft_version": mcVer,
                 "loader_version": project.loader_version
     }
 }
