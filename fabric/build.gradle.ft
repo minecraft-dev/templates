@@ -1,5 +1,5 @@
 plugins {
-    id 'fabric-loom' version '${VERSIONS.loom}'
+    id 'net.fabricmc.fabric-loom' version '${VERSIONS.loom}'
     id 'maven-publish'
 }
 
@@ -42,6 +42,7 @@ repositories {
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
+#if (${VERSIONS.minecraft.compareTo($mcver.MC1_21_11)} <= 0)
 #if (${VERSIONS.useOfficialMappings})
     mappings loom.officialMojangMappings()
 #else
@@ -51,6 +52,13 @@ dependencies {
 
 #if (${VERSIONS.useFabricApi})
     modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+#end
+#else
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+
+#if (${VERSIONS.useFabricApi})
+    implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+#end
 #end
 }
 
