@@ -3,7 +3,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "${KOTLIN_LOADER_VERSION.toString().split("kotlin.")[1]}"
+#if (${VERSIONS.minecraft.compareTo($mcver.MC1_21_11)} <= 0)
+    id("fabric-loom") version "${VERSIONS.loom}"
+#else
     id("net.fabricmc.fabric-loom") version "${VERSIONS.loom}"
+#end
     id("maven-publish")
 }
 

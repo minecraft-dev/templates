@@ -1,5 +1,9 @@
 plugins {
+#if (${VERSIONS.minecraft.compareTo($mcver.MC1_21_11)} <= 0)
     id 'net.fabricmc.fabric-loom' version '${VERSIONS.loom}'
+#else
+    id 'fabric-loom' version '${VERSIONS.loom}'
+#end
     id 'maven-publish'
 }
 
