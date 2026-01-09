@@ -200,7 +200,7 @@
       "condition": "$USE_GIT"
     },
     {
-      "template": "build.gradle.kts.ft",
+      "template": "java.build.gradle.kts.ft",
       "destination": "build.gradle.kts",
       "condition": "$BUILD_SYSTEM=='Gradle' && $LANGUAGE=='Java'"
     },

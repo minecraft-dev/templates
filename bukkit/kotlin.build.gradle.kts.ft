@@ -1,7 +1,7 @@
 plugins {
     kotlin("jvm") version "${KOTLIN_VERSION}"
     id("com.gradleup.shadow") version "9.0.1"
-#if (#INCLUDE_RUN_PAPER_PLUGIN)
+#if ($INCLUDE_RUN_PAPER_PLUGIN)
     id("xyz.jpenilla.run-paper") version "3.0.2"
 #end
 }
@@ -25,7 +25,7 @@ dependencies {
 }
 
 kotlin {
-    jvmToolchain(${KOTLIN_VERSION})
+    jvmToolchain(${JAVA_VERSION})
 }
 
 tasks {
@@ -33,19 +33,19 @@ tasks {
         dependsOn(shadowJar)
     }
 
-#if (#INCLUDE_RUN_PAPER_PLUGIN)
+#if ($INCLUDE_RUN_PAPER_PLUGIN)
     runServer {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("${API_VERSION}")
+        minecraftVersion("${MC_VERSION}")
 #if ($ACCEPT_EULA)
         jvmArgs("-Xms2G", "-Xmx2G", "-Dcom.mojang.eula.agree-true")
 #else
         jvmArgs("-Xms2G", "-Xmx2G")
+#end
     }
 
-#end
 #end
     processResources {
         val props = mapOf("version" to version)
