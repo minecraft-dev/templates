@@ -1,10 +1,19 @@
 plugins {
     id("java-library")
-#if ($INCLUDE_SHADOW_PLUGIN)
-    id("com.gradleup.shadow") version "9.0.1"
+#if ($USE_PAPERWEIGHT_USERDEV && $USE_VERSION_CATALOG)
+    alias(libs.plugin.paperweight.userdev)
+#elseif ($USE_PAPERWEIGHT_USERDEV && !$USE_VERSION_CATALOG)
+    id("io.papermc.paperweight.userdev") version "2.0.0-beta.19"
 #end
-#if ($INCLUDE_RUN_PAPER_PLUGIN)
+#if ($INCLUDE_SHADOW_PLUGIN && !$USE_VERSION_CATALOG)
+    id("com.gradleup.shadow") version "9.3.1"
+#elseif ($INCLUDE_SHADOW_PLUGIN && $USE_VERSION_CATALOG)
+    alias(libs.plugin.shadow)
+#end
+#if ($INCLUDE_RUN_PAPER_PLUGIN && !$USE_VERSION_CATALOG)
     id("xyz.jpenilla.run-paper") version "3.0.2"
+#elseif ($INCLUDE_RUN_PAPER_PLUGIN && $USE_VERSION_CATALOG)
+    alias(libs.plugins.run.paper)
 #end
 }
 
@@ -12,16 +21,24 @@ repositories {
     mavenCentral()
 #if ($IS_SPIGOT)
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-#elseif ($IS_PAPER)
+#elseif ($IS_PAPER && !$USE_PAPERWEIGHT_USERDEV)
     maven("https://repo.papermc.io/repository/maven-public/")
 #end
 }
 
 dependencies {
-#if ($IS_SPIGOT)
+#if ($IS_SPIGOT && !$USE_VERSION_CATALOG)
     compileOnly("org.spigotmc:spigot-api:${MC_VERSION}-R0.1-SNAPSHOT")
-#elseif ($IS_PAPER)
+#elseif ($IS_SPIGOT && $USE_VERSION_CATALOG)
+    compileOnly(libs.spigot.api)
+#elseif ($IS_PAPER && !$USE_PAPERWEIGHT_USERDEV && !$USE_VERSION_CATALOG)
     compileOnly("io.papermc.paper:paper-api:${MC_VERSION}-R0.1-SNAPSHOT")
+#elseif ($IS_PAPER && !$USE_PAPERWEIGHT_USERDEV && $USE_VERSION_CATALOG)
+    compileOnly(libs.paper.api)
+#elseif ($IS_PAPER && $USE_PAPERWEIGHT_USERDEV && !$USE_VERSION_CATALOG)
+    paperweight.paperDevBundle("${MC_VERSION}-R0.1-SNAPSHOT")
+#elseif ($IS_PAPER && $USE_PAPERWEIGHT_USERDEV && $USE_VERSION_CATALOG)
+    paperweight.paperDevBundle(libs.versions.paper.api.get())
 #end
 }
 
@@ -41,7 +58,7 @@ tasks {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("${API_VERSION}")
+        minecraftVersion("${MC_VERSION}")
 #if ($ACCEPT_EULA)
         jvmArgs("-Xms2G", "-Xmx2G", "-Dcom.mojang.eula.agree-true")
 #else

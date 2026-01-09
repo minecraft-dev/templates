@@ -1,0 +1,35 @@
+[versions]
+#if ($IS_PAPER)
+paper-api = "${MC_VERSION}-R0.1-SNAPSHOT"
+#elseif ($IS_SPIGOT)
+spigot-api = "${MC_VERSION}-R0.1-SNAPSHOT"
+#end
+
+#if ($USE_PAPERWEIGHT_USERDEV)
+paperweight-userdev = "2.0.0-beta.19"
+#end
+#if ($INCLUDE_SHADOW_PLUGIN)
+shadow = "9.3.1"
+#end
+#if ($INCLUDE_RUN_PAPER_PLUGIN)
+run-task = "3.0.2"
+#end
+
+#if ($IS_PAPER && !$USE_PAPERWEIGHT_USERDEV)
+[libraries]
+paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper-api" }
+#elseif ($IS_SPIGOT)
+[libraries]
+spigot-api = { module = "org.spigotmc:spigot-api", version.ref = "spigot-api" }
+#end
+
+[plugins]
+#if ($USE_PAPERWEIGHT_USERDEV)
+paperweight-userdev = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight-userdev" }
+#end
+#if ($INCLUDE_SHADOW_PLUGIN)
+shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
+#end
+#if ($INCLUDE_RUN_PAPER_PLUGIN)
+run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-task" }
+#end

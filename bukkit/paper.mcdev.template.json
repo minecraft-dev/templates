@@ -16,6 +16,12 @@
       ]
     },
     {
+      "name": "USE_VERSION_CATALOG",
+      "type": "boolean",
+      "default": false,
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
       "name": "LANGUAGE",
       "type": "string",
       "options": [
@@ -103,6 +109,11 @@
     },
     {
       "name": "USE_PAPER_MANIFEST",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "USE_PAPERWEIGHT_USERDEV",
       "type": "boolean",
       "default": false
     },
@@ -208,6 +219,11 @@
       "template": "kotlin.build.gradle.kts.ft",
       "destination": "build.gradle.kts",
       "condition": "$BUILD_SYSTEM=='Gradle' && $LANGUAGE=='Kotlin'"
+    },
+    {
+      "template": "libs.versions.toml.ft",
+      "destination": "gradle/libs.versions.toml",
+      "condition": "$BUILD_SYSTEM=='Gradle' && $USE_VERSION_CATALOG"
     },
     {
       "template": "settings.gradle.kts.ft",
