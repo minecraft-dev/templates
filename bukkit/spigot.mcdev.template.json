@@ -16,21 +16,23 @@
       ]
     },
     {
-      "name": "USE_VERSION_CATALOG",
-      "type": "boolean",
-      "default": false,
-      "visible": {
-        "dependsOn": ["BUILD_SYSTEM"],
-        "condition": "$BUILD_SYSTEM == 'Gradle'"
-      }
-    },
-    {
       "name": "LANGUAGE",
       "type": "string",
       "options": [
         "Java",
         "Kotlin"
       ]
+    },
+    {
+      "name": "KOTLIN_VERSION",
+      "type": "maven_artifact_version",
+      "parameters": {
+        "sourceUrl": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/maven-metadata.xml"
+      },
+      "visible": {
+        "dependsOn": ["LANGUAGE"],
+        "condition": "$LANGUAGE == 'Kotlin'"
+      }
     },
     {
       "name": "MC_VERSION",
@@ -60,17 +62,6 @@
       "default": 0
     },
     {
-      "name": "KOTLIN_VERSION",
-      "type": "maven_artifact_version",
-      "parameters": {
-        "sourceUrl": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/maven-metadata.xml"
-      },
-      "visible": {
-        "dependsOn": ["LANGUAGE"],
-        "condition": "$LANGUAGE == 'Kotlin'"
-      }
-    },
-    {
       "name": "API_VERSION",
       "type": "semantic_version",
       "options": [
@@ -97,26 +88,6 @@
       "derives": {
         "parents": ["BUILD_COORDS", "PLUGIN_NAME"],
         "method": "suggestClassName"
-      }
-    },
-    {
-      "name": "USE_RESOURCE_FACTORY_PLUGIN",
-      "type": "boolean",
-      "default": false
-    },
-    {
-      "name": "USE_PAPERWEIGHT_USERDEV",
-      "type": "boolean",
-      "visible": false,
-      "default": false
-    },
-    {
-      "name": "INCLUDE_SHADOW_PLUGIN",
-      "type": "boolean",
-      "default": "$LANGUAGE=='Kotlin'",
-      "visible": {
-        "dependsOn": ["LANGUAGE"],
-        "condition": "$LANGUAGE == 'Java'"
       }
     },
     {
@@ -156,6 +127,88 @@
           ],
           "default": "POSTWORLD",
           "nullIfDefault": true
+        }
+      ]
+    },
+    {
+      "label": "creator.ui.advanced_settings.label",
+      "collapsible": true,
+      "groupProperties": [
+        {
+          "name": "USE_VERSION_CATALOG",
+          "type": "boolean",
+          "default": false,
+          "visible": {
+            "dependsOn": [
+              "BUILD_SYSTEM"
+            ],
+            "condition": "$BUILD_SYSTEM == 'Gradle'"
+          }
+        },
+        {
+          "name": "USE_GREMLIN",
+          "type": "boolean",
+          "default": false,
+          "visible": false
+        },
+        {
+          "name": "INCLUDE_PLUGIN_BOOTSTRAP",
+          "type": "boolean",
+          "default": false,
+          "visible": false
+        },
+        {
+          "name": "INCLUDE_PLUGIN_LOADER",
+          "type": "boolean",
+          "default": false,
+          "visible": false
+        },
+        {
+          "name": "JAVA_PLUGIN_LOADER",
+          "type": "boolean",
+          "default": true,
+          "visible": false
+        },
+        {
+          "name": "USE_RESOURCE_FACTORY_PLUGIN",
+          "type": "boolean",
+          "default": false,
+          "visible": {
+            "dependsOn": [
+              "BUILD_SYSTEM"
+            ],
+            "condition": "$BUILD_SYSTEM == 'Gradle'"
+          }
+        },
+        {
+          "name": "USE_PAPERWEIGHT_USERDEV",
+          "type": "boolean",
+          "default": false,
+          "visible": false
+        },
+        {
+          "name": "INCLUDE_SHADOW_PLUGIN",
+          "type": "boolean",
+          "default": "$LANGUAGE=='Kotlin'",
+          "visible": {
+            "dependsOn": [
+              "LANGUAGE",
+              "BUILD_SYSTEM"
+            ],
+            "condition": "$LANGUAGE == 'Java' && $BUILD_SYSTEM == 'Gradle'"
+          }
+        },
+        {
+          "name": "INCLUDE_RUN_PAPER_PLUGIN",
+          "type": "boolean",
+          "default": false,
+          "visible": false
+        },
+        {
+          "name": "ACCEPT_EULA",
+          "type": "boolean",
+          "default": false,
+          "visible": false
         }
       ]
     },

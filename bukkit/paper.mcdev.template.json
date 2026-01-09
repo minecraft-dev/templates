@@ -16,21 +16,25 @@
       ]
     },
     {
-      "name": "USE_VERSION_CATALOG",
-      "type": "boolean",
-      "default": false,
-      "visible": {
-        "dependsOn": ["BUILD_SYSTEM"],
-        "condition": "$BUILD_SYSTEM == 'Gradle'"
-      }
-    },
-    {
       "name": "LANGUAGE",
       "type": "string",
       "options": [
         "Java",
         "Kotlin"
       ]
+    },
+    {
+      "name": "KOTLIN_VERSION",
+      "type": "maven_artifact_version",
+      "parameters": {
+        "sourceUrl": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/maven-metadata.xml"
+      },
+      "visible": {
+        "dependsOn": [
+          "LANGUAGE"
+        ],
+        "condition": "$LANGUAGE == 'Kotlin'"
+      }
     },
     {
       "name": "MC_VERSION",
@@ -59,17 +63,6 @@
       "default": 0
     },
     {
-      "name": "KOTLIN_VERSION",
-      "type": "maven_artifact_version",
-      "parameters": {
-        "sourceUrl": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/maven-metadata.xml"
-      },
-      "visible": {
-        "dependsOn": ["LANGUAGE"],
-        "condition": "$LANGUAGE == 'Kotlin'"
-      }
-    },
-    {
       "name": "API_VERSION",
       "type": "semantic_version",
       "options": [
@@ -93,8 +86,10 @@
       ],
       "visible": false,
       "derives": {
-        "parents": ["MC_VERSION"],
-        "method": "extractVersionMajorMinor"
+        "parents": [
+          "MC_VERSION"
+        ],
+        "method": "extractPaperApiVersion"
       }
     },
     {
@@ -106,7 +101,10 @@
       "name": "MAIN_CLASS",
       "type": "class_fqn",
       "derives": {
-        "parents": ["BUILD_COORDS", "PLUGIN_NAME"],
+        "parents": [
+          "BUILD_COORDS",
+          "PLUGIN_NAME"
+        ],
         "method": "suggestClassName"
       }
     },
@@ -114,71 +112,6 @@
       "name": "USE_PAPER_MANIFEST",
       "type": "boolean",
       "default": false
-    },
-    {
-      "name": "INCLUDE_PLUGIN_BOOTSTRAP",
-      "type": "boolean",
-      "default": false,
-      "visible": {
-        "dependsOn": ["USE_PAPER_MANIFEST"],
-        "condition": "$USE_PAPER_MANIFEST"
-      }
-    },
-    {
-      "name": "USE_GREMLIN",
-      "type": "boolean",
-      "default": false
-    },
-    {
-      "name": "INCLUDE_PLUGIN_LOADER",
-      "type": "boolean",
-      "default": "$USE_GREMLIN",
-      "visible": {
-        "dependsOn": ["USE_GREMLIN"],
-        "condition": "!$USE_GREMLIN"
-      }
-    },
-    {
-      "name": "JAVA_PLUGIN_LOADER",
-      "type": "boolean",
-      "default": true,
-      "visible": {
-        "dependsOn": ["USE_GREMLIN", "LANGUAGE", "INCLUDE_PLUGIN_LOADER"],
-        "condition": "!$USE_GREMLIN && $LANGUAGE=='Kotlin' && $INCLUDE_PLUGIN_LOADER"
-      }
-    },
-    {
-      "name": "USE_RESOURCE_FACTORY_PLUGIN",
-      "type": "boolean",
-      "default": false
-    },
-    {
-      "name": "USE_PAPERWEIGHT_USERDEV",
-      "type": "boolean",
-      "default": false
-    },
-    {
-      "name": "INCLUDE_SHADOW_PLUGIN",
-      "type": "boolean",
-      "default": "$LANGUAGE=='Kotlin'",
-      "visible": {
-        "dependsOn": ["LANGUAGE"],
-        "condition": "$LANGUAGE == 'Java'"
-      }
-    },
-    {
-      "name": "INCLUDE_RUN_PAPER_PLUGIN",
-      "type": "boolean",
-      "default": true
-    },
-    {
-      "name": "ACCEPT_EULA",
-      "type": "boolean",
-      "default": false,
-      "visible": {
-        "dependsOn": ["INCLUDE_RUN_PAPER_PLUGIN"],
-        "condition": "$INCLUDE_RUN_PAPER_PLUGIN"
-      }
     },
     {
       "label": "creator.ui.optional_settings.label",
@@ -221,13 +154,135 @@
       ]
     },
     {
+      "label": "creator.ui.advanced_settings.label",
+      "collapsible": true,
+      "groupProperties": [
+        {
+          "name": "USE_VERSION_CATALOG",
+          "type": "boolean",
+          "default": false,
+          "visible": {
+            "dependsOn": [
+              "BUILD_SYSTEM"
+            ],
+            "condition": "$BUILD_SYSTEM == 'Gradle'"
+          }
+        },
+        {
+          "name": "USE_GREMLIN",
+          "type": "boolean",
+          "default": false,
+          "visible": {
+            "dependsOn": [
+              "BUILD_SYSTEM"
+            ],
+            "condition": "$BUILD_SYSTEM == 'Gradle'"
+          }
+        },
+        {
+          "name": "INCLUDE_PLUGIN_BOOTSTRAP",
+          "type": "boolean",
+          "default": false,
+          "visible": {
+            "dependsOn": [
+              "USE_PAPER_MANIFEST"
+            ],
+            "condition": "$USE_PAPER_MANIFEST"
+          }
+        },
+        {
+          "name": "INCLUDE_PLUGIN_LOADER",
+          "type": "boolean",
+          "default": "$USE_GREMLIN",
+          "visible": {
+            "dependsOn": [
+              "USE_GREMLIN"
+            ],
+            "condition": "!$USE_GREMLIN"
+          }
+        },
+        {
+          "name": "JAVA_PLUGIN_LOADER",
+          "type": "boolean",
+          "default": true,
+          "visible": {
+            "dependsOn": [
+              "USE_GREMLIN",
+              "LANGUAGE",
+              "INCLUDE_PLUGIN_LOADER"
+            ],
+            "condition": "!$USE_GREMLIN && $LANGUAGE=='Kotlin' && $INCLUDE_PLUGIN_LOADER"
+          }
+        },
+        {
+          "name": "USE_RESOURCE_FACTORY_PLUGIN",
+          "type": "boolean",
+          "default": false,
+          "visible": {
+            "dependsOn": [
+              "BUILD_SYSTEM"
+            ],
+            "condition": "$BUILD_SYSTEM == 'Gradle'"
+          }
+        },
+        {
+          "name": "USE_PAPERWEIGHT_USERDEV",
+          "type": "boolean",
+          "default": false,
+          "visible": {
+            "dependsOn": [
+              "BUILD_SYSTEM"
+            ],
+            "condition": "$BUILD_SYSTEM == 'Gradle'"
+          }
+        },
+        {
+          "name": "INCLUDE_SHADOW_PLUGIN",
+          "type": "boolean",
+          "default": "$LANGUAGE=='Kotlin'",
+          "visible": {
+            "dependsOn": [
+              "LANGUAGE",
+              "BUILD_SYSTEM"
+            ],
+            "condition": "$LANGUAGE == 'Java' && $BUILD_SYSTEM == 'Gradle'"
+          }
+        },
+        {
+          "name": "INCLUDE_RUN_PAPER_PLUGIN",
+          "type": "boolean",
+          "default": true,
+          "visible": {
+            "dependsOn": [
+              "BUILD_SYSTEM"
+            ],
+            "condition": "$BUILD_SYSTEM == 'Gradle'"
+          }
+        },
+        {
+          "name": "ACCEPT_EULA",
+          "type": "boolean",
+          "default": false,
+          "visible": {
+            "dependsOn": [
+              "INCLUDE_RUN_PAPER_PLUGIN",
+              "BUILD_SYSTEM"
+            ],
+            "condition": "$INCLUDE_RUN_PAPER_PLUGIN && $BUILD_SYSTEM == 'Gradle'"
+          }
+        }
+      ]
+    },
+    {
       "name": "JAVA_VERSION",
       "type": "integer",
       "order": 20,
       "default": 17,
       "visible": false,
       "derives": {
-        "parents": ["MC_VERSION"],
+        "parents": [
+          "MC_VERSION"
+        ],
         "method": "recommendJavaVersionForMcVersion",
         "default": 17
       }
@@ -305,29 +360,31 @@
     },
     {
       "template": "BootstrapClass.java.ft",
-      "destination": "src/main/java/${MAIN_CLASS.packageName}/${MAIN_CLASS.className}Bootstrap.java",
+      "destination": "src/main/java/${MAIN_CLASS.packagePath}/${MAIN_CLASS.className}Bootstrap.java",
       "condition": "$INCLUDE_PLUGIN_BOOTSTRAP && $LANGUAGE=='Java'"
     },
     {
       "template": "BootstrapClass.kt.ft",
-      "destination": "src/main/kotlin/${MAIN_CLASS.packageName}/${MAIN_CLASS.className}Bootstrap.kt",
+      "destination": "src/main/kotlin/${MAIN_CLASS.packagePath}/${MAIN_CLASS.className}Bootstrap.kt",
       "condition": "$INCLUDE_PLUGIN_BOOTSTRAP && $LANGUAGE=='Kotlin'"
     },
     {
       "template": "LoaderClass.java.ft",
-      "destination": "src/main/java/${MAIN_CLASS.packageName}/${MAIN_CLASS.className}Loader.java",
+      "destination": "src/main/java/${MAIN_CLASS.packagePath}/${MAIN_CLASS.className}Loader.java",
       "condition": "!$USE_GREMLIN && $INCLUDE_PLUGIN_LOADER && $JAVA_PLUGIN_LOADER"
     },
     {
       "template": "LoaderClass.kt.ft",
-      "destination": "src/main/kotlin/${MAIN_CLASS.packageName}/${MAIN_CLASS.className}Loader.kt",
+      "destination": "src/main/kotlin/${MAIN_CLASS.packagePath}/${MAIN_CLASS.className}Loader.kt",
       "condition": "!$USE_GREMLIN && $INCLUDE_PLUGIN_LOADER && !$JAVA_PLUGIN_LOADER"
     }
   ],
   "finalizers": [
     {
       "type": "run_gradle_tasks",
-      "tasks": ["wrapper --gradle-version=latest"],
+      "tasks": [
+        "wrapper --gradle-version=latest"
+      ],
       "condition": "$BUILD_SYSTEM=='Gradle'"
     },
     {
