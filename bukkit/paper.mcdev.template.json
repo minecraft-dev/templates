@@ -113,6 +113,11 @@
       "default": false
     },
     {
+      "name": "USE_RESOURCE_FACTORY_PLUGIN",
+      "type": "boolean",
+      "default": false
+    },
+    {
       "name": "USE_PAPERWEIGHT_USERDEV",
       "type": "boolean",
       "default": false
@@ -243,12 +248,12 @@
     {
       "template": "plugin.yml.ft",
       "destination": "src/main/resources/plugin.yml",
-      "condition": "!$USE_PAPER_MANIFEST"
+      "condition": "!$USE_PAPER_MANIFEST && !$USE_RESOURCE_FACTORY_PLUGIN"
     },
     {
       "template": "paper-plugin.yml.ft",
       "destination": "src/main/resources/paper-plugin.yml",
-      "condition": "$USE_PAPER_MANIFEST"
+      "condition": "$USE_PAPER_MANIFEST && !$USE_RESOURCE_FACTORY_PLUGIN"
     },
     {
       "template": "MainClass.java.ft",

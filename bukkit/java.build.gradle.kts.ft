@@ -1,19 +1,39 @@
 plugins {
     id("java-library")
-#if ($USE_PAPERWEIGHT_USERDEV && $USE_VERSION_CATALOG)
+#if ($USE_VERSION_CATALOG)
+
+#if ($USE_PAPERWEIGHT_USERDEV)
     alias(libs.plugin.paperweight.userdev)
-#elseif ($USE_PAPERWEIGHT_USERDEV && !$USE_VERSION_CATALOG)
+#end
+#if ($INCLUDE_SHADOW_PLUGIN)
+    alias(libs.plugins.shadow)
+#end
+#if ($INCLUDE_RUN_PAPER_PLUGIN)
+    alias(libs.plugins.run.paper)
+#end
+#if ($USE_RESOURCE_FACTORY_PLUGIN && $USE_PAPER_MANIFEST)
+    alias(libs.plugins.resource.factory.paper)
+#elseif ($USE_RESOURCE_FACTORY_PLUGIN && !$USE_PAPER_MANIFEST)
+    alias(libs.plugins.resource.factory.bukkit)
+#end
+
+#else
+
+#if ($USE_PAPERWEIGHT_USERDEV)
     id("io.papermc.paperweight.userdev") version "2.0.0-beta.19"
 #end
-#if ($INCLUDE_SHADOW_PLUGIN && !$USE_VERSION_CATALOG)
+#if ($INCLUDE_SHADOW_PLUGIN)
     id("com.gradleup.shadow") version "9.3.1"
-#elseif ($INCLUDE_SHADOW_PLUGIN && $USE_VERSION_CATALOG)
-    alias(libs.plugin.shadow)
 #end
-#if ($INCLUDE_RUN_PAPER_PLUGIN && !$USE_VERSION_CATALOG)
+#if ($INCLUDE_RUN_PAPER_PLUGIN)
     id("xyz.jpenilla.run-paper") version "3.0.2"
-#elseif ($INCLUDE_RUN_PAPER_PLUGIN && $USE_VERSION_CATALOG)
-    alias(libs.plugins.run.paper)
+#end
+#if ($USE_RESOURCE_FACTORY_PLUGIN && $USE_PAPER_MANIFEST)
+    id("xyz.jpenilla.resource-factory-paper-convention") version "1.3.1"
+#elseif ($USE_RESOURCE_FACTORY_PLUGIN && !$USE_PAPER_MANIFEST)
+    id("xyz.jpenilla.resource-factory-bukkit-convention") version "1.3.1"
+#end
+
 #end
 }
 
@@ -42,18 +62,54 @@ dependencies {
 #end
 }
 
+#if ($USE_RESOURCE_FACTORY_PLUGIN)
+#if ($USE_PAPER_MANIFEST)
+paperPluginYaml {
+#else
+bukkitPluginYaml {
+#end
+    name = project.name
+#if ($DESCRIPTION)
+  description = "${DESCRIPTION}"
+#end
+#if ($LOG_PREFIX)
+  prefix = "${LOG_PREFIX}"
+#end
+    version = project.version.toString()
+
+    main = "${MAIN_CLASS}"
+#if ($API_VERSION)
+    api-version = "${API_VERSION}"
+#end
+#if ($LOAD_AT)
+    load = BukkitPluginYaml.PluginLoaderOrder.${LOAD_AT.toUpperCase()}
+#end
+#if ($AUTHORS || $WEBSITE)
+
+#end
+#if ($AUTHORS)
+    // TODO(mcdev): add correctly-formatted authors input
+    authors.addAll(/* ${AUTHORS} */)
+#end
+#if ($WEBSITE)
+    website = "${WEBSITE}"
+#end
+}
+#end
+
 java {
     toolchain.languageVersion = JavaLanguageVersion.of(${JAVA_VERSION})
 }
 
+#if ($INCLUDE_SHADOW_PLUGIN || $INCLUDE_RUN_PAPER_PLUGIN || $!USE_RESOURCE_FACTORY_PLUGIN)
 tasks {
 #if ($INCLUDE_SHADOW_PLUGIN)
     build {
         dependsOn(shadowJar)
     }
-
 #end
 #if ($INCLUDE_RUN_PAPER_PLUGIN)
+
     runServer {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.
@@ -66,6 +122,7 @@ tasks {
 #end
     }
 #end
+#if (!$USE_RESOURCE_FACTORY_PLUGIN)
 
     processResources {
         val props = mapOf("version" to version)
@@ -77,4 +134,6 @@ tasks {
             expand(props)
         }
     }
+#end
 }
+#end
