@@ -116,6 +116,38 @@
       "default": false
     },
     {
+      "name": "INCLUDE_PLUGIN_BOOTSTRAP",
+      "type": "boolean",
+      "default": false,
+      "visible": {
+        "dependsOn": ["USE_PAPER_MANIFEST"],
+        "condition": "$USE_PAPER_MANIFEST"
+      }
+    },
+    {
+      "name": "USE_GREMLIN",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "INCLUDE_PLUGIN_LOADER",
+      "type": "boolean",
+      "default": "$USE_GREMLIN",
+      "visible": {
+        "dependsOn": ["USE_GREMLIN"],
+        "condition": "!$USE_GREMLIN"
+      }
+    },
+    {
+      "name": "JAVA_PLUGIN_LOADER",
+      "type": "boolean",
+      "default": true,
+      "visible": {
+        "dependsOn": ["USE_GREMLIN", "LANGUAGE", "INCLUDE_PLUGIN_LOADER"],
+        "condition": "!$USE_GREMLIN && $LANGUAGE=='Kotlin' && $INCLUDE_PLUGIN_LOADER"
+      }
+    },
+    {
       "name": "USE_RESOURCE_FACTORY_PLUGIN",
       "type": "boolean",
       "default": false
@@ -270,6 +302,26 @@
       "destination": "src/main/kotlin/${MAIN_CLASS.path}.kt",
       "condition": "$LANGUAGE=='Kotlin'",
       "openInEditor": true
+    },
+    {
+      "template": "BootstrapClass.java.ft",
+      "destination": "src/main/java/${MAIN_CLASS.packageName}/${MAIN_CLASS.className}Bootstrap.java",
+      "condition": "$INCLUDE_PLUGIN_BOOTSTRAP && $LANGUAGE=='Java'"
+    },
+    {
+      "template": "BootstrapClass.kt.ft",
+      "destination": "src/main/kotlin/${MAIN_CLASS.packageName}/${MAIN_CLASS.className}Bootstrap.kt",
+      "condition": "$INCLUDE_PLUGIN_BOOTSTRAP && $LANGUAGE=='Kotlin'"
+    },
+    {
+      "template": "LoaderClass.java.ft",
+      "destination": "src/main/java/${MAIN_CLASS.packageName}/${MAIN_CLASS.className}Loader.java",
+      "condition": "!$USE_GREMLIN && $INCLUDE_PLUGIN_LOADER && $JAVA_PLUGIN_LOADER"
+    },
+    {
+      "template": "LoaderClass.kt.ft",
+      "destination": "src/main/kotlin/${MAIN_CLASS.packageName}/${MAIN_CLASS.className}Loader.kt",
+      "condition": "!$USE_GREMLIN && $INCLUDE_PLUGIN_LOADER && !$JAVA_PLUGIN_LOADER"
     }
   ],
   "finalizers": [
