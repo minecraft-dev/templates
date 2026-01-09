@@ -1,0 +1,11 @@
+package ${MAIN_CLASS.packageName}6
+
+import io.papermc.paper.plugin.bootstrap.BootstrapContext
+import io.papermc.paper.plugin.bootstrap.PluginBootstrap
+
+internal class ${MAIN_CLASS.className}Bootstrap : PluginBootstrap {
+
+  override fun bootstrap(context: BootstrapContext) {
+    // Plugin bootstrap logic
+  }
+}

@@ -8,7 +8,7 @@ spigot-api = "${MC_VERSION}-R0.1-SNAPSHOT"
 #if ($USE_PAPERWEIGHT_USERDEV)
 paperweight-userdev = "2.0.0-beta.19"
 #end
-#if ($INCLUDE_SHADOW_PLUGIN)
+#if ($USE_GREMLIN || $INCLUDE_SHADOW_PLUGIN)
 shadow = "9.3.1"
 #end
 #if ($INCLUDE_RUN_PAPER_PLUGIN)
@@ -16,6 +16,9 @@ run-task = "3.0.2"
 #end
 #if ($USE_RESOURCE_FACTORY_PLUGIN)
 resource-factory = "1.3.1"
+#end
+#if ($USE_GREMLIN)
+gremlin = "0.0.9"
 #end
 
 [libraries]
@@ -27,12 +30,15 @@ spigot-api = { module = "org.spigotmc:spigot-api", version.ref = "spigot-api" }
 #if ($LANGUAGE=='Kotlin')
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8" }
 #end
+#if ($USE_GREMLIN)
+gremlin-runtime = { module = "xyz.jpenilla:gremlin-runtime", version.ref = "gremlin" }
+#end
 
 [plugins]
 #if ($USE_PAPERWEIGHT_USERDEV)
 paperweight-userdev = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight-userdev" }
 #end
-#if ($INCLUDE_SHADOW_PLUGIN)
+#if ($USE_GREMLIN || $INCLUDE_SHADOW_PLUGIN)
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
 #end
 #if ($INCLUDE_RUN_PAPER_PLUGIN)
@@ -42,4 +48,7 @@ run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-task" }
 resource-factory-paper = { id = "xyz.jpenilla.resource-factory-paper-convention", version.ref = "resource-factory" }
 #elseif ($USE_RESOURCE_FACTORY_PLUGIN && !$USE_PAPER_MANIFEST)
 resource-factory-bukkit = { id = "xyz.jpenilla.resource-factory-bukkit-convention", version.ref = "resource-factory" }
+#end
+#if ($USE_GREMLIN)
+gremlin-gradle = { id = "xyz.jpenilla.gremlin-gradle", version.ref = "gremlin" }
 #end
