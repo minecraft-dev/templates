@@ -3,7 +3,7 @@ plugins {
 #if ($INCLUDE_SHADOW_PLUGIN)
     id("com.gradleup.shadow") version "9.0.1"
 #end
-#if (#INCLUDE_RUN_PAPER_PLUGIN)
+#if ($INCLUDE_RUN_PAPER_PLUGIN)
     id("xyz.jpenilla.run-paper") version "3.0.2"
 #end
 }
@@ -36,21 +36,18 @@ tasks {
     }
 
 #end
-#if (#INCLUDE_RUN_PAPER_PLUGIN && $ACCEPT_EULA)
+#if ($INCLUDE_RUN_PAPER_PLUGIN)
     runServer {
         // Configure the Minecraft version for our task.
         // This is the only required configuration besides applying the plugin.
         // Your plugin's jar (or shadowJar if present) will be used automatically.
         minecraftVersion("${API_VERSION}")
+#if ($ACCEPT_EULA)
         jvmArgs("-Xms2G", "-Xmx2G", "-Dcom.mojang.eula.agree-true")
-#end
-#if (#INCLUDE_RUN_PAPER_PLUGIN && !$ACCEPT_EULA)
-    runServer {
-        // Configure the Minecraft version for our task.
-        // This is the only required configuration besides applying the plugin.
-        // Your plugin's jar (or shadowJar if present) will be used automatically.
-        minecraftVersion("${API_VERSION}")
+#else
         jvmArgs("-Xms2G", "-Xmx2G")
+#end
+    }
 #end
 
     processResources {
