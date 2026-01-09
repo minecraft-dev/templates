@@ -130,8 +130,7 @@ bukkitPluginYaml {
 
 #end
 #if ($AUTHORS)
-    // TODO(mcdev): add correctly-formatted authors input
-    authors.addAll(/* ${AUTHORS} */)
+    authors.addAll(${AUTHORS.toStringQuoted()})
 #end
 #if ($WEBSITE)
     website = "${WEBSITE}"

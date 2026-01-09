@@ -12,13 +12,13 @@ main: ${MAIN_CLASS}
 bootstrapper: ${MAIN_CLASS.packageName}.${MAIN_CLASS.className}Bootstrap
 #end
 #if (${INCLUDE_PLUGIN_LOADER} && !${USE_GREMLIN} && !${USE_PAPER_MANIFEST})
-paperPluginLoader = ${MAIN_CLASS.packageName}.${MAIN_CLASS.className}Loader
+paperPluginLoader: ${MAIN_CLASS.packageName}.${MAIN_CLASS.className}Loader
 #elseif (${USE_GREMLIN} && !${USE_PAPER_MANIFEST})
-paperPluginLoader = xyz.jpenilla.gremlin.runtime.platformsupport.DefaultsPaperPluginLoader
+paperPluginLoader: xyz.jpenilla.gremlin.runtime.platformsupport.DefaultsPaperPluginLoader
 #elseif (${INCLUDE_PLUGIN_LOADER} && !${USE_GREMLIN} && ${USE_PAPER_MANIFEST})
-loader = ${MAIN_CLASS.packageName}.${MAIN_CLASS.className}Loader
+loader: ${MAIN_CLASS.packageName}.${MAIN_CLASS.className}Loader
 #elseif (${USE_GREMLIN} && ${USE_PAPER_MANIFEST})
-loader = xyz.jpenilla.gremlin.runtime.platformsupport.DefaultsPaperPluginLoader
+loader: xyz.jpenilla.gremlin.runtime.platformsupport.DefaultsPaperPluginLoader
 #end
 #if (${API_VERSION})
 api-version: '${API_VERSION}'
