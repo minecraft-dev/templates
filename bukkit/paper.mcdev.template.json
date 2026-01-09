@@ -19,7 +19,10 @@
       "name": "USE_VERSION_CATALOG",
       "type": "boolean",
       "default": false,
-      "condition": "$BUILD_SYSTEM=='Gradle'"
+      "visible": {
+        "dependsOn": ["BUILD_SYSTEM"],
+        "condition": "$BUILD_SYSTEM == 'Gradle'"
+      }
     },
     {
       "name": "LANGUAGE",
@@ -125,8 +128,11 @@
     {
       "name": "INCLUDE_SHADOW_PLUGIN",
       "type": "boolean",
-      "default": false,
-      "condition": "$LANGUAGE=='Java'"
+      "default": "$LANGUAGE=='Kotlin'",
+      "visible": {
+        "dependsOn": ["LANGUAGE"],
+        "condition": "$LANGUAGE == 'Java'"
+      }
     },
     {
       "name": "INCLUDE_RUN_PAPER_PLUGIN",
@@ -137,7 +143,10 @@
       "name": "ACCEPT_EULA",
       "type": "boolean",
       "default": false,
-      "condition": "$INCLUDE_RUN_PAPER_PLUGIN"
+      "visible": {
+        "dependsOn": ["INCLUDE_RUN_PAPER_PLUGIN"],
+        "condition": "$INCLUDE_RUN_PAPER_PLUGIN"
+      }
     },
     {
       "label": "creator.ui.optional_settings.label",
@@ -216,14 +225,9 @@
       "condition": "$USE_GIT"
     },
     {
-      "template": "java.build.gradle.kts.ft",
+      "template": "build.gradle.kts.ft",
       "destination": "build.gradle.kts",
-      "condition": "$BUILD_SYSTEM=='Gradle' && $LANGUAGE=='Java'"
-    },
-    {
-      "template": "kotlin.build.gradle.kts.ft",
-      "destination": "build.gradle.kts",
-      "condition": "$BUILD_SYSTEM=='Gradle' && $LANGUAGE=='Kotlin'"
+      "condition": "$BUILD_SYSTEM=='Gradle'"
     },
     {
       "template": "libs.versions.toml.ft",
@@ -251,7 +255,7 @@
       "condition": "!$USE_PAPER_MANIFEST && !$USE_RESOURCE_FACTORY_PLUGIN"
     },
     {
-      "template": "paper-plugin.yml.ft",
+      "template": "plugin.yml.ft",
       "destination": "src/main/resources/paper-plugin.yml",
       "condition": "$USE_PAPER_MANIFEST && !$USE_RESOURCE_FACTORY_PLUGIN"
     },
@@ -271,7 +275,7 @@
   "finalizers": [
     {
       "type": "run_gradle_tasks",
-      "tasks": ["wrapper --gradle-version=latest", "wrapper"],
+      "tasks": ["wrapper --gradle-version=latest"],
       "condition": "$BUILD_SYSTEM=='Gradle'"
     },
     {
