@@ -64,7 +64,19 @@
       "name": "API_VERSION",
       "type": "semantic_version",
       "options": [
+        "1.21.11",
+        "1.21.10",
+        "1.21.9",
+        "1.21.8",
+        "1.21.7",
+        "1.21.6",
+        "1.21.5",
+        "1.21.4",
+        "1.21.3",
+        "1.21.1",
         "1.21",
+        "1.20.6",
+        "1.20.5",
         "1.20",
         "1.19",
         "1.18",
@@ -93,6 +105,23 @@
       "name": "USE_PAPER_MANIFEST",
       "type": "boolean",
       "default": false
+    },
+    {
+      "name": "INCLUDE_SHADOW_PLUGIN",
+      "type": "boolean",
+      "default": false,
+      "condition": "$LANGUAGE=='Java'"
+    },
+    {
+      "name": "INCLUDE_RUN_PAPER_PLUGIN",
+      "type": "boolean",
+      "default": true
+    },
+    {
+      "name": "ACCEPT_EULA",
+      "type": "boolean",
+      "default": false,
+      "condition": "$INCLUDE_RUN_PAPER_PLUGIN"
     },
     {
       "label": "creator.ui.optional_settings.label",
@@ -166,33 +195,28 @@
       "condition": "$USE_GIT"
     },
     {
-      "template": "build.gradle.ft",
-      "destination": "build.gradle",
-      "condition": "$BUILD_SYSTEM=='Gradle' && $LANGUAGE=='Java'"
-    },
-    {
-      "template": "settings.gradle.ft",
-      "destination": "settings.gradle",
-      "condition": "$BUILD_SYSTEM=='Gradle' && $LANGUAGE=='Java'"
+      "template": "../.gitattributes.ft",
+      "destination": ".gitattributes",
+      "condition": "$USE_GIT"
     },
     {
       "template": "build.gradle.kts.ft",
+      "destination": "build.gradle.kts",
+      "condition": "$BUILD_SYSTEM=='Gradle' && $LANGUAGE=='Java'"
+    },
+    {
+      "template": "kotlin.build.gradle.kts.ft",
       "destination": "build.gradle.kts",
       "condition": "$BUILD_SYSTEM=='Gradle' && $LANGUAGE=='Kotlin'"
     },
     {
       "template": "settings.gradle.kts.ft",
       "destination": "settings.gradle.kts",
-      "condition": "$BUILD_SYSTEM=='Gradle' && $LANGUAGE=='Kotlin'"
+      "condition": "$BUILD_SYSTEM=='Gradle'"
     },
     {
       "template": "gradle.properties.ft",
       "destination": "gradle.properties",
-      "condition": "$BUILD_SYSTEM=='Gradle'"
-    },
-    {
-      "template": "../gradle-wrapper.properties.ft",
-      "destination": "gradle/wrapper/gradle-wrapper.properties",
       "condition": "$BUILD_SYSTEM=='Gradle'"
     },
     {
@@ -225,16 +249,16 @@
   ],
   "finalizers": [
     {
+      "type": "run_gradle_tasks",
+      "tasks": ["wrapper --gradle-version=latest", "wrapper"],
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
       "type": "import_maven_project",
       "condition": "$BUILD_SYSTEM=='Maven'"
     },
     {
       "type": "import_gradle_project",
-      "condition": "$BUILD_SYSTEM=='Gradle'"
-    },
-    {
-      "type": "run_gradle_tasks",
-      "tasks": ["wrapper"],
       "condition": "$BUILD_SYSTEM=='Gradle'"
     },
     {

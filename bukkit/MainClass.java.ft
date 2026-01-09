@@ -7,7 +7,6 @@ public final class ${MAIN_CLASS.className} extends JavaPlugin {
     @Override
     public void onEnable() {
         // Plugin startup logic
-
     }
 
     @Override
