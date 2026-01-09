@@ -24,6 +24,9 @@ paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper-api" }
 #elseif ($IS_SPIGOT)
 spigot-api = { module = "org.spigotmc:spigot-api", version.ref = "spigot-api" }
 #end
+#if ($LANGUAGE=='Kotlin')
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8" }
+#end
 
 [plugins]
 #if ($USE_PAPERWEIGHT_USERDEV)

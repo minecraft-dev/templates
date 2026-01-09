@@ -1,21 +1,25 @@
 name: ${PLUGIN_NAME}
-version: '$version'
-main: ${MAIN_CLASS}
-#if (${API_VERSION})
-api-version: '${API_VERSION}'
+#if (${DESCRIPTION})
+description: ${DESCRIPTION}
 #end
 #if (${LOG_PREFIX})
 prefix: ${LOG_PREFIX}
 #end
+version: '$version'
+
+main: ${MAIN_CLASS}
+#if (${API_VERSION})
+api-version: '${API_VERSION}'
+#end
 #if (${LOAD_AT})
 load: ${LOAD_AT}
 #end
-#if (${AUTHORS})
+#if ($AUTHORS || $WEBSITE)
+
+#if ($AUTHORS)
 authors: ${AUTHORS.toString(", ", "[", "]")}
-#end
-#if (${DESCRIPTION})
-description: ${DESCRIPTION}
 #end
 #if (${WEBSITE})
 website: ${WEBSITE}
+#end
 #end
