@@ -4,6 +4,9 @@ paper-api = "${MC_VERSION}-R0.1-SNAPSHOT"
 #elseif ($IS_SPIGOT)
 spigot-api = "${MC_VERSION}-R0.1-SNAPSHOT"
 #end
+#if ($INCLUDE_RUN_PAPER_PLUGIN)
+minecraft = ${MC_VERSION}
+#end
 
 #if ($USE_PAPERWEIGHT_USERDEV)
 paperweight-userdev = "2.0.0-beta.19"
