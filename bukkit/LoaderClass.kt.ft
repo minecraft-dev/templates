@@ -1,11 +1,11 @@
-package ${MAIN_CLASS.packageName}6
+package ${MAIN_CLASS.packageName}
 
 import io.papermc.paper.plugin.loader.PluginClasspathBuilder
 import io.papermc.paper.plugin.loader.PluginLoader
 
 internal class ${MAIN_CLASS.className}Loader : PluginLoader {
 
-  override fun classloader(builder: PluginClasspathBuilder) {
-    // Add dynamically loaded libraries here
-  }
+    override fun classloader(builder: PluginClasspathBuilder) {
+        // Add dynamically loaded libraries here
+    }
 }
