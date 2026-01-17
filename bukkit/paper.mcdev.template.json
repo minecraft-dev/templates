@@ -141,6 +141,17 @@
           }
         },
         {
+          "name": "GREMLIN_VERSION",
+          "type": "maven_artifact_version",
+          "parameters": {
+            "sourceUrl": "https://plugins.gradle.org/m2/xyz/jpenilla/gremlin-gradle/maven-metadata.xml"
+          },
+          "visible": {
+            "dependsOn": [ "USE_GREMLIN" ],
+            "condition": "$USE_GREMLIN"
+          }
+        },
+        {
           "name": "INCLUDE_PLUGIN_BOOTSTRAP",
           "type": "boolean",
           "default": false,
@@ -187,6 +198,17 @@
           }
         },
         {
+          "name": "RESOURCE_FACTORY_VERSION",
+          "type": "maven_artifact_version",
+          "parameters": {
+            "sourceUrl": "https://plugins.gradle.org/m2/xyz/jpenilla/resource-factory/maven-metadata.xml"
+          },
+          "visible": {
+            "dependsOn": [ "USE_RESOURCE_FACTORY_PLUGIN" ],
+            "condition": "$USE_RESOURCE_FACTORY_PLUGIN"
+          }
+        },
+        {
           "name": "USE_PAPERWEIGHT_USERDEV",
           "type": "boolean",
           "default": false,
@@ -195,6 +217,17 @@
               "BUILD_SYSTEM"
             ],
             "condition": "$BUILD_SYSTEM == 'Gradle'"
+          }
+        },
+        {
+          "name": "PAPERWEIGHT_VERSION",
+          "type": "maven_artifact_version",
+          "parameters": {
+            "sourceUrl": "https://plugins.gradle.org/m2/io/papermc/paperweight/paperweight-userdev/maven-metadata.xml"
+          },
+          "visible": {
+            "dependsOn": [ "USE_PAPERWEIGHT_USERDEV" ],
+            "condition": "$USE_PAPERWEIGHT_USERDEV"
           }
         },
         {
@@ -210,6 +243,17 @@
           }
         },
         {
+          "name": "SHADOW_VERSION",
+          "type": "maven_artifact_version",
+          "parameters": {
+            "sourceUrl": "https://repo.maven.apache.org/maven2/com/gradleup/shadow/shadow-gradle-plugin/maven-metadata.xml"
+          },
+          "visible": {
+            "dependsOn": [ "INCLUDE_SHADOW_PLUGIN" ],
+            "condition": "$INCLUDE_SHADOW_PLUGIN"
+          }
+        },
+        {
           "name": "INCLUDE_RUN_PAPER_PLUGIN",
           "type": "boolean",
           "default": true,
@@ -218,6 +262,17 @@
               "BUILD_SYSTEM"
             ],
             "condition": "$BUILD_SYSTEM == 'Gradle'"
+          }
+        },
+        {
+          "name": "RUN_PAPER_VERSION",
+          "type": "maven_artifact_version",
+          "parameters": {
+            "sourceUrl": "https://plugins.gradle.org/m2/xyz/jpenilla/run-paper/xyz.jpenilla.run-paper.gradle.plugin/maven-metadata.xml"
+          },
+          "visible": {
+            "dependsOn": [ "INCLUDE_RUN_PAPER_PLUGIN" ],
+            "condition": "$INCLUDE_RUN_PAPER_PLUGIN"
           }
         },
         {
