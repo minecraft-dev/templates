@@ -6,7 +6,7 @@ plugins {
 #if ($LANGUAGE=='Java')
     id("java-library")
 #else
-    kotlin("jvm") version "${KOTLIN_VERSION}"
+    kotlin("jvm") version #if ($USE_VERSION_CATALOG) libs.versions.kotlin.get() #else "${KOTLIN_VERSION}" #end
 #end
 #if ($USE_VERSION_CATALOG)
 #if ($USE_PAPERWEIGHT_USERDEV)
