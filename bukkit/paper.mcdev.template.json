@@ -239,7 +239,7 @@
               "LANGUAGE",
               "BUILD_SYSTEM"
             ],
-            "condition": "$LANGUAGE == 'Java' && $BUILD_SYSTEM == 'Gradle'"
+            "condition": "!$USE_GREMLIN && $LANGUAGE != 'Kotlin' && $BUILD_SYSTEM == 'Gradle'"
           }
         },
         {
@@ -249,8 +249,8 @@
             "sourceUrl": "https://repo.maven.apache.org/maven2/com/gradleup/shadow/shadow-gradle-plugin/maven-metadata.xml"
           },
           "visible": {
-            "dependsOn": [ "INCLUDE_SHADOW_PLUGIN" ],
-            "condition": "$INCLUDE_SHADOW_PLUGIN"
+            "dependsOn": [ "LANGUAGE", "INCLUDE_SHADOW_PLUGIN" ],
+            "condition": "$USE_GREMLIN || $LANGUAGE == 'Kotlin' || $INCLUDE_SHADOW_PLUGIN"
           }
         },
         {
@@ -325,6 +325,13 @@
       "template": "../.gitattributes.ft",
       "destination": ".gitattributes",
       "condition": "$USE_GIT"
+    },
+    {
+      "template": "../gradle-wrapper.properties.ft",
+      "destination": "gradle/wrapper/gradle-wrapper.properties",
+      "properties": {
+        "GRADLE_VERSION": "9.3.0"
+      }
     },
     {
       "template": "build.gradle.kts.ft",
