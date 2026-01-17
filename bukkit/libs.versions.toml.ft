@@ -1,4 +1,8 @@
 [versions]
+#if ($LANGUAGE=='Kotlin')
+kotlin = "$KOTLIN_VERSION"
+
+#end
 #if ($IS_PAPER)
 paper-api = "${MC_VERSION}-R0.1-SNAPSHOT"
 #elseif ($IS_SPIGOT)
@@ -31,7 +35,7 @@ paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper-api" }
 spigot-api = { module = "org.spigotmc:spigot-api", version.ref = "spigot-api" }
 #end
 #if ($LANGUAGE=='Kotlin')
-kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8" }
+kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 #end
 #if ($USE_GREMLIN)
 gremlin-runtime = { module = "xyz.jpenilla:gremlin-runtime", version.ref = "gremlin" }
