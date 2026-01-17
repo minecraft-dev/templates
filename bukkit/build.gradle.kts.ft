@@ -28,21 +28,21 @@ plugins {
 #end
 #else
 #if ($USE_PAPERWEIGHT_USERDEV)
-    id("io.papermc.paperweight.userdev") version "2.0.0-beta.19"
+    id("io.papermc.paperweight.userdev") version "$PAPERWEIGHT_VERSION"
 #end
 #if ($INCLUDE_SHADOW_PLUGIN)
-    id("com.gradleup.shadow") version "9.3.1"
+    id("com.gradleup.shadow") version "$SHADOW_VERSION"
 #end
 #if ($INCLUDE_RUN_PAPER_PLUGIN)
-    id("xyz.jpenilla.run-paper") version "3.0.2"
+    id("xyz.jpenilla.run-paper") version "$RUN_PAPER_VERSION"
 #end
 #if ($USE_RESOURCE_FACTORY_PLUGIN && $USE_PAPER_MANIFEST)
-    id("xyz.jpenilla.resource-factory-paper-convention") version "1.3.1"
+    id("xyz.jpenilla.resource-factory-paper-convention") version "$RESOURCE_FACTORY_VERSION"
 #elseif ($USE_RESOURCE_FACTORY_PLUGIN && !$USE_PAPER_MANIFEST)
-    id("xyz.jpenilla.resource-factory-bukkit-convention") version "1.3.1"
+    id("xyz.jpenilla.resource-factory-bukkit-convention") version "$RESOURCE_FACTORY_VERSION"
 #end
 #if ($USE_GREMLIN)
-    id("xyz.jpenilla.gremlin-gradle") version "0.0.9"
+    id("xyz.jpenilla.gremlin-gradle") version "$GREMLIN_VERSION"
 #end
 #end
 }

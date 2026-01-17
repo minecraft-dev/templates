@@ -5,23 +5,23 @@ paper-api = "${MC_VERSION}-R0.1-SNAPSHOT"
 spigot-api = "${MC_VERSION}-R0.1-SNAPSHOT"
 #end
 #if ($INCLUDE_RUN_PAPER_PLUGIN)
-minecraft = ${MC_VERSION}
+minecraft = "${MC_VERSION}"
 #end
 
 #if ($USE_PAPERWEIGHT_USERDEV)
-paperweight-userdev = "2.0.0-beta.19"
+paperweight-userdev = "$PAPERWEIGHT_VERSION"
 #end
 #if ($USE_GREMLIN || $INCLUDE_SHADOW_PLUGIN)
-shadow = "9.3.1"
+shadow = "$SHADOW_VERSION"
 #end
 #if ($INCLUDE_RUN_PAPER_PLUGIN)
-run-task = "3.0.2"
+run-task = "$RUN_PAPER_VERSION"
 #end
 #if ($USE_RESOURCE_FACTORY_PLUGIN)
-resource-factory = "1.3.1"
+resource-factory = "$RESOURCE_FACTORY_VERSION"
 #end
 #if ($USE_GREMLIN)
-gremlin = "0.0.9"
+gremlin = "$GREMLIN_VERSION"
 #end
 
 [libraries]
