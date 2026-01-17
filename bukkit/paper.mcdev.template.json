@@ -152,6 +152,30 @@
           }
         },
         {
+          "name": "INCLUDE_SHADOW_PLUGIN",
+          "type": "boolean",
+          "default": "$LANGUAGE=='Kotlin'",
+          "visible": {
+            "dependsOn": [
+              "LANGUAGE",
+              "BUILD_SYSTEM",
+              "USE_GREMLIN"
+            ],
+            "condition": "!$USE_GREMLIN && $LANGUAGE != 'Kotlin' && $BUILD_SYSTEM == 'Gradle'"
+          }
+        },
+        {
+          "name": "SHADOW_VERSION",
+          "type": "maven_artifact_version",
+          "parameters": {
+            "sourceUrl": "https://repo.maven.apache.org/maven2/com/gradleup/shadow/shadow-gradle-plugin/maven-metadata.xml"
+          },
+          "visible": {
+            "dependsOn": [ "LANGUAGE", "INCLUDE_SHADOW_PLUGIN" ],
+            "condition": "$USE_GREMLIN || $LANGUAGE == 'Kotlin' || $INCLUDE_SHADOW_PLUGIN"
+          }
+        },
+        {
           "name": "INCLUDE_PLUGIN_BOOTSTRAP",
           "type": "boolean",
           "default": false,
@@ -228,29 +252,6 @@
           "visible": {
             "dependsOn": [ "USE_PAPERWEIGHT_USERDEV" ],
             "condition": "$USE_PAPERWEIGHT_USERDEV"
-          }
-        },
-        {
-          "name": "INCLUDE_SHADOW_PLUGIN",
-          "type": "boolean",
-          "default": "$LANGUAGE=='Kotlin'",
-          "visible": {
-            "dependsOn": [
-              "LANGUAGE",
-              "BUILD_SYSTEM"
-            ],
-            "condition": "!$USE_GREMLIN && $LANGUAGE != 'Kotlin' && $BUILD_SYSTEM == 'Gradle'"
-          }
-        },
-        {
-          "name": "SHADOW_VERSION",
-          "type": "maven_artifact_version",
-          "parameters": {
-            "sourceUrl": "https://repo.maven.apache.org/maven2/com/gradleup/shadow/shadow-gradle-plugin/maven-metadata.xml"
-          },
-          "visible": {
-            "dependsOn": [ "LANGUAGE", "INCLUDE_SHADOW_PLUGIN" ],
-            "condition": "$USE_GREMLIN || $LANGUAGE == 'Kotlin' || $INCLUDE_SHADOW_PLUGIN"
           }
         },
         {
