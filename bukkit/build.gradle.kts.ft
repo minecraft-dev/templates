@@ -5,14 +5,14 @@ import xyz.jpenilla.resourcefactory.bukkit.BukkitPluginYaml
 plugins {
 #if ($LANGUAGE=='Java')
     id("java-library")
-#else
+#elseif ($LANGUAGE == 'Kotlin')
     kotlin("jvm") version #if ($USE_VERSION_CATALOG) libs.versions.kotlin.get() #else "${KOTLIN_VERSION}" #end
 #end
 #if ($USE_VERSION_CATALOG)
 #if ($USE_PAPERWEIGHT_USERDEV)
-    alias(libs.plugin.paperweight.userdev)
+    alias(libs.plugins.paperweight.userdev)
 #end
-#if ($USE_GREMLIN || $INCLUDE_SHADOW_PLUGIN)
+#if ($USE_GREMLIN || $INCLUDE_SHADOW_PLUGIN || $LANGUAGE == 'Kotlin')
     alias(libs.plugins.shadow)
 #end
 #if ($INCLUDE_RUN_PAPER_PLUGIN)
@@ -30,7 +30,7 @@ plugins {
 #if ($USE_PAPERWEIGHT_USERDEV)
     id("io.papermc.paperweight.userdev") version "$PAPERWEIGHT_VERSION"
 #end
-#if ($INCLUDE_SHADOW_PLUGIN)
+#if ($USE_GREMLIN || $INCLUDE_SHADOW_PLUGIN || $LANGUAGE == 'Kotlin')
     id("com.gradleup.shadow") version "$SHADOW_VERSION"
 #end
 #if ($INCLUDE_RUN_PAPER_PLUGIN)
@@ -150,7 +150,7 @@ kotlin {
 
 #if ($USE_GREMLIN || $INCLUDE_SHADOW_PLUGIN || $INCLUDE_RUN_PAPER_PLUGIN || $!USE_RESOURCE_FACTORY_PLUGIN)
 tasks {
-#if ($USE_GREMLIN || $INCLUDE_SHADOW_PLUGIN)
+#if ($USE_GREMLIN || $INCLUDE_SHADOW_PLUGIN || $LANGUAGE == 'Kotlin')
     build {
         dependsOn(shadowJar)
     }

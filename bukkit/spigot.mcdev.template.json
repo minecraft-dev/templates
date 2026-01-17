@@ -229,6 +229,13 @@
       "condition": "$USE_GIT"
     },
     {
+      "template": "../gradle-wrapper.properties.ft",
+      "destination": "gradle/wrapper/gradle-wrapper.properties",
+      "properties": {
+        "GRADLE_VERSION": "9.3.0"
+      }
+    },
+    {
       "template": "build.gradle.kts.ft",
       "destination": "build.gradle.kts",
       "condition": "$BUILD_SYSTEM=='Gradle'"
