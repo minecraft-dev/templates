@@ -1,4 +1,4 @@
-#if ($USE_RESOURCE_FACTORY_PLUGIN && $LOAD_AT)
+#if ($RESOURCE_FACTORY_PLUGIN.enabled && $LOAD_AT)
 import xyz.jpenilla.resourcefactory.bukkit.BukkitPluginYaml
 
 #end
@@ -9,40 +9,40 @@ plugins {
     kotlin("jvm") version #if ($USE_VERSION_CATALOG) libs.versions.kotlin.get() #else "${KOTLIN_VERSION}" #end
 #end
 #if ($USE_VERSION_CATALOG)
-#if ($USE_PAPERWEIGHT_USERDEV)
+#if ($PAPERWEIGHT_USERDEV_PLUGIN.enabled)
     alias(libs.plugins.paperweight.userdev)
 #end
-#if ($USE_GREMLIN || $INCLUDE_SHADOW_PLUGIN || $LANGUAGE == 'Kotlin')
+#if ($GREMLIN_PLUGIN.enabled || $SHADOW_PLUGIN.enabled || $LANGUAGE == 'Kotlin')
     alias(libs.plugins.shadow)
 #end
-#if ($INCLUDE_RUN_PAPER_PLUGIN)
+#if ($RUN_PAPER_PLUGIN.enabled)
     alias(libs.plugins.run.paper)
 #end
-#if ($USE_RESOURCE_FACTORY_PLUGIN && $USE_PAPER_MANIFEST)
+#if ($RESOURCE_FACTORY_PLUGIN.enabled && $USE_PAPER_MANIFEST)
     alias(libs.plugins.resource.factory.paper)
-#elseif ($USE_RESOURCE_FACTORY_PLUGIN && !$USE_PAPER_MANIFEST)
+#elseif ($RESOURCE_FACTORY_PLUGIN.enabled && !$USE_PAPER_MANIFEST)
     alias(libs.plugins.resource.factory.bukkit)
 #end
-#if ($USE_GREMLIN)
+#if ($GREMLIN_PLUGIN.enabled)
     alias(libs.plugins.gremlin.gradle)
 #end
 #else
-#if ($USE_PAPERWEIGHT_USERDEV)
-    id("io.papermc.paperweight.userdev") version "$PAPERWEIGHT_VERSION"
+#if ($PAPERWEIGHT_USERDEV_PLUGIN.enabled)
+    id("io.papermc.paperweight.userdev") version "$PAPERWEIGHT_USERDEV_PLUGIN.version"
 #end
-#if ($USE_GREMLIN || $INCLUDE_SHADOW_PLUGIN || $LANGUAGE == 'Kotlin')
-    id("com.gradleup.shadow") version "$SHADOW_VERSION"
+#if ($GREMLIN_PLUGIN.enabled || $SHADOW_PLUGIN.enabled || $LANGUAGE == 'Kotlin')
+    id("com.gradleup.shadow") version "$SHADOW_PLUGIN.version"
 #end
-#if ($INCLUDE_RUN_PAPER_PLUGIN)
-    id("xyz.jpenilla.run-paper") version "$RUN_PAPER_VERSION"
+#if ($RUN_PAPER_PLUGIN.enabled)
+    id("xyz.jpenilla.run-paper") version "$RUN_PAPER_PLUGIN.version"
 #end
-#if ($USE_RESOURCE_FACTORY_PLUGIN && $USE_PAPER_MANIFEST)
-    id("xyz.jpenilla.resource-factory-paper-convention") version "$RESOURCE_FACTORY_VERSION"
-#elseif ($USE_RESOURCE_FACTORY_PLUGIN && !$USE_PAPER_MANIFEST)
-    id("xyz.jpenilla.resource-factory-bukkit-convention") version "$RESOURCE_FACTORY_VERSION"
+#if ($RESOURCE_FACTORY_PLUGIN.enabled && $USE_PAPER_MANIFEST)
+    id("xyz.jpenilla.resource-factory-paper-convention") version "$RESOURCE_FACTORY_PLUGIN.version"
+#elseif ($RESOURCE_FACTORY_PLUGIN.enabled && !$USE_PAPER_MANIFEST)
+    id("xyz.jpenilla.resource-factory-bukkit-convention") version "$RESOURCE_FACTORY_PLUGIN.version"
 #end
-#if ($USE_GREMLIN)
-    id("xyz.jpenilla.gremlin-gradle") version "$GREMLIN_VERSION"
+#if ($GREMLIN_PLUGIN.enabled)
+    id("xyz.jpenilla.gremlin-gradle") version "$GREMLIN_PLUGIN.version"
 #end
 #end
 }
@@ -51,11 +51,11 @@ repositories {
     mavenCentral()
 #if ($IS_SPIGOT)
     maven("https://hub.spigotmc.org/nexus/content/repositories/snapshots/")
-#elseif ($IS_PAPER && !$USE_PAPERWEIGHT_USERDEV)
+#elseif ($IS_PAPER && !$PAPERWEIGHT_USERDEV_PLUGIN.enabled)
     maven("https://repo.papermc.io/repository/maven-public/")
 #end
 }
-#if ($USE_GREMLIN)
+#if ($GREMLIN_PLUGIN.enabled)
 
 configurations.compileOnly {
   extendsFrom(configurations.runtimeDownload.get())
@@ -67,31 +67,31 @@ dependencies {
     compileOnly("org.spigotmc:spigot-api:${MC_VERSION}-R0.1-SNAPSHOT")
 #elseif ($IS_SPIGOT && $USE_VERSION_CATALOG)
     compileOnly(libs.spigot.api)
-#elseif ($IS_PAPER && !$USE_PAPERWEIGHT_USERDEV && !$USE_VERSION_CATALOG)
+#elseif ($IS_PAPER && !$PAPERWEIGHT_USERDEV_PLUGIN.enabled && !$USE_VERSION_CATALOG)
     compileOnly("io.papermc.paper:paper-api:${MC_VERSION}-R0.1-SNAPSHOT")
-#elseif ($IS_PAPER && !$USE_PAPERWEIGHT_USERDEV && $USE_VERSION_CATALOG)
+#elseif ($IS_PAPER && !$PAPERWEIGHT_USERDEV_PLUGIN.enabled && $USE_VERSION_CATALOG)
     compileOnly(libs.paper.api)
-#elseif ($IS_PAPER && $USE_PAPERWEIGHT_USERDEV && !$USE_VERSION_CATALOG)
+#elseif ($IS_PAPER && $PAPERWEIGHT_USERDEV_PLUGIN.enabled && !$USE_VERSION_CATALOG)
     paperweight.paperDevBundle("${MC_VERSION}-R0.1-SNAPSHOT")
-#elseif ($IS_PAPER && $USE_PAPERWEIGHT_USERDEV && $USE_VERSION_CATALOG)
+#elseif ($IS_PAPER && $PAPERWEIGHT_USERDEV_PLUGIN.enabled && $USE_VERSION_CATALOG)
     paperweight.paperDevBundle(libs.versions.paper.api.get())
 #end
-#if ($USE_GREMLIN && !$USE_VERSION_CATALOG)
-    implementation("xyz.jpenilla:gremlin-runtime:0.0.9")
-#elseif ($USE_GREMLIN && $USE_VERSION_CATALOG)
+#if ($GREMLIN_PLUGIN.enabled && !$USE_VERSION_CATALOG)
+    implementation("xyz.jpenilla:gremlin-runtime:$GREMLIN_PLUGIN.version")
+#elseif ($GREMLIN_PLUGIN.enabled && $USE_VERSION_CATALOG)
     implementation(libs.gremlin.runtime)
 #end
-#if ($LANGUAGE=='Kotlin' && !$USE_VERSION_CATALOG && !$USE_GREMLIN)
+#if ($LANGUAGE=='Kotlin' && !$USE_VERSION_CATALOG && !$GREMLIN_PLUGIN.enabled)
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-#elseif ($LANGUAGE=='Kotlin' && $USE_VERSION_CATALOG && !$USE_GREMLIN)
+#elseif ($LANGUAGE=='Kotlin' && $USE_VERSION_CATALOG && !$GREMLIN_PLUGIN.enabled)
     implementation(libs.kotlin.stdlib)
-#elseif ($LANGUAGE=='Kotlin' && !$USE_VERSION_CATALOG && $USE_GREMLIN)
+#elseif ($LANGUAGE=='Kotlin' && !$USE_VERSION_CATALOG && $GREMLIN_PLUGIN.enabled)
     runtimeDownload("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-#elseif ($LANGUAGE=='Kotlin' && $USE_VERSION_CATALOG && $USE_GREMLIN)
+#elseif ($LANGUAGE=='Kotlin' && $USE_VERSION_CATALOG && $GREMLIN_PLUGIN.enabled)
     runtimeDownload(libs.kotlin.stdlib)
 #end
 }
-#if ($USE_RESOURCE_FACTORY_PLUGIN)
+#if ($RESOURCE_FACTORY_PLUGIN.enabled)
 
 #if ($USE_PAPER_MANIFEST)
 paperPluginYaml {
@@ -111,13 +111,13 @@ bukkitPluginYaml {
 #if (${INCLUDE_PLUGIN_BOOTSTRAP})
     bootstrapper = "${MAIN_CLASS.packageName}.${MAIN_CLASS.className}Bootstrap"
 #end
-#if (${INCLUDE_PLUGIN_LOADER} && !${USE_GREMLIN} && !${USE_PAPER_MANIFEST})
+#if (${INCLUDE_PLUGIN_LOADER} && !${GREMLIN_PLUGIN.enabled} && !${USE_PAPER_MANIFEST})
     paperPluginLoader = "${MAIN_CLASS.packageName}.${MAIN_CLASS.className}Loader"
-#elseif (${USE_GREMLIN} && !${USE_PAPER_MANIFEST})
+#elseif (${GREMLIN_PLUGIN.enabled} && !${USE_PAPER_MANIFEST})
     paperPluginLoader = "xyz.jpenilla.gremlin.runtime.platformsupport.DefaultsPaperPluginLoader"
-#elseif (${INCLUDE_PLUGIN_LOADER} && !${USE_GREMLIN} && ${USE_PAPER_MANIFEST})
+#elseif (${INCLUDE_PLUGIN_LOADER} && !${GREMLIN_PLUGIN.enabled} && ${USE_PAPER_MANIFEST})
     loader = "${MAIN_CLASS.packageName}.${MAIN_CLASS.className}Loader"
-#elseif (${USE_GREMLIN} && ${USE_PAPER_MANIFEST})
+#elseif (${GREMLIN_PLUGIN.enabled} && ${USE_PAPER_MANIFEST})
     loader = "xyz.jpenilla.gremlin.runtime.platformsupport.DefaultsPaperPluginLoader"
 #end
 #if ($API_VERSION)
@@ -148,14 +148,14 @@ kotlin {
 }
 #end
 
-#if ($USE_GREMLIN || $INCLUDE_SHADOW_PLUGIN || $INCLUDE_RUN_PAPER_PLUGIN || $!USE_RESOURCE_FACTORY_PLUGIN)
+#if ($GREMLIN_PLUGIN.enabled || $SHADOW_PLUGIN.enabled || $RUN_PAPER_PLUGIN.enabled || !$RESOURCE_FACTORY_PLUGIN.enabled)
 tasks {
-#if ($USE_GREMLIN || $INCLUDE_SHADOW_PLUGIN || $LANGUAGE == 'Kotlin')
+#if ($GREMLIN_PLUGIN.enabled || $SHADOW_PLUGIN.enabled || $LANGUAGE == 'Kotlin')
     build {
         dependsOn(shadowJar)
     }
 #end
-#if ($INCLUDE_RUN_PAPER_PLUGIN)
+#if ($RUN_PAPER_PLUGIN.enabled)
     runServer {
 #if ($USE_VERSION_CATALOG)
         minecraftVersion(libs.versions.minecraft.get())
@@ -172,7 +172,7 @@ tasks {
 #end
     }
 #end
-#if (!$USE_RESOURCE_FACTORY_PLUGIN)
+#if (!$RESOURCE_FACTORY_PLUGIN.enabled)
     processResources {
         val props = mapOf("version" to version)
 #if ($USE_PAPER_MANIFEST)
