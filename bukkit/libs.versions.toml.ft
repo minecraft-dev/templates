@@ -8,28 +8,28 @@ paper-api = "${MC_VERSION}-R0.1-SNAPSHOT"
 #elseif ($IS_SPIGOT)
 spigot-api = "${MC_VERSION}-R0.1-SNAPSHOT"
 #end
-#if ($INCLUDE_RUN_PAPER_PLUGIN)
+#if ($RUN_PAPER_PLUGIN.enabled)
 minecraft = "${MC_VERSION}"
 #end
 
-#if ($USE_PAPERWEIGHT_USERDEV)
-paperweight-userdev = "$PAPERWEIGHT_VERSION"
+#if ($PAPERWEIGHT_USERDEV_PLUGIN.enabled)
+paperweight-userdev = "$PAPERWEIGHT_USERDEV_PLUGIN.version"
 #end
-#if ($USE_GREMLIN || $INCLUDE_SHADOW_PLUGIN)
-shadow = "$SHADOW_VERSION"
+#if ($GREMLIN_PLUGIN.enabled || $SHADOW_PLUGIN.enabled)
+shadow = "$SHADOW_PLUGIN.version"
 #end
-#if ($INCLUDE_RUN_PAPER_PLUGIN)
-run-task = "$RUN_PAPER_VERSION"
+#if ($RUN_PAPER_PLUGIN.enabled)
+run-task = "$RUN_PAPER_PLUGIN.version"
 #end
-#if ($USE_RESOURCE_FACTORY_PLUGIN)
-resource-factory = "$RESOURCE_FACTORY_VERSION"
+#if ($RESOURCE_FACTORY_PLUGIN.enabled)
+resource-factory = "$RESOURCE_FACTORY_PLUGIN.version"
 #end
-#if ($USE_GREMLIN)
-gremlin = "$GREMLIN_VERSION"
+#if ($GREMLIN_PLUGIN.enabled)
+gremlin = "$GREMLIN_PLUGIN.version"
 #end
 
 [libraries]
-#if ($IS_PAPER && !$USE_PAPERWEIGHT_USERDEV)
+#if ($IS_PAPER && !$PAPERWEIGHT_USERDEV_PLUGIN.enabled)
 paper-api = { module = "io.papermc.paper:paper-api", version.ref = "paper-api" }
 #elseif ($IS_SPIGOT)
 spigot-api = { module = "org.spigotmc:spigot-api", version.ref = "spigot-api" }
@@ -37,25 +37,25 @@ spigot-api = { module = "org.spigotmc:spigot-api", version.ref = "spigot-api" }
 #if ($LANGUAGE=='Kotlin')
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 #end
-#if ($USE_GREMLIN)
+#if ($GREMLIN_PLUGIN.enabled)
 gremlin-runtime = { module = "xyz.jpenilla:gremlin-runtime", version.ref = "gremlin" }
 #end
 
 [plugins]
-#if ($USE_PAPERWEIGHT_USERDEV)
+#if ($PAPERWEIGHT_USERDEV_PLUGIN.enabled)
 paperweight-userdev = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight-userdev" }
 #end
-#if ($USE_GREMLIN || $INCLUDE_SHADOW_PLUGIN)
+#if ($GREMLIN_PLUGIN.enabled || $SHADOW_PLUGIN.enabled)
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
 #end
-#if ($INCLUDE_RUN_PAPER_PLUGIN)
+#if ($RUN_PAPER_PLUGIN.enabled)
 run-paper = { id = "xyz.jpenilla.run-paper", version.ref = "run-task" }
 #end
-#if ($USE_RESOURCE_FACTORY_PLUGIN && $USE_PAPER_MANIFEST)
+#if ($RESOURCE_FACTORY_PLUGIN.enabled && $USE_PAPER_MANIFEST)
 resource-factory-paper = { id = "xyz.jpenilla.resource-factory-paper-convention", version.ref = "resource-factory" }
-#elseif ($USE_RESOURCE_FACTORY_PLUGIN && !$USE_PAPER_MANIFEST)
+#elseif ($RESOURCE_FACTORY_PLUGIN.enabled && !$USE_PAPER_MANIFEST)
 resource-factory-bukkit = { id = "xyz.jpenilla.resource-factory-bukkit-convention", version.ref = "resource-factory" }
 #end
-#if ($USE_GREMLIN)
+#if ($GREMLIN_PLUGIN.enabled)
 gremlin-gradle = { id = "xyz.jpenilla.gremlin-gradle", version.ref = "gremlin" }
 #end

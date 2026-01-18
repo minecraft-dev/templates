@@ -16,6 +16,17 @@
       ]
     },
     {
+      "name": "USE_VERSION_CATALOG",
+      "type": "boolean",
+      "default": false,
+      "visible": {
+        "dependsOn": [
+          "BUILD_SYSTEM"
+        ],
+        "condition": "$BUILD_SYSTEM == 'Gradle'"
+      }
+    },
+    {
       "name": "LANGUAGE",
       "type": "string",
       "options": [
@@ -75,6 +86,34 @@
       "default": false
     },
     {
+      "name": "INCLUDE_PLUGIN_BOOTSTRAP",
+      "type": "boolean",
+      "default": false,
+      "visible": {
+        "dependsOn": [
+          "USE_PAPER_MANIFEST"
+        ],
+        "condition": "$USE_PAPER_MANIFEST"
+      }
+    },
+    {
+      "name": "INCLUDE_PLUGIN_LOADER",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "JAVA_PLUGIN_LOADER",
+      "type": "boolean",
+      "default": true,
+      "visible": {
+        "dependsOn": [
+          "LANGUAGE",
+          "INCLUDE_PLUGIN_LOADER"
+        ],
+        "condition": "$LANGUAGE=='Kotlin' && $INCLUDE_PLUGIN_LOADER"
+      }
+    },
+    {
       "label": "creator.ui.optional_settings.label",
       "collapsible": true,
       "groupProperties": [
@@ -115,165 +154,21 @@
       ]
     },
     {
-      "label": "creator.ui.advanced_settings.label",
+      "label": "creator.ui.gradle_plugins.label",
       "collapsible": true,
       "groupProperties": [
         {
-          "name": "USE_VERSION_CATALOG",
-          "type": "boolean",
-          "default": false,
-          "visible": {
-            "dependsOn": [
-              "BUILD_SYSTEM"
-            ],
-            "condition": "$BUILD_SYSTEM == 'Gradle'"
-          }
-        },
-        {
-          "name": "USE_GREMLIN",
-          "type": "boolean",
-          "default": false,
-          "visible": {
-            "dependsOn": [
-              "BUILD_SYSTEM"
-            ],
-            "condition": "$BUILD_SYSTEM == 'Gradle'"
-          }
-        },
-        {
-          "name": "GREMLIN_VERSION",
-          "type": "maven_artifact_version",
-          "parameters": {
-            "sourceUrl": "https://plugins.gradle.org/m2/xyz/jpenilla/gremlin-gradle/maven-metadata.xml"
-          },
-          "visible": {
-            "dependsOn": [ "USE_GREMLIN" ],
-            "condition": "$USE_GREMLIN"
-          }
-        },
-        {
-          "name": "INCLUDE_SHADOW_PLUGIN",
-          "type": "boolean",
-          "default": "$LANGUAGE=='Kotlin'",
-          "visible": {
-            "dependsOn": [
-              "LANGUAGE",
-              "BUILD_SYSTEM",
-              "USE_GREMLIN"
-            ],
-            "condition": "!$USE_GREMLIN && $LANGUAGE != 'Kotlin' && $BUILD_SYSTEM == 'Gradle'"
-          }
-        },
-        {
-          "name": "SHADOW_VERSION",
-          "type": "maven_artifact_version",
-          "parameters": {
-            "sourceUrl": "https://repo.maven.apache.org/maven2/com/gradleup/shadow/shadow-gradle-plugin/maven-metadata.xml"
-          },
-          "visible": {
-            "dependsOn": [ "LANGUAGE", "INCLUDE_SHADOW_PLUGIN" ],
-            "condition": "$USE_GREMLIN || $LANGUAGE == 'Kotlin' || $INCLUDE_SHADOW_PLUGIN"
-          }
-        },
-        {
-          "name": "INCLUDE_PLUGIN_BOOTSTRAP",
-          "type": "boolean",
-          "default": false,
-          "visible": {
-            "dependsOn": [
-              "USE_PAPER_MANIFEST"
-            ],
-            "condition": "$USE_PAPER_MANIFEST"
-          }
-        },
-        {
-          "name": "INCLUDE_PLUGIN_LOADER",
-          "type": "boolean",
-          "default": "$USE_GREMLIN",
-          "visible": {
-            "dependsOn": [
-              "USE_GREMLIN"
-            ],
-            "condition": "!$USE_GREMLIN"
-          }
-        },
-        {
-          "name": "JAVA_PLUGIN_LOADER",
-          "type": "boolean",
+          "name": "RUN_PAPER_PLUGIN",
+          "type": "gradle_plugin",
           "default": true,
-          "visible": {
-            "dependsOn": [
-              "USE_GREMLIN",
-              "LANGUAGE",
-              "INCLUDE_PLUGIN_LOADER"
-            ],
-            "condition": "!$USE_GREMLIN && $LANGUAGE=='Kotlin' && $INCLUDE_PLUGIN_LOADER"
-          }
-        },
-        {
-          "name": "USE_RESOURCE_FACTORY_PLUGIN",
-          "type": "boolean",
-          "default": false,
-          "visible": {
-            "dependsOn": [
-              "BUILD_SYSTEM"
-            ],
-            "condition": "$BUILD_SYSTEM == 'Gradle'"
-          }
-        },
-        {
-          "name": "RESOURCE_FACTORY_VERSION",
-          "type": "maven_artifact_version",
-          "parameters": {
-            "sourceUrl": "https://plugins.gradle.org/m2/xyz/jpenilla/resource-factory/maven-metadata.xml"
-          },
-          "visible": {
-            "dependsOn": [ "USE_RESOURCE_FACTORY_PLUGIN" ],
-            "condition": "$USE_RESOURCE_FACTORY_PLUGIN"
-          }
-        },
-        {
-          "name": "USE_PAPERWEIGHT_USERDEV",
-          "type": "boolean",
-          "default": false,
-          "visible": {
-            "dependsOn": [
-              "BUILD_SYSTEM"
-            ],
-            "condition": "$BUILD_SYSTEM == 'Gradle'"
-          }
-        },
-        {
-          "name": "PAPERWEIGHT_VERSION",
-          "type": "maven_artifact_version",
-          "parameters": {
-            "sourceUrl": "https://plugins.gradle.org/m2/io/papermc/paperweight/paperweight-userdev/maven-metadata.xml"
-          },
-          "visible": {
-            "dependsOn": [ "USE_PAPERWEIGHT_USERDEV" ],
-            "condition": "$USE_PAPERWEIGHT_USERDEV"
-          }
-        },
-        {
-          "name": "INCLUDE_RUN_PAPER_PLUGIN",
-          "type": "boolean",
-          "default": true,
-          "visible": {
-            "dependsOn": [
-              "BUILD_SYSTEM"
-            ],
-            "condition": "$BUILD_SYSTEM == 'Gradle'"
-          }
-        },
-        {
-          "name": "RUN_PAPER_VERSION",
-          "type": "maven_artifact_version",
           "parameters": {
             "sourceUrl": "https://plugins.gradle.org/m2/xyz/jpenilla/run-paper/xyz.jpenilla.run-paper.gradle.plugin/maven-metadata.xml"
           },
           "visible": {
-            "dependsOn": [ "INCLUDE_RUN_PAPER_PLUGIN" ],
-            "condition": "$INCLUDE_RUN_PAPER_PLUGIN"
+            "dependsOn": [
+              "BUILD_SYSTEM"
+            ],
+            "condition": "$BUILD_SYSTEM == 'Gradle'"
           }
         },
         {
@@ -282,10 +177,67 @@
           "default": false,
           "visible": {
             "dependsOn": [
-              "INCLUDE_RUN_PAPER_PLUGIN",
+              "RUN_PAPER_PLUGIN",
               "BUILD_SYSTEM"
             ],
-            "condition": "$INCLUDE_RUN_PAPER_PLUGIN && $BUILD_SYSTEM == 'Gradle'"
+            "condition": "$RUN_PAPER_PLUGIN.enabled && $BUILD_SYSTEM == 'Gradle'"
+          }
+        },
+        {
+          "name": "SHADOW_PLUGIN",
+          "type": "gradle_plugin",
+          "default": "$LANGUAGE=='Kotlin'",
+          "parameters": {
+            "sourceUrl": "https://repo.maven.apache.org/maven2/com/gradleup/shadow/shadow-gradle-plugin/maven-metadata.xml"
+          },
+          "visible": {
+            "dependsOn": [
+              "LANGUAGE",
+              "BUILD_SYSTEM"
+            ],
+            "condition": "$LANGUAGE != 'Kotlin' && $BUILD_SYSTEM == 'Gradle'"
+          }
+        },
+        {
+          "name": "PAPERWEIGHT_USERDEV_PLUGIN",
+          "type": "gradle_plugin",
+          "default": false,
+          "parameters": {
+            "sourceUrl": "https://plugins.gradle.org/m2/io/papermc/paperweight/paperweight-userdev/maven-metadata.xml"
+          },
+          "visible": {
+            "dependsOn": [
+              "BUILD_SYSTEM"
+            ],
+            "condition": "$BUILD_SYSTEM == 'Gradle'"
+          }
+        },
+        {
+          "name": "RESOURCE_FACTORY_PLUGIN",
+          "type": "gradle_plugin",
+          "default": false,
+          "parameters": {
+            "sourceUrl": "https://plugins.gradle.org/m2/xyz/jpenilla/resource-factory/maven-metadata.xml"
+          },
+          "visible": {
+            "dependsOn": [
+              "BUILD_SYSTEM"
+            ],
+            "condition": "$BUILD_SYSTEM == 'Gradle'"
+          }
+        },
+        {
+          "name": "GREMLIN_PLUGIN",
+          "type": "gradle_plugin",
+          "default": false,
+          "parameters": {
+            "sourceUrl": "https://plugins.gradle.org/m2/xyz/jpenilla/gremlin-gradle/maven-metadata.xml"
+          },
+          "visible": {
+            "dependsOn": [
+              "BUILD_SYSTEM"
+            ],
+            "condition": "$BUILD_SYSTEM == 'Gradle'"
           }
         }
       ]
