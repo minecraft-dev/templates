@@ -15,7 +15,7 @@ minecraft = "${MC_VERSION}"
 #if ($PAPERWEIGHT_USERDEV_PLUGIN.enabled)
 paperweight-userdev = "$PAPERWEIGHT_USERDEV_PLUGIN.version"
 #end
-#if ($GREMLIN_PLUGIN.enabled || $SHADOW_PLUGIN.enabled)
+#if ($SHADOW_PLUGIN.enabled)
 shadow = "$SHADOW_PLUGIN.version"
 #end
 #if ($RUN_PAPER_PLUGIN.enabled)
@@ -45,7 +45,7 @@ gremlin-runtime = { module = "xyz.jpenilla:gremlin-runtime", version.ref = "grem
 #if ($PAPERWEIGHT_USERDEV_PLUGIN.enabled)
 paperweight-userdev = { id = "io.papermc.paperweight.userdev", version.ref = "paperweight-userdev" }
 #end
-#if ($GREMLIN_PLUGIN.enabled || $SHADOW_PLUGIN.enabled)
+#if ($SHADOW_PLUGIN.enabled)
 shadow = { id = "com.gradleup.shadow", version.ref = "shadow" }
 #end
 #if ($RUN_PAPER_PLUGIN.enabled)

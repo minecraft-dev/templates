@@ -1,6 +1,6 @@
 name: ${PLUGIN_NAME}
 #if (${DESCRIPTION})
-description: ${DESCRIPTION}
+description: $description
 #end
 #if (${LOG_PREFIX})
 prefix: ${LOG_PREFIX}
