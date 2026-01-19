@@ -16,6 +16,17 @@
       ]
     },
     {
+      "name": "USE_VERSION_CATALOG",
+      "type": "boolean",
+      "default": false,
+      "visible": {
+        "dependsOn": [
+          "BUILD_SYSTEM"
+        ],
+        "condition": "$BUILD_SYSTEM == 'Gradle'"
+      }
+    },
+    {
       "name": "LANGUAGE",
       "type": "string",
       "options": [
@@ -131,63 +142,56 @@
       ]
     },
     {
-      "label": "creator.ui.advanced_settings.label",
+      "label": "creator.ui.gradle_plugins.label",
       "collapsible": true,
+      "visible": {
+        "dependsOn": [
+          "BUILD_SYSTEM"
+        ],
+        "condition": "$BUILD_SYSTEM == 'Gradle'"
+      },
       "groupProperties": [
         {
-          "name": "USE_VERSION_CATALOG",
-          "type": "boolean",
-          "default": false,
-          "visible": {
-            "dependsOn": [
-              "BUILD_SYSTEM"
-            ],
-            "condition": "$BUILD_SYSTEM == 'Gradle'"
-          }
-        },
-        {
-          "name": "USE_RESOURCE_FACTORY_PLUGIN",
-          "type": "boolean",
-          "default": false,
-          "visible": {
-            "dependsOn": [
-              "BUILD_SYSTEM"
-            ],
-            "condition": "$BUILD_SYSTEM == 'Gradle'"
-          }
-        },
-        {
-          "name": "RESOURCE_FACTORY_VERSION",
-          "type": "maven_artifact_version",
-          "parameters": {
-            "sourceUrl": "https://plugins.gradle.org/m2/xyz/jpenilla/resource-factory/maven-metadata.xml"
-          },
-          "visible": {
-            "dependsOn": [ "USE_RESOURCE_FACTORY_PLUGIN" ],
-            "condition": "$USE_RESOURCE_FACTORY_PLUGIN"
-          }
-        },
-        {
-          "name": "INCLUDE_SHADOW_PLUGIN",
-          "type": "boolean",
+          "name": "SHADOW_PLUGIN",
+          "type": "gradle_plugin",
           "default": "$LANGUAGE=='Kotlin'",
+          "parameters": {
+            "sourceUrl": "https://repo.maven.apache.org/maven2/com/gradleup/shadow/shadow-gradle-plugin/maven-metadata.xml"
+          },
           "visible": {
             "dependsOn": [
               "LANGUAGE",
               "BUILD_SYSTEM"
             ],
-            "condition": "$LANGUAGE == 'Java' && $BUILD_SYSTEM == 'Gradle'"
+            "condition": "$LANGUAGE != 'Kotlin' && $BUILD_SYSTEM == 'Gradle'"
           }
         },
         {
-          "name": "SHADOW_VERSION",
-          "type": "maven_artifact_version",
+          "name": "RESOURCE_FACTORY_PLUGIN",
+          "type": "gradle_plugin",
+          "default": false,
           "parameters": {
-            "sourceUrl": "https://repo.maven.apache.org/maven2/com/gradleup/shadow/shadow-gradle-plugin/maven-metadata.xml"
+            "sourceUrl": "https://plugins.gradle.org/m2/xyz/jpenilla/resource-factory/maven-metadata.xml"
           },
           "visible": {
-            "dependsOn": [ "INCLUDE_SHADOW_PLUGIN" ],
-            "condition": "$INCLUDE_SHADOW_PLUGIN"
+            "dependsOn": [
+              "BUILD_SYSTEM"
+            ],
+            "condition": "$BUILD_SYSTEM == 'Gradle'"
+          }
+        },
+        {
+          "name": "GREMLIN_PLUGIN",
+          "type": "gradle_plugin",
+          "default": false,
+          "parameters": {
+            "sourceUrl": "https://plugins.gradle.org/m2/xyz/jpenilla/gremlin-gradle/maven-metadata.xml"
+          },
+          "visible": {
+            "dependsOn": [
+              "BUILD_SYSTEM"
+            ],
+            "condition": "$BUILD_SYSTEM == 'Gradle'"
           }
         }
       ]

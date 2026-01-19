@@ -156,6 +156,12 @@
     {
       "label": "creator.ui.gradle_plugins.label",
       "collapsible": true,
+      "visible": {
+        "dependsOn": [
+          "BUILD_SYSTEM"
+        ],
+        "condition": "$BUILD_SYSTEM == 'Gradle'"
+      },
       "groupProperties": [
         {
           "name": "RUN_PAPER_PLUGIN",
