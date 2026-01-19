@@ -282,7 +282,23 @@
       "condition": "$BUILD_SYSTEM=='Gradle'"
     },
     {
+      "type": "add_gradle_run",
+      "tasks": [
+        "build"
+      ],
+      "name": "Build",
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
       "type": "import_maven_project",
+      "condition": "$BUILD_SYSTEM=='Maven'"
+    },
+    {
+      "type": "add_maven_run",
+      "goals": [
+        "package"
+      ],
+      "name": "Build",
       "condition": "$BUILD_SYSTEM=='Maven'"
     },
     {

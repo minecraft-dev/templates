@@ -228,11 +228,18 @@
   ],
   "finalizers": [
     {
+      "type": "run_gradle_tasks",
+      "tasks": ["wrapper"]
+    },
+    {
       "type": "import_gradle_project"
     },
     {
-      "type": "run_gradle_tasks",
-      "tasks": ["wrapper"]
+      "type": "add_gradle_run",
+      "tasks": [
+        "build"
+      ],
+      "name": "Build"
     },
     {
       "type": "git_add_all",
