@@ -1,4 +1,4 @@
-#if ($RESOURCE_FACTORY_PLUGIN.enabled && $LOAD_AT)
+#if ($RESOURCE_FACTORY_PLUGIN.enabled && $LOAD_AT != "POSTWORLD")
 import xyz.jpenilla.resourcefactory.bukkit.BukkitPluginYaml
 
 #end
@@ -12,7 +12,7 @@ plugins {
 #if ($PAPERWEIGHT_USERDEV_PLUGIN.enabled)
     alias(libs.plugins.paperweight.userdev)
 #end
-#if ($GREMLIN_PLUGIN.enabled || $SHADOW_PLUGIN.enabled || $LANGUAGE == 'Kotlin')
+#if ($SHADOW_PLUGIN.enabled)
     alias(libs.plugins.shadow)
 #end
 #if ($RUN_PAPER_PLUGIN.enabled)
@@ -30,7 +30,7 @@ plugins {
 #if ($PAPERWEIGHT_USERDEV_PLUGIN.enabled)
     id("io.papermc.paperweight.userdev") version "$PAPERWEIGHT_USERDEV_PLUGIN.version"
 #end
-#if ($GREMLIN_PLUGIN.enabled || $SHADOW_PLUGIN.enabled || $LANGUAGE == 'Kotlin')
+#if ($SHADOW_PLUGIN.enabled)
     id("com.gradleup.shadow") version "$SHADOW_PLUGIN.version"
 #end
 #if ($RUN_PAPER_PLUGIN.enabled)
@@ -58,7 +58,7 @@ repositories {
 #if ($GREMLIN_PLUGIN.enabled)
 
 configurations.compileOnly {
-  extendsFrom(configurations.runtimeDownload.get())
+    extendsFrom(configurations.runtimeDownload.get())
 }
 #end
 
@@ -98,15 +98,6 @@ paperPluginYaml {
 #else
 bukkitPluginYaml {
 #end
-    name = project.name
-#if ($DESCRIPTION)
-  description = "${DESCRIPTION}"
-#end
-#if ($LOG_PREFIX)
-  prefix = "${LOG_PREFIX}"
-#end
-    version = project.version.toString()
-
     main = "${MAIN_CLASS}"
 #if (${INCLUDE_PLUGIN_BOOTSTRAP})
     bootstrapper = "${MAIN_CLASS.packageName}.${MAIN_CLASS.className}Bootstrap"
@@ -123,17 +114,20 @@ bukkitPluginYaml {
 #if ($API_VERSION)
     apiVersion = "${API_VERSION}"
 #end
-#if ($LOAD_AT)
-    load = BukkitPluginYaml.PluginLoadOrder.${LOAD_AT.toUpperCase()}
-#end
-#if ($AUTHORS || $WEBSITE)
+#if ($AUTHORS || $WEBSITE || $LOG_PREFIX || $LOAD_AT != "POSTWORLD")
 
+#end
+#if ($LOAD_AT != "POSTWORLD")
+    load = BukkitPluginYaml.PluginLoadOrder.$LOAD_AT
 #end
 #if ($AUTHORS)
     authors.addAll(${AUTHORS.toStringQuoted()})
 #end
 #if ($WEBSITE)
     website = "${WEBSITE}"
+#end
+#if ($LOG_PREFIX)
+    prefix = "${LOG_PREFIX}"
 #end
 }
 #end
@@ -148,14 +142,17 @@ kotlin {
 }
 #end
 
-#if ($GREMLIN_PLUGIN.enabled || $SHADOW_PLUGIN.enabled || $RUN_PAPER_PLUGIN.enabled || !$RESOURCE_FACTORY_PLUGIN.enabled)
+#if ($SHADOW_PLUGIN.enabled || $RUN_PAPER_PLUGIN.enabled || !$RESOURCE_FACTORY_PLUGIN.enabled)
 tasks {
-#if ($GREMLIN_PLUGIN.enabled || $SHADOW_PLUGIN.enabled || $LANGUAGE == 'Kotlin')
+#if ($SHADOW_PLUGIN.enabled)
     build {
         dependsOn(shadowJar)
     }
 #end
 #if ($RUN_PAPER_PLUGIN.enabled)
+#if ($SHADOW_PLUGIN.enabled)
+
+#end
     runServer {
 #if ($USE_VERSION_CATALOG)
         minecraftVersion(libs.versions.minecraft.get())
@@ -173,8 +170,11 @@ tasks {
     }
 #end
 #if (!$RESOURCE_FACTORY_PLUGIN.enabled)
+#if ($SHADOW_PLUGIN.enabled || $RUN_PAPER_PLUGIN.enabled)
+
+#end
     processResources {
-        val props = mapOf("version" to version)
+        val props = mapOf("version" to version #if ($DESCRIPTION), "description" to project.description #end)
 #if ($USE_PAPER_MANIFEST)
         filesMatching("paper-plugin.yml") {
 #else

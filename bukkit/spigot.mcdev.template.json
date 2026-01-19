@@ -41,7 +41,9 @@
         "sourceUrl": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/maven-metadata.xml"
       },
       "visible": {
-        "dependsOn": ["LANGUAGE"],
+        "dependsOn": [
+          "LANGUAGE"
+        ],
         "condition": "$LANGUAGE == 'Kotlin'"
       }
     },
@@ -84,7 +86,9 @@
       ],
       "visible": false,
       "derives": {
-        "parents": ["MC_VERSION"],
+        "parents": [
+          "MC_VERSION"
+        ],
         "method": "extractVersionMajorMinor"
       }
     },
@@ -97,7 +101,10 @@
       "name": "MAIN_CLASS",
       "type": "class_fqn",
       "derives": {
-        "parents": ["BUILD_COORDS", "PLUGIN_NAME"],
+        "parents": [
+          "BUILD_COORDS",
+          "PLUGIN_NAME"
+        ],
         "method": "suggestClassName"
       }
     },
@@ -158,12 +165,10 @@
           "parameters": {
             "sourceUrl": "https://repo.maven.apache.org/maven2/com/gradleup/shadow/shadow-gradle-plugin/maven-metadata.xml"
           },
-          "visible": {
-            "dependsOn": [
-              "LANGUAGE",
-              "BUILD_SYSTEM"
-            ],
-            "condition": "$LANGUAGE != 'Kotlin' && $BUILD_SYSTEM == 'Gradle'"
+          "forceValue": {
+            "dependsOn": "LANGUAGE",
+            "condition": "$LANGUAGE == 'Kotlin'",
+            "value": "true"
           }
         },
         {
@@ -172,26 +177,6 @@
           "default": false,
           "parameters": {
             "sourceUrl": "https://plugins.gradle.org/m2/xyz/jpenilla/resource-factory/maven-metadata.xml"
-          },
-          "visible": {
-            "dependsOn": [
-              "BUILD_SYSTEM"
-            ],
-            "condition": "$BUILD_SYSTEM == 'Gradle'"
-          }
-        },
-        {
-          "name": "GREMLIN_PLUGIN",
-          "type": "gradle_plugin",
-          "default": false,
-          "parameters": {
-            "sourceUrl": "https://plugins.gradle.org/m2/xyz/jpenilla/gremlin-gradle/maven-metadata.xml"
-          },
-          "visible": {
-            "dependsOn": [
-              "BUILD_SYSTEM"
-            ],
-            "condition": "$BUILD_SYSTEM == 'Gradle'"
           }
         }
       ]
@@ -203,7 +188,9 @@
       "default": 17,
       "visible": false,
       "derives": {
-        "parents": ["MC_VERSION"],
+        "parents": [
+          "MC_VERSION"
+        ],
         "method": "recommendJavaVersionForMcVersion",
         "default": 17
       }
@@ -267,7 +254,7 @@
     {
       "template": "plugin.yml.ft",
       "destination": "src/main/resources/plugin.yml",
-      "condition": "!$USE_RESOURCE_FACTORY_PLUGIN"
+      "condition": "!RESOURCE_FACTORY_PLUGIN.enabled"
     },
     {
       "template": "MainClass.java.ft",
@@ -285,7 +272,9 @@
   "finalizers": [
     {
       "type": "run_gradle_tasks",
-      "tasks": ["wrapper --gradle-version=latest"],
+      "tasks": [
+        "wrapper --gradle-version=latest"
+      ],
       "condition": "$BUILD_SYSTEM=='Gradle'"
     },
     {

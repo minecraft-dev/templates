@@ -97,25 +97,9 @@
       }
     },
     {
-      "name": "INCLUDE_PLUGIN_LOADER",
-      "type": "boolean",
-      "default": false
-    },
-    {
-      "name": "JAVA_PLUGIN_LOADER",
-      "type": "boolean",
-      "default": true,
-      "visible": {
-        "dependsOn": [
-          "LANGUAGE",
-          "INCLUDE_PLUGIN_LOADER"
-        ],
-        "condition": "$LANGUAGE=='Kotlin' && $INCLUDE_PLUGIN_LOADER"
-      }
-    },
-    {
       "label": "creator.ui.optional_settings.label",
       "collapsible": true,
+      "order": 2,
       "groupProperties": [
         {
           "name": "DESCRIPTION",
@@ -148,14 +132,14 @@
             "STARTUP",
             "POSTWORLD"
           ],
-          "default": "POSTWORLD",
-          "nullIfDefault": true
+          "default": "POSTWORLD"
         }
       ]
     },
     {
       "label": "creator.ui.gradle_plugins.label",
       "collapsible": true,
+      "order": 2,
       "visible": {
         "dependsOn": [
           "BUILD_SYSTEM"
@@ -163,6 +147,21 @@
         "condition": "$BUILD_SYSTEM == 'Gradle'"
       },
       "groupProperties": [
+        {
+          "name": "GREMLIN_PLUGIN",
+          "type": "gradle_plugin",
+          "default": false,
+          "order": 10,
+          "parameters": {
+            "sourceUrl": "https://plugins.gradle.org/m2/xyz/jpenilla/gremlin-gradle/maven-metadata.xml"
+          },
+          "visible": {
+            "dependsOn": [
+              "BUILD_SYSTEM"
+            ],
+            "condition": "$BUILD_SYSTEM == 'Gradle'"
+          }
+        },
         {
           "name": "RUN_PAPER_PLUGIN",
           "type": "gradle_plugin",
@@ -198,10 +197,17 @@
           },
           "visible": {
             "dependsOn": [
-              "LANGUAGE",
               "BUILD_SYSTEM"
             ],
-            "condition": "$LANGUAGE != 'Kotlin' && $BUILD_SYSTEM == 'Gradle'"
+            "condition": "$BUILD_SYSTEM == 'Gradle'"
+          },
+          "forceValue": {
+            "dependsOn": [
+              "LANGUAGE",
+              "GREMLIN_PLUGIN"
+            ],
+            "condition": "$LANGUAGE == 'Kotlin' || $GREMLIN_PLUGIN.enabled",
+            "value": "true"
           }
         },
         {
@@ -231,22 +237,32 @@
             ],
             "condition": "$BUILD_SYSTEM == 'Gradle'"
           }
-        },
-        {
-          "name": "GREMLIN_PLUGIN",
-          "type": "gradle_plugin",
-          "default": false,
-          "parameters": {
-            "sourceUrl": "https://plugins.gradle.org/m2/xyz/jpenilla/gremlin-gradle/maven-metadata.xml"
-          },
-          "visible": {
-            "dependsOn": [
-              "BUILD_SYSTEM"
-            ],
-            "condition": "$BUILD_SYSTEM == 'Gradle'"
-          }
         }
       ]
+    },
+    {
+      "name": "INCLUDE_PLUGIN_LOADER",
+      "type": "boolean",
+      "order": 1,
+      "default": false,
+      "forceValue": {
+        "dependsOn": "GREMLIN_PLUGIN",
+        "condition": "$GREMLIN_PLUGIN.enabled",
+        "value": "false"
+      }
+    },
+    {
+      "name": "JAVA_PLUGIN_LOADER",
+      "type": "boolean",
+      "order": 1,
+      "default": true,
+      "visible": {
+        "dependsOn": [
+          "LANGUAGE",
+          "INCLUDE_PLUGIN_LOADER"
+        ],
+        "condition": "$LANGUAGE=='Kotlin' && $INCLUDE_PLUGIN_LOADER"
+      }
     },
     {
       "name": "JAVA_VERSION",
@@ -320,12 +336,12 @@
     {
       "template": "plugin.yml.ft",
       "destination": "src/main/resources/plugin.yml",
-      "condition": "!$USE_PAPER_MANIFEST && !$USE_RESOURCE_FACTORY_PLUGIN"
+      "condition": "!$RESOURCE_FACTORY_PLUGIN.enabled && !$USE_PAPER_MANIFEST"
     },
     {
       "template": "plugin.yml.ft",
       "destination": "src/main/resources/paper-plugin.yml",
-      "condition": "$USE_PAPER_MANIFEST && !$USE_RESOURCE_FACTORY_PLUGIN"
+      "condition": "!$RESOURCE_FACTORY_PLUGIN.enabled && $USE_PAPER_MANIFEST"
     },
     {
       "template": "MainClass.java.ft",
@@ -352,12 +368,12 @@
     {
       "template": "LoaderClass.java.ft",
       "destination": "src/main/java/${MAIN_CLASS.packagePath}/${MAIN_CLASS.className}Loader.java",
-      "condition": "!$USE_GREMLIN && $INCLUDE_PLUGIN_LOADER && $JAVA_PLUGIN_LOADER"
+      "condition": "$INCLUDE_PLUGIN_LOADER && $JAVA_PLUGIN_LOADER"
     },
     {
       "template": "LoaderClass.kt.ft",
       "destination": "src/main/kotlin/${MAIN_CLASS.packagePath}/${MAIN_CLASS.className}Loader.kt",
-      "condition": "!$USE_GREMLIN && $INCLUDE_PLUGIN_LOADER && !$JAVA_PLUGIN_LOADER"
+      "condition": "$INCLUDE_PLUGIN_LOADER && !$JAVA_PLUGIN_LOADER"
     }
   ],
   "finalizers": [
