@@ -191,17 +191,33 @@
   ],
   "finalizers": [
     {
-      "type": "import_maven_project",
-      "condition": "$BUILD_SYSTEM=='Maven'"
+      "type": "run_gradle_tasks",
+      "tasks": ["wrapper"],
+      "condition": "$BUILD_SYSTEM=='Gradle'"
     },
     {
       "type": "import_gradle_project",
       "condition": "$BUILD_SYSTEM=='Gradle'"
     },
     {
-      "type": "run_gradle_tasks",
-      "tasks": ["wrapper"],
+      "type": "add_gradle_run",
+      "tasks": [
+        "build"
+      ],
+      "name": "Build",
       "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
+      "type": "import_maven_project",
+      "condition": "$BUILD_SYSTEM=='Maven'"
+    },
+    {
+      "type": "add_maven_run",
+      "goals": [
+        "package"
+      ],
+      "name": "Build",
+      "condition": "$BUILD_SYSTEM=='Maven'"
     },
     {
       "type": "git_add_all",
