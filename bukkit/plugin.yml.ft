@@ -11,13 +11,13 @@ main: ${MAIN_CLASS}
 #if (${INCLUDE_PLUGIN_BOOTSTRAP})
 bootstrapper: ${MAIN_CLASS.packageName}.${MAIN_CLASS.className}Bootstrap
 #end
-#if (${INCLUDE_PLUGIN_LOADER} && !${USE_GREMLIN} && !${USE_PAPER_MANIFEST})
+#if (${INCLUDE_PLUGIN_LOADER} && !${GREMLIN_PLUGIN.enabled} && !${USE_PAPER_MANIFEST})
 paperPluginLoader: ${MAIN_CLASS.packageName}.${MAIN_CLASS.className}Loader
-#elseif (${USE_GREMLIN} && !${USE_PAPER_MANIFEST})
+#elseif (${GREMLIN_PLUGIN.enabled} && !${USE_PAPER_MANIFEST})
 paperPluginLoader: xyz.jpenilla.gremlin.runtime.platformsupport.DefaultsPaperPluginLoader
-#elseif (${INCLUDE_PLUGIN_LOADER} && !${USE_GREMLIN} && ${USE_PAPER_MANIFEST})
+#elseif (${INCLUDE_PLUGIN_LOADER} && !${GREMLIN_PLUGIN.enabled} && ${USE_PAPER_MANIFEST})
 loader: ${MAIN_CLASS.packageName}.${MAIN_CLASS.className}Loader
-#elseif (${USE_GREMLIN} && ${USE_PAPER_MANIFEST})
+#elseif (${GREMLIN_PLUGIN.enabled} && ${USE_PAPER_MANIFEST})
 loader: xyz.jpenilla.gremlin.runtime.platformsupport.DefaultsPaperPluginLoader
 #end
 #if (${API_VERSION})
