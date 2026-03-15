@@ -1,0 +1,9 @@
+group=${BUILD_COORDS.groupId}
+version=${BUILD_COORDS.version}
+#if ($DESCRIPTION)
+description=${DESCRIPTION}
+#end
+
+org.gradle.configuration-cache=true
+org.gradle.parallel=true
+org.gradle.caching=true

@@ -1,0 +1,15 @@
+{
+  "id": "${PLUGIN_ID}",
+  "name": "${PLUGIN_NAME}",
+  "version": "$version",
+  "main": "${MAIN_CLASS}"
+#if ($DESCRIPTION)
+  ,"description": "${DESCRIPTION}"
+#end
+#if ($WEBSITE)
+  ,"url": "${WEBSITE}"
+#end
+#if ($AUTHORS)
+  ,"authors": [${AUTHORS.toString('", "', '"', '"')}]
+#end
+}

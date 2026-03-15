@@ -306,7 +306,7 @@
       "destination": "gradle/wrapper/gradle-wrapper.properties",
       "condition": "$BUILD_SYSTEM=='Gradle'",
       "properties": {
-        "GRADLE_VERSION": "9.3.0"
+        "GRADLE_VERSION": "9.4.0"
       }
     },
     {

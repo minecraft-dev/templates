@@ -16,6 +16,17 @@
       ]
     },
     {
+      "name": "USE_VERSION_CATALOG",
+      "type": "boolean",
+      "default": false,
+      "visible": {
+        "dependsOn": [
+          "BUILD_SYSTEM"
+        ],
+        "condition": "$BUILD_SYSTEM == 'Gradle'"
+      }
+    },
+    {
       "name": "LANGUAGE",
       "type": "string",
       "options": [
@@ -28,6 +39,7 @@
       "type": "semantic_version",
       "forceDropdown": true,
       "options": [
+        "3.5.0-SNAPSHOT",
         "3.4.0-SNAPSHOT",
         "3.3.0-SNAPSHOT",
         "3.2.0-SNAPSHOT",
@@ -46,9 +58,21 @@
         "sourceUrl": "https://repo1.maven.org/maven2/org/jetbrains/kotlin/kotlin-stdlib-jdk8/maven-metadata.xml"
       },
       "visible": {
-        "dependsOn": ["LANGUAGE"],
+        "dependsOn": [
+          "LANGUAGE"
+        ],
         "condition": "$LANGUAGE == 'Kotlin'"
       }
+    },
+    {
+      "name": "USE_ANNOTATION_PROCESSOR",
+      "type": "boolean",
+      "default": false
+    },
+    {
+      "name": "USE_BUILD_CONSTANTS_TEMPLATING",
+      "type": "boolean",
+      "default": "USE_ANNOTATION_PROCESSOR"
     },
     {
       "name": "PLUGIN_NAME",
@@ -60,7 +84,9 @@
       "type": "string",
       "validator": "[a-z][a-z0-9-_]{1,63}",
       "derives": {
-        "parents": ["PROJECT_NAME"],
+        "parents": [
+          "PROJECT_NAME"
+        ],
         "method": "replace",
         "parameters": {
           "regex": "[^a-z0-9-_]+",
@@ -74,7 +100,10 @@
       "name": "MAIN_CLASS",
       "type": "class_fqn",
       "derives": {
-        "parents": ["BUILD_COORDS", "PLUGIN_NAME"],
+        "parents": [
+          "BUILD_COORDS",
+          "PLUGIN_NAME"
+        ],
         "method": "suggestClassName"
       }
     },
@@ -103,15 +132,80 @@
       ]
     },
     {
+      "label": "creator.ui.gradle_plugins.label",
+      "collapsible": true,
+      "order": 2,
+      "visible": {
+        "dependsOn": [
+          "BUILD_SYSTEM"
+        ],
+        "condition": "$BUILD_SYSTEM == 'Gradle'"
+      },
+      "groupProperties": [
+        {
+          "name": "RUN_VELOCITY_PLUGIN",
+          "type": "gradle_plugin",
+          "default": true,
+          "parameters": {
+            "sourceUrl": "https://plugins.gradle.org/m2/xyz/jpenilla/run-velocity/xyz.jpenilla.run-velocity.gradle.plugin/maven-metadata.xml"
+          }
+        },
+        {
+          "name": "SHADOW_PLUGIN",
+          "type": "gradle_plugin",
+          "default": "$LANGUAGE=='Kotlin'",
+          "parameters": {
+            "sourceUrl": "https://repo.maven.apache.org/maven2/com/gradleup/shadow/shadow-gradle-plugin/maven-metadata.xml"
+          },
+          "forceValue": {
+            "dependsOn": [
+              "LANGUAGE"
+            ],
+            "condition": "$LANGUAGE == 'Kotlin'",
+            "value": "true"
+          }
+        },
+        {
+          "name": "RESOURCE_FACTORY_PLUGIN",
+          "type": "gradle_plugin",
+          "default": false,
+          "parameters": {
+            "sourceUrl": "https://plugins.gradle.org/m2/xyz/jpenilla/resource-factory/maven-metadata.xml"
+          },
+          "forceValue": {
+            "dependsOn": [
+              "USE_ANNOTATION_PROCESSOR"
+            ],
+            "condition": "$USE_ANNOTATION_PROCESSOR",
+            "value": "false"
+          }
+        },
+        {
+          "name": "IDEA_EXT_PLUGIN",
+          "type": "gradle_plugin",
+          "parameters": {
+            "sourceUrl": "https://plugins.gradle.org/m2/org/jetbrains/gradle/plugin/idea-ext/org.jetbrains.gradle.plugin.idea-ext.gradle.plugin/maven-metadata.xml"
+          },
+          "visible": false
+        }
+      ]
+    },
+    {
       "name": "JAVA_VERSION",
       "type": "integer",
       "order": 20,
       "default": 17,
       "visible": false,
       "derives": {
-        "parents": ["VELOCITY_VERSION"],
+        "parents": [
+          "VELOCITY_VERSION"
+        ],
         "default": 8,
         "select": [
+          {
+            "condition": "$VELOCITY_VERSION.compareTo($semver.release(3, 5)) >= 0",
+            "value": 21
+          },
           {
             "condition": "$VELOCITY_VERSION.compareTo($semver.release(3, 3)) >= 0",
             "value": 17
@@ -137,24 +231,32 @@
       "condition": "$USE_GIT"
     },
     {
-      "template": "build.gradle.ft",
-      "destination": "build.gradle",
-      "condition": "$BUILD_SYSTEM=='Gradle' && $LANGUAGE=='Java'"
+      "template": "../.gitattributes.ft",
+      "destination": ".gitattributes",
+      "condition": "$USE_GIT"
     },
     {
-      "template": "settings.gradle.ft",
-      "destination": "settings.gradle",
-      "condition": "$BUILD_SYSTEM=='Gradle' && $LANGUAGE=='Java'"
+      "template": "../gradle-wrapper.properties.ft",
+      "destination": "gradle/wrapper/gradle-wrapper.properties",
+      "condition": "$BUILD_SYSTEM=='Gradle'",
+      "properties": {
+        "GRADLE_VERSION": "9.4.0"
+      }
     },
     {
       "template": "build.gradle.kts.ft",
       "destination": "build.gradle.kts",
-      "condition": "$BUILD_SYSTEM=='Gradle' && $LANGUAGE=='Kotlin'"
+      "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
+      "template": "libs.versions.toml.ft",
+      "destination": "gradle/libs.versions.toml",
+      "condition": "$BUILD_SYSTEM=='Gradle' && $USE_VERSION_CATALOG"
     },
     {
       "template": "settings.gradle.kts.ft",
       "destination": "settings.gradle.kts",
-      "condition": "$BUILD_SYSTEM=='Gradle' && $LANGUAGE=='Kotlin'"
+      "condition": "$BUILD_SYSTEM=='Gradle'"
     },
     {
       "template": "gradle.properties.ft",
@@ -162,14 +264,14 @@
       "condition": "$BUILD_SYSTEM=='Gradle'"
     },
     {
-      "template": "../gradle-wrapper.properties.ft",
-      "destination": "gradle/wrapper/gradle-wrapper.properties",
-      "condition": "$BUILD_SYSTEM=='Gradle'"
-    },
-    {
       "template": "pom.xml.ft",
       "destination": "pom.xml",
       "condition": "$BUILD_SYSTEM=='Maven'"
+    },
+    {
+      "template": "velocity-plugin.json.ft",
+      "destination": "src/main/resources/velocity-plugin.json",
+      "condition": "!$USE_ANNOTATION_PROCESSOR && !$RESOURCE_FACTORY_PLUGIN.enabled"
     },
     {
       "template": "MainClass.java.ft",
@@ -186,13 +288,15 @@
     {
       "template": "BuildConstants.java.ft",
       "destination": "src/main/templates/${MAIN_CLASS.packagePath}/BuildConstants.java",
-      "condition": "$BUILD_SYSTEM=='Gradle'"
+      "condition": "$USE_BUILD_CONSTANTS_TEMPLATING"
     }
   ],
   "finalizers": [
     {
       "type": "run_gradle_tasks",
-      "tasks": ["wrapper"],
+      "tasks": [
+        "wrapper --gradle-version=latest"
+      ],
       "condition": "$BUILD_SYSTEM=='Gradle'"
     },
     {
@@ -206,6 +310,15 @@
       ],
       "name": "Build",
       "condition": "$BUILD_SYSTEM=='Gradle'"
+    },
+    {
+      "type": "add_gradle_run",
+      "tasks": [
+        "runVelocity"
+      ],
+      "name": "Run",
+      "select": true,
+      "condition": "$RUN_VELOCITY_PLUGIN.enabled && $BUILD_SYSTEM=='Gradle'"
     },
     {
       "type": "import_maven_project",
