@@ -12,9 +12,9 @@ import org.slf4j.Logger
 @Plugin(
     id = "${PLUGIN_ID}",
     name = "${PLUGIN_NAME}",
-#if ($BUILD_SYSTEM == 'Gradle')
+#if ($USE_BUILD_CONSTANTS_TEMPLATING)
     version = BuildConstants.VERSION
-#elseif ($BUILD_SYSTEM == 'Maven')
+#else
     version = "${BUILD_COORDS.version}"
 #end
 #if ($DESCRIPTION)

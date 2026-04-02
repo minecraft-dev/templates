@@ -1,7 +1,7 @@
 {
   "id": "${PLUGIN_ID}",
   "name": "${PLUGIN_NAME}",
-  "version": "$version",
+  "version": "${version}",
   "main": "${MAIN_CLASS}"
 #if ($DESCRIPTION)
   ,"description": "${DESCRIPTION}"

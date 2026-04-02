@@ -103,6 +103,7 @@
                 <sourceDir>src/main/kotlin</sourceDir>
                 <sourceDir>src/main/java</sourceDir>
               </sourceDirs>
+#if ($USE_ANNOTATION_PROCESSOR)
               <annotationProcessorPaths>
                 <annotationProcessorPath>
                   <groupId>com.velocitypowered</groupId>
@@ -110,6 +111,7 @@
                   <version>${VELOCITY_VERSION}</version>
                 </annotationProcessorPath>
               </annotationProcessorPaths>
+#end
             </configuration>
           </execution>
           <execution>
@@ -145,8 +147,18 @@
         <configuration>
           <source>${java.version}</source>
           <target>${java.version}</target>
+#if ($USE_ANNOTATION_PROCESSOR)
+          <annotationProcessorPaths>
+              <annotationProcessorPath>
+                <groupId>com.velocitypowered</groupId>
+                <artifactId>velocity-api</artifactId>
+                <version>${VELOCITY_VERSION}</version>
+              </annotationProcessorPath>
+          </annotationProcessorPaths>
+#end
         </configuration>
       </plugin>
+#if ($USE_BUILD_CONSTANTS_TEMPLATING)
       <plugin>
         <groupId>org.codehaus.mojo</groupId>
         <artifactId>templating-maven-plugin</artifactId>
@@ -160,6 +172,7 @@
           </execution>
         </executions>
       </plugin>
+#end
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-site-plugin</artifactId>

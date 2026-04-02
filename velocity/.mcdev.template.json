@@ -271,7 +271,7 @@
     {
       "template": "velocity-plugin.json.ft",
       "destination": "src/main/resources/velocity-plugin.json",
-      "condition": "!$USE_ANNOTATION_PROCESSOR && !$RESOURCE_FACTORY_PLUGIN.enabled"
+      "condition": "!$USE_ANNOTATION_PROCESSOR && !($BUILD_SYSTEM=='Gradle' && $RESOURCE_FACTORY_PLUGIN.enabled)"
     },
     {
       "template": "MainClass.java.ft",
@@ -288,7 +288,12 @@
     {
       "template": "BuildConstants.java.ft",
       "destination": "src/main/templates/${MAIN_CLASS.packagePath}/BuildConstants.java",
-      "condition": "$USE_BUILD_CONSTANTS_TEMPLATING"
+      "condition": "$USE_BUILD_CONSTANTS_TEMPLATING && $BUILD_SYSTEM=='Gradle'"
+    },
+    {
+      "template": "BuildConstants.java.ft",
+      "destination": "src/main/java-templates/${MAIN_CLASS.packagePath}/BuildConstants.java",
+      "condition": "$USE_BUILD_CONSTANTS_TEMPLATING && $BUILD_SYSTEM=='Maven'"
     }
   ],
   "finalizers": [
