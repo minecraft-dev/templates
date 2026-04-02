@@ -222,6 +222,7 @@
     {
       "template": "../gradle-wrapper.properties.ft",
       "destination": "gradle/wrapper/gradle-wrapper.properties",
+      "condition": "$BUILD_SYSTEM=='Gradle'",
       "properties": {
         "GRADLE_VERSION": "9.3.0"
       }
@@ -254,7 +255,7 @@
     {
       "template": "plugin.yml.ft",
       "destination": "src/main/resources/plugin.yml",
-      "condition": "!RESOURCE_FACTORY_PLUGIN.enabled"
+      "condition": "$BUILD_SYSTEM=='Maven' || !$RESOURCE_FACTORY_PLUGIN.enabled"
     },
     {
       "template": "MainClass.java.ft",
