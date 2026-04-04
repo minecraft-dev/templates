@@ -68,11 +68,11 @@ dependencies {
 #elseif ($IS_SPIGOT && $USE_VERSION_CATALOG)
     compileOnly(libs.spigot.api)
 #elseif ($IS_PAPER && !$PAPERWEIGHT_USERDEV_PLUGIN.enabled && !$USE_VERSION_CATALOG)
-    compileOnly("io.papermc.paper:paper-api:${MC_VERSION}-R0.1-SNAPSHOT")
+    compileOnly("io.papermc.paper:paper-api:${DEPENDENCY_VERSION}")
 #elseif ($IS_PAPER && !$PAPERWEIGHT_USERDEV_PLUGIN.enabled && $USE_VERSION_CATALOG)
     compileOnly(libs.paper.api)
 #elseif ($IS_PAPER && $PAPERWEIGHT_USERDEV_PLUGIN.enabled && !$USE_VERSION_CATALOG)
-    paperweight.paperDevBundle("${MC_VERSION}-R0.1-SNAPSHOT")
+    paperweight.paperDevBundle("${DEPENDENCY_VERSION}")
 #elseif ($IS_PAPER && $PAPERWEIGHT_USERDEV_PLUGIN.enabled && $USE_VERSION_CATALOG)
     paperweight.paperDevBundle(libs.versions.paper.api.get())
 #end
