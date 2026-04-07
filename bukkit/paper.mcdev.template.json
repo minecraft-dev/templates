@@ -1,5 +1,5 @@
 {
-  "version": 2,
+  "version": 3,
   "group": "plugin",
   "properties": [
     {
@@ -288,6 +288,18 @@
       "type": "boolean",
       "visible": false,
       "default": true
+    },
+    {
+      "name": "DEPENDENCY_VERSION",
+      "type": "string",
+      "derives": {
+        "parents": [
+          "MC_VERSION",
+          "BUILD_SYSTEM"
+        ],
+        "method": "fetchPaperDependencyVersionForMcVersion"
+      },
+      "visible": false
     }
   ],
   "files": [

@@ -4,7 +4,7 @@ kotlin = "$KOTLIN_VERSION"
 
 #end
 #if ($IS_PAPER)
-paper-api = "${MC_VERSION}-R0.1-SNAPSHOT"
+paper-api = "${DEPENDENCY_VERSION}"
 #elseif ($IS_SPIGOT)
 spigot-api = "${MC_VERSION}-R0.1-SNAPSHOT"
 #end
