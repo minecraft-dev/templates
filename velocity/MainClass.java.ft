@@ -3,15 +3,18 @@ package ${MAIN_CLASS.packageName};
 import com.google.inject.Inject;
 import com.velocitypowered.api.event.proxy.ProxyInitializeEvent;
 import com.velocitypowered.api.event.Subscribe;
+#if ($USE_ANNOTATION_PROCESSOR)
 import com.velocitypowered.api.plugin.Plugin;
+#end
 import org.slf4j.Logger;
 
+#if ($USE_ANNOTATION_PROCESSOR)
 @Plugin(
     id = "${PLUGIN_ID}",
     name = "${PLUGIN_NAME}",
-#if ($BUILD_SYSTEM == 'Gradle')
+#if ($USE_BUILD_CONSTANTS_TEMPLATING)
     version = BuildConstants.VERSION
-#elseif ($BUILD_SYSTEM == 'Maven')
+#else
     version = "${BUILD_COORDS.version}"
 #end
 #if ($DESCRIPTION)
@@ -24,11 +27,13 @@ import org.slf4j.Logger;
     ,authors = {${AUTHORS.toString('", "', '"', '"')}}
 #end
 )
+#end
 public class ${MAIN_CLASS.className} {
 
     @Inject private Logger logger;
 
     @Subscribe
     public void onProxyInitialization(ProxyInitializeEvent event) {
+      // Plugin initialization logic goes here
     }
 }

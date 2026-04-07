@@ -1,44 +1,137 @@
+#if ($USE_BUILD_CONSTANTS_TEMPLATING)
 import org.jetbrains.gradle.ext.settings
 import org.jetbrains.gradle.ext.taskTriggers
+#end
 
 plugins {
-    kotlin("jvm") version "2.0.20-Beta1"
-    kotlin("kapt") version "2.0.20-Beta1"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
+#if ($LANGUAGE == 'Kotlin')
+    kotlin("jvm") version #if ($USE_VERSION_CATALOG) libs.versions.kotlin.get() #else "${KOTLIN_VERSION}" #end
+#if ($USE_ANNOTATION_PROCESSOR)
+    kotlin("kapt") version #if ($USE_VERSION_CATALOG) libs.versions.kotlin.get() #else "${KOTLIN_VERSION}" #end
+#end
+#elseif ($LANGUAGE == 'Java')
+    id("java-library")
+#end
+#if ($USE_VERSION_CATALOG)
+#if ($SHADOW_PLUGIN.enabled)
+    alias(libs.plugins.shadow)
+#end
+#if ($RUN_VELOCITY_PLUGIN.enabled)
+    alias(libs.plugins.run.velocity)
+#end
+#if ($RESOURCE_FACTORY_PLUGIN.enabled)
+    alias(libs.plugins.resource.factory.velocity)
+#end
+#if ($USE_BUILD_CONSTANTS_TEMPLATING)
     id("eclipse")
-    id("org.jetbrains.gradle.plugin.idea-ext") version "1.1.8"
-    id("xyz.jpenilla.run-velocity") version "2.3.1"
+    alias(libs.plugins.idea.ext)
+#end
+#else
+#if ($SHADOW_PLUGIN.enabled)
+    id("com.gradleup.shadow") version "$SHADOW_PLUGIN.version"
+#end
+#if ($RUN_VELOCITY_PLUGIN.enabled)
+    id("xyz.jpenilla.run-velocity") version "$RUN_VELOCITY_PLUGIN.version"
+#end
+#if ($RESOURCE_FACTORY_PLUGIN.enabled)
+    id("xyz.jpenilla.resource-factory-velocity-convention") version "$RESOURCE_FACTORY_PLUGIN.version"
+#end
+#if ($USE_BUILD_CONSTANTS_TEMPLATING)
+    id("eclipse")
+    id("org.jetbrains.gradle.plugin.idea-ext") version "$IDEA_EXT_PLUGIN.version"
+#end
+#end
 }
-
-group = "${BUILD_COORDS.groupId}"
-version = "${BUILD_COORDS.version}"
 
 repositories {
     mavenCentral()
-    maven("https://repo.papermc.io/repository/maven-public/") {
-        name = "papermc-repo"
-    }
+    maven("https://repo.papermc.io/repository/maven-public/")
 }
 
 dependencies {
+#if ($USE_VERSION_CATALOG)
+    compileOnly(libs.velocity.api)
+#if ($USE_ANNOTATION_PROCESSOR && $LANGUAGE == 'Java')
+    annotationProcessor(libs.velocity.api)
+#elseif ($USE_ANNOTATION_PROCESSOR && $LANGUAGE == 'Kotlin')
+    kapt(libs.velocity.api)
+#end
+#if ($LANGUAGe == 'Kotlin')
+    implementation(libs.kotlin.stdlib)
+#end
+#else
     compileOnly("com.velocitypowered:velocity-api:${VELOCITY_VERSION}")
+#if ($USE_ANNOTATION_PROCESSOR && $LANGUAGE == 'Java')
+    annotationProcessor("com.velocitypowered:velocity-api:${VELOCITY_VERSION}")
+#elseif ($USE_ANNOTATION_PROCESSOR && $LANGUAGE == 'Kotlin')
     kapt("com.velocitypowered:velocity-api:${VELOCITY_VERSION}")
+#end
+#if ($LANGUAGe == 'Kotlin')
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
+#end
+#end
 }
+#if ($RESOURCE_FACTORY_PLUGIN.enabled)
 
+velocityPluginJson {
+    id = "${PLUGIN_ID}"
+    name = "${PLUGIN_NAME}"
+    main = "${MAIN_CLASS}"
+#if ($AUTHORS)
+    authors = listOf(${AUTHORS.toStringQuoted()})
+#end
+#if ($WEBSITE)
+    url = "$WEBSITE"
+#end
+}
+#end
+
+#if ($LANGUAGE == 'Java')
+java {
+    toolchain.languageVersion = JavaLanguageVersion.of(${JAVA_VERSION})
+}
+#else
+kotlin {
+    jvmToolchain(${JAVA_VERSION})
+}
+#end
+
+#if ($SHADOW_PLUGIN.enabled || $RUN_VELOCITY_PLUGIN.enabled || !$RESOURCE_FACTORY_PLUGIN.enabled)
 tasks {
+#if ($SHADOW_PLUGIN.enabled)
+    build {
+        dependsOn(shadowJar)
+    }
+#end
+#if ($RUN_VELOCITY_PLUGIN.enabled)
+#if ($SHADOW_PLUGIN.enabled)
+
+#end
   runVelocity {
+#if ($USE_VERSION_CATALOG)
+    velocityVersion(libs.versions.velocity.api.get())
+#else
     // Configure the Velocity version for our task.
     // This is the only required configuration besides applying the plugin.
     // Your plugin's jar (or shadowJar if present) will be used automatically.
     velocityVersion("${VELOCITY_VERSION}")
+#end
   }
-}
+#end
+#if (!$USE_ANNOTATION_PROCESSOR && !$RESOURCE_FACTORY_PLUGIN.enabled)
+#if ($SHADOW_PLUGIN.enabled || $RUN_VELOCITY_PLUGIN.enabled)
 
-val targetJavaVersion = 17
-kotlin {
-    jvmToolchain(targetJavaVersion)
+#end
+    processResources {
+        val props = mapOf("version" to version #if ($DESCRIPTION), "description" to project.description #end)
+        filesMatching("velocity-plugin.json") {
+            expand(props)
+        }
+    }
+#end
 }
+#end
+#if ($USE_BUILD_CONSTANTS_TEMPLATING)
 
 val templateSource = file("src/main/templates")
 val templateDest = layout.buildDirectory.dir("generated/sources/templates")
@@ -55,3 +148,4 @@ sourceSets.main.configure { java.srcDir(generateTemplates.map { it.outputs }) }
 
 project.idea.project.settings.taskTriggers.afterSync(generateTemplates)
 project.eclipse.synchronizationTasks(generateTemplates)
+#end

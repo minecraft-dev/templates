@@ -5,7 +5,7 @@ description: $description
 #if (${LOG_PREFIX})
 prefix: ${LOG_PREFIX}
 #end
-version: '$version'
+version: '${version}'
 
 main: ${MAIN_CLASS}
 #if (${INCLUDE_PLUGIN_BOOTSTRAP})
