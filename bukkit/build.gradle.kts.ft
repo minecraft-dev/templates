@@ -76,11 +76,6 @@ dependencies {
 #elseif ($IS_PAPER && $PAPERWEIGHT_USERDEV_PLUGIN.enabled && $USE_VERSION_CATALOG)
     paperweight.paperDevBundle(libs.versions.paper.api.get())
 #end
-#if ($GREMLIN_PLUGIN.enabled && !$USE_VERSION_CATALOG)
-    implementation("xyz.jpenilla:gremlin-runtime:$GREMLIN_PLUGIN.version")
-#elseif ($GREMLIN_PLUGIN.enabled && $USE_VERSION_CATALOG)
-    implementation(libs.gremlin.runtime)
-#end
 #if ($LANGUAGE=='Kotlin' && !$USE_VERSION_CATALOG && !$GREMLIN_PLUGIN.enabled)
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
 #elseif ($LANGUAGE=='Kotlin' && $USE_VERSION_CATALOG && !$GREMLIN_PLUGIN.enabled)
