@@ -79,6 +79,7 @@ dependencies {
 		modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
 	#end
 #end
+}
 
 tasks.processResources {
     inputs.property("version", project.version)
