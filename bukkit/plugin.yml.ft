@@ -12,9 +12,9 @@ main: ${MAIN_CLASS}
 bootstrapper: ${MAIN_CLASS.packageName}.${MAIN_CLASS.className}Bootstrap
 #end
 #if (${INCLUDE_PLUGIN_LOADER} && !${GREMLIN_PLUGIN.enabled} && !${USE_PAPER_MANIFEST})
-paperPluginLoader: ${MAIN_CLASS.packageName}.${MAIN_CLASS.className}Loader
+paper-plugin-loader: ${MAIN_CLASS.packageName}.${MAIN_CLASS.className}Loader
 #elseif (${GREMLIN_PLUGIN.enabled} && !${USE_PAPER_MANIFEST})
-paperPluginLoader: xyz.jpenilla.gremlin.runtime.platformsupport.DefaultsPaperPluginLoader
+paper-plugin-loader: xyz.jpenilla.gremlin.runtime.platformsupport.DefaultsPaperPluginLoader
 #elseif (${INCLUDE_PLUGIN_LOADER} && !${GREMLIN_PLUGIN.enabled} && ${USE_PAPER_MANIFEST})
 loader: ${MAIN_CLASS.packageName}.${MAIN_CLASS.className}Loader
 #elseif (${GREMLIN_PLUGIN.enabled} && ${USE_PAPER_MANIFEST})
