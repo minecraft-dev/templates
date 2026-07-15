@@ -60,24 +60,24 @@ dependencies {
     // To change the versions see the gradle.properties file
     minecraft("com.mojang:minecraft:${project.property("minecraft_version")}")
 #if ($VERSIONS.minecraftVersion.compareTo($mcver.MC26_1) >= 0)
-	implementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
+    implementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
     implementation("net.fabricmc:fabric-language-kotlin:${project.property("kotlin_loader_version")}")
-	
-	#if (${VERSIONS.useFabricApi})
-		implementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
-	#end
+    
+    #if (${VERSIONS.useFabricApi})
+        implementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
+    #end
 #else
-	#if (${VERSIONS.useOfficialMappings})
-		mappings(loom.officialMojangMappings())
-	#else
-		mappings("net.fabricmc:yarn:${project.property("yarn_mappings")}:v2")
-	#end
-	modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
+    #if (${VERSIONS.useOfficialMappings})
+        mappings(loom.officialMojangMappings())
+    #else
+        mappings("net.fabricmc:yarn:${project.property("yarn_mappings")}:v2")
+    #end
+    modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
     modImplementation("net.fabricmc:fabric-language-kotlin:${project.property("kotlin_loader_version")}")
 
-	#if (${VERSIONS.useFabricApi})
-		modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
-	#end
+    #if (${VERSIONS.useFabricApi})
+        modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
+    #end
 #end
 }
 
