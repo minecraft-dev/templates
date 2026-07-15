@@ -3,7 +3,11 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
     kotlin("jvm") version "${KOTLIN_LOADER_VERSION.toString().split("kotlin.")[1]}"
+#if ($VERSIONS.minecraftVersion.compareTo($mcver.MC26_1) >= 0)
+    id("net.fabricmc.fabric-loom") version "${VERSIONS.loom}"
+#else
     id("fabric-loom") version "${VERSIONS.loom}"
+#end
     id("maven-publish")
 }
 
@@ -55,16 +59,25 @@ repositories {
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft("com.mojang:minecraft:${project.property("minecraft_version")}")
-#if (${VERSIONS.useOfficialMappings})
-    mappings(loom.officialMojangMappings())
+#if ($VERSIONS.minecraftVersion.compareTo($mcver.MC26_1) >= 0)
+    implementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
+    implementation("net.fabricmc:fabric-language-kotlin:${project.property("kotlin_loader_version")}")
+    
+    #if (${VERSIONS.useFabricApi})
+        implementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
+    #end
 #else
-    mappings("net.fabricmc:yarn:${project.property("yarn_mappings")}:v2")
-#end
+    #if (${VERSIONS.useOfficialMappings})
+        mappings(loom.officialMojangMappings())
+    #else
+        mappings("net.fabricmc:yarn:${project.property("yarn_mappings")}:v2")
+    #end
     modImplementation("net.fabricmc:fabric-loader:${project.property("loader_version")}")
     modImplementation("net.fabricmc:fabric-language-kotlin:${project.property("kotlin_loader_version")}")
 
-#if (${VERSIONS.useFabricApi})
-    modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
+    #if (${VERSIONS.useFabricApi})
+        modImplementation("net.fabricmc.fabric-api:fabric-api:${project.property("fabric_version")}")
+    #end
 #end
 }
 

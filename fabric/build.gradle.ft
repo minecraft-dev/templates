@@ -1,5 +1,9 @@
 plugins {
+#if ($VERSIONS.minecraftVersion.compareTo($mcver.MC26_1) >= 0)
+    id 'net.fabricmc.fabric-loom' version '${VERSIONS.loom}'
+#else
     id 'fabric-loom' version '${VERSIONS.loom}'
+#end
     id 'maven-publish'
 }
 
@@ -42,15 +46,23 @@ repositories {
 dependencies {
     // To change the versions see the gradle.properties file
     minecraft "com.mojang:minecraft:${project.minecraft_version}"
-#if (${VERSIONS.useOfficialMappings})
-    mappings loom.officialMojangMappings()
+#if ($VERSIONS.minecraftVersion.compareTo($mcver.MC26_1) >= 0)
+    implementation "net.fabricmc:fabric-loader:${project.loader_version}"
+    
+    #if (${VERSIONS.useFabricApi})
+        implementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    #end
 #else
-    mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
-#end
+    #if (${VERSIONS.useOfficialMappings})
+        mappings loom.officialMojangMappings()
+    #else
+        mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
+    #end
     modImplementation "net.fabricmc:fabric-loader:${project.loader_version}"
 
-#if (${VERSIONS.useFabricApi})
-    modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    #if (${VERSIONS.useFabricApi})
+        modImplementation "net.fabricmc.fabric-api:fabric-api:${project.fabric_version}"
+    #end
 #end
 }
 
