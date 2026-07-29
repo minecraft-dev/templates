@@ -37,9 +37,6 @@ spigot-api = { module = "org.spigotmc:spigot-api", version.ref = "spigot-api" }
 #if ($LANGUAGE=='Kotlin')
 kotlin-stdlib = { module = "org.jetbrains.kotlin:kotlin-stdlib-jdk8", version.ref = "kotlin" }
 #end
-#if ($GREMLIN_PLUGIN.enabled)
-gremlin-runtime = { module = "xyz.jpenilla:gremlin-runtime", version.ref = "gremlin" }
-#end
 
 [plugins]
 #if ($PAPERWEIGHT_USERDEV_PLUGIN.enabled)
