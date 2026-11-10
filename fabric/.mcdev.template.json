@@ -3,11 +3,6 @@
   "group": "mod",
   "properties": [
     {
-      "name": "BUILD_COORDS",
-      "type": "build_system_coordinates",
-      "order": 10
-    },
-    {
       "name": "LANGUAGE",
       "type": "string",
       "options": [
@@ -17,44 +12,33 @@
       "default": 0
     },
     {
-      "name": "VERSIONS",
-      "type": "fabric_versions"
+      "name": "MC_VERSION",
+      "type": "fabric_game_version",
+      "remember": false
     },
     {
-      "name": "KOTLIN_LOADER_VERSION",
-      "type": "maven_artifact_version",
-      "parameters": {
-        "sourceUrl": "https://maven.fabricmc.net/net/fabricmc/fabric-language-kotlin/maven-metadata.xml",
-        "rawVersionFilter": "$version.contains('+kotlin.')"
-      },
-      "visible": {
-        "dependsOn": "LANGUAGE",
-        "condition": "$LANGUAGE == 'Kotlin'"
-      }
-    },
-    {
-      "name": "MOD_ENVIRONMENT",
-      "type": "string",
-      "options": [
-        "*",
-        "client",
-        "server"
-      ],
-      "default": "*"
-    },
-    {
-      "name": "USE_MIXINS",
+      "name": "USE_GRADLE_KOTLIN_DSL",
       "type": "boolean",
-      "remember": "fabric.USE_MIXINS",
-      "default": true
+      "remember": "fabric.USE_GRADLE_KOTLIN_DSL",
+      "default": false
+    },
+    {
+      "name": "USE_MOJANG_MAPPINGS",
+      "type": "boolean",
+      "remember": "fabric.USE_MOJANG_MAPPINGS",
+      "default": true,
+      "visible": {
+        "dependsOn": ["MC_VERSION"],
+        "condition": "$MC_VERSION.compareTo($mcver.MC26_1) < 0"
+      }
     },
     {
       "name": "USE_DATAGEN",
       "type": "boolean",
-      "default": true,
+      "default": false,
       "visible": {
-        "dependsOn": ["VERSIONS"],
-        "condition": "$VERSIONS.useFabricApi"
+        "dependsOn": ["MC_VERSION"],
+        "condition": "$MC_VERSION.compareTo($mcver.MC1_17) >= 0"
       }
     },
     {
@@ -62,23 +46,8 @@
       "type": "boolean",
       "default": true,
       "visible": {
-        "dependsOn": ["VERSIONS"],
-        "condition": "$VERSIONS.minecraftVersion.compareTo($mcver.MC1_18) >= 0"
-      }
-    },
-    {
-      "name": "CLIENT_SOURCE_SET",
-      "type": "string",
-      "visible": false,
-      "derives": {
-        "parents": ["VERSIONS", "SPLIT_SOURCES"],
-        "select": [
-          {
-            "condition": "$SPLIT_SOURCES && $VERSIONS.minecraftVersion.compareTo($mcver.MC1_18) >= 0",
-            "value": "client"
-          }
-        ],
-        "default": "main"
+        "dependsOn": ["MC_VERSION"],
+        "condition": "$MC_VERSION.compareTo($mcver.MC1_19) >= 0"
       }
     },
     {
@@ -102,11 +71,29 @@
       "inheritFrom": "PROJECT_NAME"
     },
     {
-      "name": "MAIN_CLASS",
-      "type": "class_fqn",
+      "name": "MOD_ID_PACKAGE_SEGMENT",
+      "type": "string",
+      "visible": false,
       "derives": {
-        "parents": ["BUILD_COORDS", "MOD_ID"],
-        "method": "suggestClassName"
+        "parents": ["MOD_ID"],
+        "method": "replace",
+        "parameters": {
+          "regex": "-",
+          "replacement": "_"
+        }
+      }
+    },
+    {
+      "name": "PACKAGE_NAME",
+      "type": "string",
+      "validator": "[a-z_][a-z0-9_]*(\\.[a-z_][a-z0-9_]*)*",
+      "derives": {
+        "parents": ["MOD_ID_PACKAGE_SEGMENT"],
+        "method": "replace",
+        "parameters": {
+          "regex": "^",
+          "replacement": "com.example."
+        }
       }
     },
     {
@@ -118,18 +105,8 @@
       "collapsible": true,
       "groupProperties": [
         {
-          "name": "DESCRIPTION",
-          "type": "string",
-          "default": ""
-        },
-        {
           "name": "AUTHORS",
           "type": "inline_string_list",
-          "default": ""
-        },
-        {
-          "name": "WEBSITE",
-          "type": "string",
           "default": ""
         }
       ]
@@ -138,12 +115,12 @@
       "name": "JAVA_VERSION",
       "type": "integer",
       "order": 20,
-      "default": 17,
+      "default": 21,
       "visible": false,
       "derives": {
-        "parents": ["VERSIONS"],
+        "parents": ["MC_VERSION"],
         "method": "recommendJavaVersionForMcVersion",
-        "default": 17
+        "default": 21
       }
     },
     {
@@ -153,105 +130,42 @@
       "default": "JAVA_VERSION"
     }
   ],
-  "files": [
-    {
-      "template": "../Gradle.gitignore.ft",
-      "destination": ".gitignore",
-      "condition": "$USE_GIT"
-    },
-    {
-      "template": "build.gradle.ft",
-      "destination": "build.gradle",
-      "condition": "$LANGUAGE == 'Java'"
-    },
-    {
-      "template": "settings.gradle.ft",
-      "destination": "settings.gradle",
-      "condition": "$LANGUAGE == 'Java'"
-    },
-    {
-      "template": "build.gradle.kts.ft",
-      "destination": "build.gradle.kts",
-      "condition": "$LANGUAGE == 'Kotlin'"
-    },
-    {
-      "template": "settings.gradle.kts.ft",
-      "destination": "settings.gradle.kts",
-      "condition": "$LANGUAGE == 'Kotlin'"
-    },
-    {
-      "template": "gradle.properties.ft",
-      "destination": "gradle.properties"
-    },
-    {
-      "template": "../gradle-wrapper.properties.ft",
-      "destination": "gradle/wrapper/gradle-wrapper.properties",
-      "properties": {
-        "GRADLE_VERSION": "9.6.1"
-      }
-    },
-    {
-      "template": "fabric.mod.json.ft",
-      "destination": "src/main/resources/fabric.mod.json"
-    },
-    {
-      "template": "mixins.json.ft",
-      "destination": "src/main/resources/${MOD_ID}.mixins.json",
-      "condition": "$USE_MIXINS"
-    },
-    {
-      "template": "mixins.json.ft",
-      "destination": "src/client/resources/${MOD_ID}.client.mixins.json",
-      "condition": "$USE_MIXINS && $SPLIT_SOURCES && $VERSIONS.minecraftVersion.compareTo($mcver.MC1_18) >= 0",
-      "properties": {
-        "CLIENT": true
-      }
-    },
-    {
-      "template": "Initializer.java.ft",
-      "destination": "src/main/java/${MAIN_CLASS.path}.java",
-      "condition": "$LANGUAGE == 'Java'",
-      "openInEditor": true
-    },
-    {
-      "template": "ClientInitializer.java.ft",
-      "destination": "src/${CLIENT_SOURCE_SET}/java/${MAIN_CLASS.packagePath}/client/${MAIN_CLASS.className}Client.java",
-      "condition": "$LANGUAGE == 'Java' && $MOD_ENVIRONMENT != 'server'",
-      "openInEditor": true
-    },
-    {
-      "template": "Initializer.kt.ft",
-      "destination": "src/main/kotlin/${MAIN_CLASS.path}.kt",
-      "condition": "$LANGUAGE == 'Kotlin'",
-      "openInEditor": true
-    },
-    {
-      "template": "ClientInitializer.kt.ft",
-      "destination": "src/${CLIENT_SOURCE_SET}/kotlin/${MAIN_CLASS.packagePath}/client/${MAIN_CLASS.className}Client.kt",
-      "condition": "$LANGUAGE == 'Kotlin' && $MOD_ENVIRONMENT != 'server'",
-      "openInEditor": true
-    },
-    {
-      "template": "DataGenerator.java.ft",
-      "destination": "src/${CLIENT_SOURCE_SET}/java/${MAIN_CLASS.packagePath}/client/${MAIN_CLASS.className}DataGenerator.java",
-      "condition": "$LANGUAGE == 'Java' && $USE_DATAGEN",
-      "openInEditor": true
-    },
-    {
-      "template": "DataGenerator.kt.ft",
-      "destination": "src/${CLIENT_SOURCE_SET}/kotlin/${MAIN_CLASS.packagePath}/client/${MAIN_CLASS.className}DataGenerator.kt",
-      "condition": "$LANGUAGE == 'Kotlin' && $USE_DATAGEN",
-      "openInEditor": true
-    },
-    {
-      "template": "../licenses/${LICENSE.id}.txt.ft",
-      "destination": "LICENSE.txt"
-    }
-  ],
   "finalizers": [
     {
-      "type": "run_gradle_tasks",
-      "tasks": ["wrapper"]
+      "type": "run_npm_package",
+      "package": "@fabricmc/cli",
+      "command": "fabric",
+      "args": [
+        "init",
+        "--defaultOptions",
+        "--allow-non-empty-dir",
+        "--name=$MOD_NAME",
+        "--modid=$MOD_ID",
+        "--packageName=$PACKAGE_NAME",
+        "--version=$MC_VERSION",
+        "--option=kotlin=$LANGUAGE.equals('Kotlin')",
+        "--option=gradleKotlin=$USE_GRADLE_KOTLIN_DSL",
+        "--option=mojangMappings=$USE_MOJANG_MAPPINGS",
+        "--option=datagen=#if ($USE_DATAGEN && $MC_VERSION.compareTo($mcver.MC1_17) >= 0)true#{else}false#end",
+        "--option=splitSources=#if ($SPLIT_SOURCES && $MC_VERSION.compareTo($mcver.MC1_19) >= 0)true#{else}false#end",
+        "."
+      ]
+    },
+    {
+      "type": "generate_files",
+      "files": [
+        {
+          "template": "../licenses/${LICENSE.id}.txt.ft",
+          "destination": "LICENSE"
+        }
+      ]
+    },
+    {
+      "type": "replace_in_file",
+      "file": "src/main/resources/fabric.mod.json",
+      "find": "\"license\"\\s*:\\s*\"[^\"]*\"",
+      "regex": true,
+      "replace": "\"license\": \"${LICENSE.id}\""
     },
     {
       "type": "import_gradle_project"
